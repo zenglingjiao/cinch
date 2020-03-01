@@ -1,0 +1,36 @@
+$(function () {
+    $("#updateForm").validate({
+        errorClass: "textcolor"
+     });
+     $("#updatePasswordForm").validate({
+         errorClass: "textcolor",
+         rules: {
+	      oldPassword: "required",
+	      newPassword: {
+	        required: true,
+            minlength: 6,
+            maxlength:12
+	      },
+	      newPasswordRetype: {
+	        required: true,
+            minlength: 6,
+            maxlength:12,
+	        equalTo: "#newPassword"
+	      }
+	    },
+	    messages: {
+	      oldPassword: "請輸入原密碼",
+	      newPassword: {
+	        required: "請輸入新密碼",
+	        minlength: "請輸入6-12個字元英文或數字"
+	      },
+	      newPasswordRetype: {
+	        required: "請再次輸入新密碼",
+	        minlength: "請輸入6-12個字元英文或數字",
+	        equalTo: "兩次密碼輸入不一致"
+	      }
+	    }
+     });
+
+
+});

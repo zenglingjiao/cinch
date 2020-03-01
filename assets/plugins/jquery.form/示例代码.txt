@@ -1,0 +1,94 @@
+$(document).ready(function () {
+            var options = {
+                target: '',   // target element(s) to be updated with server response 
+                dataType: 'json',
+                beforeSubmit: showRequest,  // pre-submit callback 
+                success: showResponse,  // post-submit callback 
+                error: showError
+            };
+            $('#from1').ajaxForm(options);
+});
+
+
+
+function showRequest(formData, jqForm, options) {
+
+        }
+
+
+
+
+        // post-submit callback 
+function showResponse(jsonData, statusText, xhr, $form) {
+            /*alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+                '\n\nThe output div should have already been updated with the responseText.');*/
+            switch (jsonData.Statu) {
+                case "ok":
+                    if (jsonData.Msg && $.trim(jsonData.Msg) != "") {
+                        //$.alertMsg(data.Msg, "系統提示", function () { funcSuc(data); });
+                        sweetAlert({
+                            title: jsonData.Msg,
+                            text: null,
+                            type: "success",
+                            showCancelButton: false,
+                            confirmButtonColor: "#33A0E8",
+                            confirmButtonText: "確定",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        }, function (isConfirm) {
+                            if (jsonData.BackUrl && $.trim(jsonData.BackUrl) != "") {
+                                if (window.top) { window.top.location = jsonData.BackUrl; } else {
+                                    window.location = jsonData.BackUrl;
+                                }
+                            } else {
+
+                            }
+                        });
+                    }
+                    break;
+                case "err":
+                    if (jsonData.Msg && $.trim(jsonData.Msg) != "") {
+
+                        //$.alertMsg(data.Msg, "系統提示", function () { funcErr(data); });
+
+                        sweetAlert({
+                            title: jsonData.Msg,
+                            text: null,
+                            type: "error",
+                            showCancelButton: false,
+                            confirmButtonColor: "#33A0E8",
+                            confirmButtonText: "確定",
+                            cancelButtonText: "取消",
+                            closeOnConfirm: true,
+                            closeOnCancel: false
+                        }, function (isConfirm) {
+                            if (jsonData.BackUrl && $.trim(jsonData.BackUrl) != "") {
+                                if (window.top) { window.top.location = jsonData.BackUrl; } else {
+                                    window.location = jsonData.BackUrl;
+                                }
+                            } else {
+
+                            }
+                        });
+
+
+                    }
+                    break;
+            }
+        }
+
+function showError() {
+            sweetAlert({
+                title: "服務器無響應，請稍後重試",
+                text: null,
+                type: "error",
+                showCancelButton: false,
+                confirmButtonColor: "#33A0E8",
+                confirmButtonText: "確定",
+                cancelButtonText: "取消",
+                closeOnConfirm: true,
+                closeOnCancel: false
+            }, function (isConfirm) {
+            });
+        }

@@ -1,0 +1,20 @@
+$(".datepicker-input").datetimepicker({
+        minView: "month", //选择日期后，不会再跳转去选择时分秒 
+        language: 'zh-TW',
+        format: 'yyyy-mm-dd',
+        todayBtn: 1,
+        autoclose: 1,
+        clearBtn:true,//清除按钮
+    });
+    $(".datepicker-time-input").datetimepicker({
+        format: 'yyyy-mm-dd hh:ii:ss',
+        language: 'zh-TW',
+        weekStart: 1,
+        todayBtn: 1,//显示‘今日’按钮
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        minView: 0,  //Number, String. 默认值：0, 'hour'，日期时间选择器所能够提供的最精确的时间选择视图。
+        minuteStep: 5,
+        clearBtn: true,//清除按钮
+    });

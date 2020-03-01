@@ -1,0 +1,312 @@
+<form class="form-inline no-margin" id="form_search">
+
+	<div style="">
+							
+		<div class="form-group">
+
+			<label class="sr-only">身份證字號/統編：</label>
+
+			<div class="input-group">
+
+				<input placeholder="搜尋身份證字號/統編" name="MemberId" class=" form-control" type="text">
+
+				<!--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+
+			</div>
+
+		</div>
+		<div class="form-group">
+
+			<label class="sr-only">email：</label>
+
+			<div class="input-group">
+
+				<input placeholder="搜尋email" name="Email" class=" form-control" type="text">
+
+				<!--<span class="input-group-addon"><i class="fa fa-calendar"></i></span>-->
+
+			</div>
+
+		</div>
+	</div>
+
+	<button type="button" class="btn btn-info btn-clean" onclick="cleanForm()">清除</button> <button type="button" class="btn btn-success btn-query" onclick="$('#search').val('1');$('#table-javascript').bootstrapTable('refreshOptions',{pageNumber:1});">查詢</button>
+	<div class="clearfix">
+		<input id="search" name="search" type="hidden" />
+	</div>
+
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--这是表格 -->
+<table class="table table-striped" id="table-javascript">
+
+</table>
+<!--表格结束 -->
+
+
+
+
+$('#table-javascript').bootstrapTable({
+    method: 'post',
+    url: '@Url.Content("~/ad_min/manager/Get_Member_email_auth_list")',
+    striped: true,
+    pagination: true,
+    pageSize: 10,
+    pageList: [10, 20, 50, 100, 200, 500, 1000],
+    //search: true,
+    sidePagination: 'server',
+    showColumns: true,
+    showRefresh: true,
+    queryParams: queryParams,
+    minimumCountColumns: 2,
+    sortName: 'displayOrder',
+    sortOrder: 'desc',
+    clickToSelect: false,
+    contentType: "application/x-www-form-urlencoded",
+    toolbar: '#toolbar',
+    formatLoadingMessage: function () {
+        return "請稍後，正在加載...";
+    },
+    formatNoMatches: function () {  //没有匹配的结果
+        return '無符合條件的記錄';
+    },
+    onLoadError: function (data) {
+        $('#table-javascript').bootstrapTable('removeAll');
+    },
+    onClickRow: function (row, $element, field) {
+        if (field == "Id" || field == "IsActive") { } else {
+            window.location.href = "@Url.Content("~/ad_min/manager/Member_email_auth/")" + row.Id;
+        }
+    },
+    onLoadSuccess: function () {
+        $('.xcheck').change(function () {
+            if($(this).is(":checked"))
+    		{
+        		poststate=1;
+        	}
+        	else{
+        		poststate=0;
+            }
+    		$.ajax({
+    			type : 'post',
+    			url : '@(Url.Content("~/ad_min/manager/SetActive"))',
+    			data: 'tableName=MemberEmailAuth&id=' + this.value + '&isActive=' + poststate,
+    			//async : false, //同步方式
+    			success : function(redata) {
+    				if(redata>0)
+    				{
+        				
+        			}
+        			else
+            		{
+        				sweetAlert("状态保存失败");
+        				$('#table-javascript').bootstrapTable('refresh');
+                	}
+    			}
+    		});
+
+    	});
+    },
+    columns: [{
+        field: 'STATE',
+        checkbox: true,
+        visible:false
+    }, {
+        field: 'Id',
+        title: 'ID',
+        align: 'center',
+        valign: 'bottom',
+        sortable: false,
+        visible:false
+    }, {
+        field: 'DisplayOrder',
+        title: '排序',
+        align: 'center',
+        valign: 'bottom',
+        sortable: true
+    }, {
+        field: 'IsActive',
+        title: '停用/啟用',
+        align: 'center',
+        valign: 'bottom',
+        sortable: false,
+        formatter:returnStatus
+    }, {
+        field: 'ValidFrom',
+        title: 'email驗證開始時間',
+        align: 'center',
+        valign: 'bottom',
+        sortable: true
+    }, {
+        field: 'GoodThru',
+        title: 'email驗證結束時間',
+        align: 'center',
+        valign: 'bottom',
+        sortable: true
+    }, {
+        field: 'Email',
+        title: 'Email',
+        align: 'center',
+        valign: 'bottom',
+        sortable: true
+    }, {
+        field: 'ConfirmTime',
+        title: 'Email驗證時間',
+        align: 'center',
+        valign: 'bottom',
+        sortable: true
+    }
+    ]
+});
+
+
+//设置传入参数
+function queryParams(params) {
+    if ($("#search").val() == '1') {
+        params = $.extend(params, $('#form_search').serializeJson());
+        $("#search").val('0');
+    } else {
+        $("#search").val('0');
+        params = $.extend(params, $('#form_search').serializeJson());
+    }
+    return params
+}
+//清除搜索表单数据
+function cleanForm(){
+	$(':input','#form_search').not(':button, :submit, :reset, :hidden').val('').removeAttr('checked').removeAttr('selected');
+	$('#table-javascript').bootstrapTable('refreshOptions',{pageNumber:1});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//以下都是辅助函数
+
+function returnStatus(value, row, index) {
+	if(value==1 || value == "1")
+	{
+		return '<label class="el-switch  control-label"><input type="checkbox" value='+row.Id+' class="xcheck" checked name=""><span class="el-switch-style"></span></label>';
+
+	}
+	else
+	{
+		return '<label class="el-switch  control-label"><input type="checkbox" value='+row.Id+' class="xcheck" name=""><span class="el-switch-style"></span></label>';
+	}
+}
+function operateFormatter(value, row, index) {
+    return [
+                    '<a class="btn btn-xs btn-primary" href="backstage/Back/qa_detail?action=edit&id=' + row.Id + '"" title="編輯">編輯</a>'
+    ].join('');
+
+}
+
+function returnLong(value){
+	if(value.length>30){
+		return value.substring(0,25)+'...';
+	}else{
+		return value;
+	}
+}
+
+function returnSort(value, row, index){
+	if(value)
+	{
+	}else{
+		value="";
+	}
+	return '<div class="input-group"><input type="text" id="sort'+row.id+'" value="'+value+'" class="form-control"> <span class="input-group-btn"> <button onclick="saveSort('+row.id+')" class="btn btn-default" type="button">保存</button></span></div>';
+}
+
+
+function getDate(date){
+	return date.split(" ")[0];
+}
+function getTime(value, row, index){
+	return row.concertTime.split(" ")[1].substring(0,5);
+}
+//获得日期加时间
+function ChangeDateFormat(jsondate) {
+    if (jsondate) { if (jsondate.length > 0) { } else { return ""; } } else { return ""; }
+    jsondate = jsondate.replace("/Date(", "").replace(")/", "");
+    if (jsondate.indexOf("+") > 0) {
+        jsondate = jsondate.substring(0, jsondate.indexOf("+"));
+    } else if (jsondate.indexOf("-") > 0) {
+        jsondate = jsondate.substring(0, jsondate.indexOf("-"));
+    }
+    var date = new Date(parseInt(jsondate, 10));
+    var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+    var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+    var Hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+    var Minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+    var Seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+    return date.getFullYear() + "-" + month + "-" + currentDate + " " + Hours + ":" + Minutes + ":" + Seconds;
+}
+//获得日期
+function dateFromStringWithTime(str) {
+    if (str == null || str == undefined) {
+        return '';
+    }
+    var match;
+    if (!(match = str.match(/\d+/))) {
+        return false;
+    }
+    var date = new Date();
+    date.setTime(match[0] - 0);
+    return DateToStr(date);
+}
+//日期转化为字符串格式： yyyy-mm-dd
+function DateToStr(dt) {
+    var str = "";
+    if (dt.getFullYear) {
+        var y, m, d;
+        y = dt.getFullYear();
+        m = dt.getMonth() + 1; //1-12
+        m = "" + m;
+        d = "" + dt.getDate();
+        if (m.length != 2) {
+            m = "0" + m;
+        }
+        if (d.length != 2) {
+            d = "0" + d;
+        }
+        str = "" + y + "-" + m + "-" + d;
+    }
+    return str;
+}
+//获取选择id
+function xianshiid() {
+    var selects = $('#table-javascript').bootstrapTable('getSelections');
+    ids = $.map(selects, function (row) {
+        return row.id;
+    });
+    return ids;
+}

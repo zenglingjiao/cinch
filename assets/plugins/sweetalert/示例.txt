@@ -1,0 +1,50 @@
+sweetAlert({
+                    title: jsonData.Msg,
+                    text: null,
+                    type: "success",
+                    showCancelButton: false,
+                    confirmButtonClass: 'btn-success btn-md waves-effect waves-light',
+                    confirmButtonColor: "#33A0E8",
+                    confirmButtonText: "確定 ",
+                    cancelButtonText: "取消",
+                    closeOnConfirm: true,
+                    closeOnCancel: false
+                }, function (isConfirm) {
+                    if (jsonData.BackUrl && $.trim(jsonData.BackUrl) != "") {
+                        if (window.top) { window.top.location = jsonData.BackUrl; } else {
+                            window.location = jsonData.BackUrl;
+                        }
+                    } else {
+
+                    }
+                });
+
+
+sweetAlert({
+    title: "服務器無響應，請稍後重試",
+    text: null,
+    type: "error",
+    showCancelButton: false,
+    confirmButtonColor: "#33A0E8",
+    confirmButtonText: "確定",
+    cancelButtonText: "取消",
+    closeOnConfirm: true,
+    closeOnCancel: false
+}, function (isConfirm) {
+
+if (isConfirm) {      swal("删除！", "你的虚拟文件已经被删除。", "success");    } else {      swal("取消！", "你的虚拟文件是安全的:)", "error");    } 
+});
+
+
+sweetAlert({
+        title: "服務器無響應，請稍後重試",
+        text: null,
+        type: "error",
+        showCancelButton: false,
+        confirmButtonColor: "#33A0E8",
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        closeOnConfirm: true,
+        closeOnCancel: false
+    }, function (isConfirm) {
+    });
