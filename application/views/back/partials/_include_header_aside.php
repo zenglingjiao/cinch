@@ -138,7 +138,7 @@
                                 <a class="<?= isset($active_news)?$active_news:""?>" href="<?php echo base_url('back/News/news_list')?>">最新消息管理</a>
                             </li>
                             <li>
-                                <a class="<?= isset($active_proposita)?$active_proposita:""?>" href="<?php echo base_url('back/Proposita/proposita_list')?>">活動詳情管理</a>
+                                <a class="<?= isset($active_activities_details)?$active_activities_details:""?>" href="<?php echo base_url('back/Activities_details/activities_details_list')?>">活動詳情管理</a>
                             </li>
                             <li>
                                 <a class="<?= isset($active_hot_film)?$active_hot_film:""?>" href="<?php echo base_url('back/Hot_film/hot_film_list')?>">熱門影音管理</a>

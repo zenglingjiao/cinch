@@ -76,15 +76,15 @@ $query_builder = TRUE;
 $db['default'] = array(
 	'dsn'	=> '',
 	//本地
-	'hostname' => '127.0.0.1',
-	'username' => 'root',
-	'password' => 'root',
-	'database' => 'cinch',
-	//線上
 	// 'hostname' => '127.0.0.1',
-	// 'username' => 'cinch',
-	// 'password' => 'cinCh^&*123',
-	// 'database' => 'db_cinch',
+	// 'username' => 'root',
+	// 'password' => 'root',
+	// 'database' => 'cinch',
+	//線上
+	'hostname' => '61.222.197.34',
+	'username' => 'cinch',
+	'password' => 'cinCh^&*123',
+	'database' => 'db_cinch',
 
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
