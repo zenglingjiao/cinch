@@ -200,7 +200,7 @@
                 }
                 $.ajax({
                     type : 'post',
-                    url : '<?php echo isset($state)?$state:""?>',
+                    url : '<?php echo isset($api_state)?$api_state:""?>',
                     data: 'id=' + this.value + '&set=' + poststate+ '&field=state',
                     //async : false, //同步方式
                     success : function(redata) {

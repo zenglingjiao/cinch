@@ -133,7 +133,7 @@
                                         <div class="col-md-3">
                                             <div class="btn btn_en btn-success" onclick="document.getElementById('upload1').click();"><i class="fa fa-image"></i>瀏覽
                                                 <input type="file" data-input="false" @change="tirgger_file_img_schedule($event,'up_img')" id="upload1" accept="image/*" data-badge="false" style="display:none;">
-                                                <input type="text" :value="model.img_schedule" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
+                                                <input type="text" :value="model.img_schedule" name="has_img_schedule" id="has_img_schedule" style="opacity: 0;position: absolute;" />
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +162,7 @@
                                         <div class="col-md-3">
                                             <div class="btn btn_en btn-success" onclick="document.getElementById('upload').click();"><i class="fa fa-image"></i>瀏覽
                                                 <input type="file" data-input="false" @change="tirgger_file_img_scoring($event,'up_img')" id="upload" accept="image/*" data-badge="false" style="display:none;">
-                                                <input type="text" :value="model.img_scoring" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
+                                                <input type="text" :value="model.img_scoring" name="has_img_scoring" id="has_img_scoring" style="opacity: 0;position: absolute;" />
                                             </div>
                                         </div>
                                     </div>
@@ -368,20 +368,23 @@
                     this.img_scoring = {name: '設備圖', file: null, src: this.model.img_scoring, type: 'img'};
                 }
                 if(this.model.img_schedule){
-                    this.img_schedule = {name: '設備圖', file: null, src: this.model.img_scoring, type: 'img'};
+                    this.img_schedule = {name: '設備圖', file: null, src: this.model.img_schedule, type: 'img'};
                 }
                 if(this.model.awards_explain){
-                	console.log(this.model.awards_explain);
-                    this.awards_explain=JSON.parse(this.model.awards_explain);
+                	// console.log(this.model.awards_explain);
+                    this.awards_explain=this.model.awards_explain;
                 }
                 
             }
         },
         methods: {
             delimg:function(event){
-                if(this.model.pic.length>0){
-                    this.model.pic.splice(event,1);
+                if(this.model.awards_imgs.length>0){
+                    this.model.awards_imgs.splice(event,1);
                 }
+                // if(this.model.awards_explain.length>0){
+                //     this.model.awards_explain.splice(event,1);
+                // }
             },
             //多选框
             toggleCheckSingle(id,e) {
@@ -451,7 +454,6 @@
                             src: getObjectURL(file[0]),
                             type: "img"
                         };
-                        console.log(this.class_name);
                         this.model.imgs="1";
                         $("#has_upimg").focus();
                     }
@@ -461,6 +463,7 @@
             //處理多張圖片
             tirgger_file: function (event) {
                 var file = event.target.files; // (利用console.log输出看file文件对象)
+               	console.log(file);
                 if (file) {
                     var fileSize = file[0].size / 1024;
                     var fileName = file[0].name;
