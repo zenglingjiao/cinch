@@ -45,9 +45,9 @@
                         <small><a class="link-effect" href="<?php echo base_url('back/Admin/index')?>">回首頁</a></small>
                     </h1>
                 </div>
-                <div class="col-sm-5 text-right hidden-xs">
-                    <a href="<?php echo isset($api_edit)?$api_edit:""?>" class="btn btn-primary" title="新增">新增</a>
-                </div>
+                <!-- <div class="col-sm-5 text-right hidden-xs">
+                    <a href="<?php echo isset($edit)?$edit:""?>" class="btn btn-primary" title="新增">新增</a>
+                </div> -->
             </div>
         </div>
         <!-- END Page 中間標題頭部 -->
@@ -60,26 +60,22 @@
                         <div class="smart-widget-header">
                             <form class="form-inline no-margin herd-from-alert" id="form_search">
                                 <div class="cleom">
-                                	<div class="form-group">
+                                    <div class="form-group">
                                         <label class="control-label" for="">關鍵字：</label>
                                         <input class="form-control" type="text" id="title" name="title" placeholder="輸入關鍵字">
                                     </div>
-                                    <!-- <div class="form-group">
-                                        <label class="control-label" for="">分類名稱：</label>
-                                        <input class="form-control" type="text" id="name" name="name" placeholder="輸入物品分類名稱">
-                                    </div> -->
-                                    <div class="form-group">
+                                <!--     <div class="form-group">
                                         <label class="control-label" for="">狀態：</label>
                                         <select name="state" id="state" class="form-control">
                                             <option value=""></option>
                                             <option value="1">開啟</option>
                                             <option value="0">關閉</option>
                                         </select>
-                                    </div>
-                                  <!--   <div class="form-group">
-                                        <label class="control-label" for="">建立時間：</label>
-                                        <input placeholder="建立時間" name="c_time" id="c_time" class=" form-control dateStart" type="text" readonly>
                                     </div> -->
+<!--                                    <div class="form-group">-->
+<!--                                        <label class="control-label" for="">建立時間：</label>-->
+<!--                                        <input placeholder="建立時間" name="c_time" id="c_time" class=" form-control dateStart" type="text" readonly>-->
+<!--                                    </div>-->
 
                                 </div>
                                 <div class="cleom">
@@ -155,7 +151,7 @@
         sortOrder: 'desc',
         clickToSelect: false,
         contentType: "application/x-www-form-urlencoded",
-        classes: "table overview-table",
+        classes: "table overview-table table-hover",
         toolbar: '#toolbar',
         formatLoadingMessage: function () {
             return "請稍後，正在加載...";
@@ -175,7 +171,6 @@
         //表格頁面數據渲染數據後執行的方法
         onLoadSuccess: function () {
             //$("#md-show").wrap('<div class="reveal-overlay" style="display: block;"></div>');
-            console.log($('#table-javascript').bootstrapTable("getOptions").totalRows);
             if($('#table-javascript').bootstrapTable("getOptions").totalRows<=1){
                 $("#btn_box").css("margin-top","10px")
             }
@@ -189,7 +184,7 @@
                 }
                 $.ajax({
                     type : 'post',
-                    url : '<?php echo isset($api_state)?$api_state:""?>',
+                    url : '<?php echo isset($state)?$state:""?>',
                     data: 'id=' + this.value + '&set=' + poststate+ '&field=state',
                     //async : false, //同步方式
                     success : function(redata) {
@@ -220,35 +215,27 @@
             field: 'id',
             title: 'ID',
             align: 'center',
-            valign: 'center',
+            valign: 'bottom',
             sortable: false,
             visible:false
         },{
-            field: 'type',
-            title: '分類',
-            align: 'center',
-            valign: 'center',
-            sortable: true,
-            formatter:function (value, row, index) {
-                if(value==1){
-                	return '團體';
-                }else{
-                	return '個人';
-                }
-            }
-        }, {
-            field: 'title',
-            title: '標題',
+            field: 'name',
+            title: '姓名',
             align: 'center',
             valign: 'center',
             sortable: true
         }, {
-            field: 'state',
-            title: '關閉／開啟',
+            field: 'awards',
+            title: '獎項',
+            align: 'center',
+            valign: 'center',
+            sortable: true
+        },{
+            field: 'created_at',
+            title: '創建時間',
             align: 'center',
             valign: 'center',
             sortable: true,
-            formatter:returnStatus
         },{
             field: 'created_at',
             title: '操作',
@@ -279,13 +266,15 @@
         }
         else
         {
-            return '<label class="css-input switch switch-info"><input type="checkbox" value='+row.id+' class="xcheck" name=""><span ></span></label>';
+            return '<label  class="css-input switch switch-info"><input type="checkbox" value='+row.id+' class="xcheck" name=""><span ></span></label>';
         }
     }
 
     function operateFormatter(value, row, index) {
         return [
-            '<a class="btn btn-primary" href="<?php echo isset($api_edit)?$api_edit:""?>' + row.id + '" title="編輯">編輯</a>'
+            '<a class="btn btn-primary" href="<?php echo isset($edit)?$edit:""?>' + row.id + '" title="編輯">編輯</a>',
+            //'   ',
+            //'<a style="background-color:red;" class="btn btn-primary" href="<?php //echo isset($edit)?$edit:""?>//' + row.id + '" title="刪除">刪除</a>'
         ].join('');
 
     }

@@ -26,6 +26,7 @@ class Cinch_product extends Admin_Controller
             $state = mb_strlen(trim(isset($_POST['state']) ?: "")) == 0 ? "" : trim($_POST['state']);
             $c_time = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
             $title = mb_strlen(trim(isset($_POST['title']) ?: "")) == 0 ? "" : trim($_POST['title']);
+            $classify = mb_strlen(trim(isset($_POST['classify']) ?: "")) == 0 ? "" : trim($_POST['classify']);
             $field = array(
                 'cinch_product.id',
                 'cinch_product.sort',
@@ -40,7 +41,7 @@ class Cinch_product extends Admin_Controller
             $this->db->select($field);
             if ($title != "") {
                 $this->db->group_start();
-                $this->db->like('title', $title);
+                $this->db->like('product_name', $title);
                 $this->db->group_end();
 
 
@@ -48,7 +49,9 @@ class Cinch_product extends Admin_Controller
             if ($state != "") {
                 $this->db->where('state', $state);
             }
-
+            if ($classify != "") {
+                $this->db->where('classify', $classify);
+            }
             if ($c_time != "") {
                 $c_time = explode("~", $c_time);
                 $this->db->where('cinch_product.created_at >=', $c_time[0]);

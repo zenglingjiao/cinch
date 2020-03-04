@@ -72,6 +72,14 @@
                                             <option value="0">關閉</option>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                        <label class="control-label" for="">類型：</label>
+                                        <select name="type" id="type" class="form-control">
+                                            <option value=""></option>
+                                            <option value="2">文字</option>
+                                            <option value="1">圖片</option>
+                                        </select>
+                                    </div>
 <!--                                    <div class="form-group">-->
 <!--                                        <label class="control-label" for="">建立時間：</label>-->
 <!--                                        <input placeholder="建立時間" name="c_time" id="c_time" class=" form-control dateStart" type="text" readonly>-->

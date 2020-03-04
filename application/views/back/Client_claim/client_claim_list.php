@@ -64,18 +64,18 @@
                                         <label class="control-label" for="">關鍵字：</label>
                                         <input class="form-control" type="text" id="title" name="title" placeholder="輸入關鍵字">
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="control-label" for="">狀態：</label>
                                         <select name="state" id="state" class="form-control">
                                             <option value=""></option>
                                             <option value="1">開啟</option>
                                             <option value="0">關閉</option>
                                         </select>
+                                    </div> -->
+                                    <div class="form-group">
+                                        <label class="control-label" for="">建立時間：</label>
+                                        <input placeholder="建立時間" name="c_time" id="c_time" class=" form-control dateStart" type="text" readonly>
                                     </div>
-<!--                                    <div class="form-group">-->
-<!--                                        <label class="control-label" for="">建立時間：</label>-->
-<!--                                        <input placeholder="建立時間" name="c_time" id="c_time" class=" form-control dateStart" type="text" readonly>-->
-<!--                                    </div>-->
 
                                 </div>
                                 <div class="cleom">

@@ -26,6 +26,7 @@ class Roulette extends Admin_Controller
             $state = mb_strlen(trim(isset($_POST['state']) ?: "")) == 0 ? "" : trim($_POST['state']);
             $c_time = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
             $title = mb_strlen(trim(isset($_POST['title']) ?: "")) == 0 ? "" : trim($_POST['title']);
+            $stock = mb_strlen(trim(isset($_POST['stock']) ?: "")) == 0 ? "" : trim($_POST['stock']);
             $field = array(
                 'roulette.id',
                 'roulette.name',
@@ -39,13 +40,16 @@ class Roulette extends Admin_Controller
             $this->db->select($field);
             if ($title != "") {
                 $this->db->group_start();
-                $this->db->like('title', $title);
+                $this->db->like('name', $title);
                 $this->db->group_end();
 
 
             }
             if ($state != "") {
                 $this->db->where('state', $state);
+            }
+            if ($stock != "") {
+                $this->db->where('stock', $stock);
             }
 
             if ($c_time != "") {

@@ -72,6 +72,16 @@
                                             <option value="0">關閉</option>
                                         </select>
                                     </div>
+                                     <div class="form-group">
+                                        <label class="control-label" for="">分類：</label>
+                                        <select name="classify" id="classify" class="form-control">
+                                            <option value=""></option>
+                                            <option value="1">cleanse清</option>
+                                            <option value="2">nourish調</option>
+                                            <option value="3">energize活</option>
+                                            <option value="4">推薦組合</option>
+                                        </select>
+                                    </div>
 <!--                                    <div class="form-group">-->
 <!--                                        <label class="control-label" for="">建立時間：</label>-->
 <!--                                        <input placeholder="建立時間" name="c_time" id="c_time" class=" form-control dateStart" type="text" readonly>-->

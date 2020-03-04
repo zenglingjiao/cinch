@@ -39,7 +39,7 @@ class Client_claim extends Admin_Controller
             $this->db->select($field);
             if ($title != "") {
                 $this->db->group_start();
-                $this->db->like('title', $title);
+                $this->db->like('name', $title);
                 $this->db->group_end();
 
 

@@ -21,7 +21,7 @@ class Activities_details extends Admin_Controller
     public function activities_details_list()
     {
         if (IS_POST) {
-            $name = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+            $title = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
             $state = mb_strlen(trim(isset($_POST['state']) ?: "")) == 0 ? "" : trim($_POST['state']);
             $c_time = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
             $third_login = mb_strlen(trim(isset($_POST['third_login']) ?: "")) == 0 ? "" : trim($_POST['third_login']);
@@ -41,9 +41,9 @@ class Activities_details extends Admin_Controller
             );
 
             $this->db->select($field);
-            if ($name != "") {
+            if ($title != "") {
                 $this->db->group_start();
-                $this->db->like('name', $name);
+                $this->db->like('title', $title);
                 $this->db->group_end();
 
 

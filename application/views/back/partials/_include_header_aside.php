@@ -153,10 +153,10 @@
                                 <a class="<?= isset($active_apply)?$active_apply:""?>" href="<?php echo base_url('back/Apply/apply_list')?>">報名管理</a>
                             </li>
                             <li>
-                                <a class="<?= isset($active_proposita)?$active_proposita:""?>" href="<?php echo base_url('back/Proposita/proposita_list')?>">中獎管理</a>
+                                <a class="<?= isset($active_winning)?$active_winning:""?>" href="<?php echo base_url('back/Winning/winning_list')?>">中獎管理</a>
                             </li>
                             <li>
-                                <a class="<?= isset($active_proposita)?$active_proposita:""?>" href="<?php echo base_url('back/Proposita/proposita_list')?>">投票管理</a>
+                                <a class="<?= isset($active_vote)?$active_vote:""?>" href="<?php echo base_url('back/Vote/vote_list')?>">投票管理</a>
                             </li>
                         </ul>
                     </li>
