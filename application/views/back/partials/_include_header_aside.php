@@ -91,7 +91,7 @@
                                 <a class="<?= isset($active_major_product)?$active_major_product:""?>" href="<?php echo base_url('back/Major_product/major_product_list')?>">主力產品管理</a>
                             </li>
                              <li>
-                                <a class="<?= isset($active_about)?$active_about:""?>" href="<?php echo base_url('back/About/about_list')?>">產品索取管理</a>
+                                <a class="<?= isset($active_products_for)?$active_products_for:""?>" href="<?php echo base_url('back/Products_for/products_for_edit')?>">產品索取管理</a>
                             </li>
                         </ul>
                     </li>
