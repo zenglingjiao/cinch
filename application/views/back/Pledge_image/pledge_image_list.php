@@ -190,7 +190,14 @@
                     success : function(redata) {
                         if(redata>0)
                         {
+                        	if(redata==2){
+                        		sweetAlert("同一時間最多上架1筆");
+                            	$('#table-javascript').bootstrapTable('refresh');
+                        	}else if(redata==3){
+                        		sweetAlert("上架時間不能小於當前時間");
+                            	$('#table-javascript').bootstrapTable('refresh');
 
+                        	}
                         }
                         else
                         {

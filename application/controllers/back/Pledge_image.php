@@ -130,9 +130,19 @@ class Pledge_image extends Admin_Controller
                 $errors[] = "標題不可為空";
             }
             if ($activities_time == "") {
-                $errors[] = "活動時間不可為空";
+                $errors[] = "時間不可為空";
             }
             $activities_time=explode('~',$activities_time);
+            if($activities_time[0] < date("Y-m-d H:i:s", time())){
+            	$errors[] = "時間不可早於當前時間";
+            }
+            //狀態不為0時
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("pledge_image", ['state','activities_time_start'], [1 , $activities_time[0]]);
+	        	if(count($count) >= 1){
+	                $errors[] = "同一時間最多上架一筆";
+	        	}
+            }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -210,6 +220,19 @@ class Pledge_image extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+        		$model = $this->Data_helper_model->get_model_in_id("pledge_image", $id);
+	        	//上架時間不能小於當前時間
+	        	if($model->activities_time_start < date("Y-m-d H:i:s", time())){
+	        		echo 3;
+		           	return;
+	        	}
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("pledge_image", [$field,'activities_time_start'], [$value , $model->activities_time_start]);
+	        	if(count($count) >= 1){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "pledge_image", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;

@@ -198,7 +198,13 @@
                     success : function(redata) {
                         if(redata>0)
                         {
-
+                        	if(redata==2){
+                        		sweetAlert("文字最多上架1筆");
+                            	$('#table-javascript').bootstrapTable('refresh');
+                        	}else if(redata==3){
+                        		sweetAlert("圖片最多上架3筆");
+                            	$('#table-javascript').bootstrapTable('refresh');
+                        	}
                         }
                         else
                         {

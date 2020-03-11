@@ -126,6 +126,13 @@ class About extends Admin_Controller
             if ($title == "") {
                 $errors[] = "標題不可為空";
             }
+            //狀態不為0時
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("about_us", ['state'], [1]);
+	        	if(count($count) >= 3){
+	                $errors[] = "最多上架三筆";
+	        	}
+            }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -200,7 +207,15 @@ class About extends Admin_Controller
         $id = mb_strlen(trim(isset($_POST['id']) ?: "")) == 0 ? "" : trim($_POST['id']);
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
+
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("about_us", [$field], [$value]);
+	        	if(count($count) >= 3){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "about_us", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;

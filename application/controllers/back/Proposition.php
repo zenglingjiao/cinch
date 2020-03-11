@@ -138,7 +138,23 @@ class Proposition extends Admin_Controller
                 if ($content == "") {
                     $errors[] = "內容不可為空";
                 }
+                //狀態不為0時
+	            if($state){
+	            	$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,2]);
+		        	if(count($count) >= 1){
+		                $errors[] = "文字最多上架一筆";
+		        	}
+	            }
+            }else{
+            	//狀態不為0時
+	            if($state){
+	            	$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,1]);
+		        	if(count($count) >= 3){
+		                $errors[] = "圖片最多上架三筆";
+		        	}
+	            }
             }
+
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -218,6 +234,23 @@ class Proposition extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	$model = $this->Data_helper_model->get_model_in_id("proposition", $id);
+        	if(!empty($value)){
+	        	//1圖片2文字
+	        	if($model->type==2){
+	        		$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,2]);
+		        	if(count($count) >= 1){
+		                echo 2;
+                		return;
+		        	}
+	        	}else{
+	        		$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,1]);
+		        	if(count($count) >= 3){
+		                echo 3;
+                		return;
+		        	}
+	        	}
+	        }
             if ($this->Data_helper_model->tabel_status($id, "proposition", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;
