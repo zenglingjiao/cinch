@@ -190,7 +190,10 @@
                     success : function(redata) {
                         if(redata>0)
                         {
-
+                        	if(redata==2){
+                        		sweetAlert("最多上架5筆");
+                            	$('#table-javascript').bootstrapTable('refresh');
+                        	}
                         }
                         else
                         {

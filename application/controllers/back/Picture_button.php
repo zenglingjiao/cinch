@@ -136,7 +136,27 @@ class Picture_button extends Admin_Controller
             if ($activities_time == "") {
                 $errors[] = "活動時間不可為空";
             }
+            
             $activities_time=explode('~',$activities_time);
+            //不可小於當前時間
+            if($activities_time[0] < date("Y-m-d H:i:s", time())){
+            	 $errors[] = "不可小於當前時間";
+            }
+            //同一時間上架限制為主圖一筆，按鈕五個
+            if($state){
+            	//1圖片2按鈕
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("picture_button", ['state' , 'type' ,'activities_time_start'], [1 , $type , $activities_time[0]]);
+            	if($type == 1){
+		        	if(count($count) >= 1){
+		                $errors[] = "同一時間主圖最多上架一筆";
+		        	}
+            	}else{
+		        	if(count($count) >= 5){
+		                $errors[] = "同一時間按鈕最多上架五個";
+		        	}
+            	}
+            	
+            }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -216,18 +236,32 @@ class Picture_button extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+        		$model = $this->Data_helper_model->get_model_in_id("picture_button", $id);
+        		if($model){
+        			if($model->activities_time_start < date("Y-m-d H:i:s", time())){
+        				echo '小於當前時間不能上架';
+			            return;
+        			}
+        			$count=$this->Data_helper_model->get_model_list_in_fileds("picture_button", [$field , 'type' , 'activities_time_start'], [$value, $model->type , $model->activities_time_start]);
+        			//1圖片2按鈕
+        			if($model->type == 1){
+        				if(count($count) >= 1){
+			                echo '同一時間最多上架圖片一筆';
+			                return;
+			        	}
+        			}else{
+        				if(count($count) >= 5){
+			                echo '同一時間最多上架按鈕五筆';
+			                return;
+			        	}
+        			}
+
+		        	
+        		}
+	        	
+        	}
             if ($this->Data_helper_model->tabel_status($id, "picture_button", $field, $value)) {
-                // $db_debug = $this->db->db_debug;
-                // $this->db->db_debug = FALSE;
-                // $sql_data = [
-                //     "updated_at"=>date("Y-m-d H:i:s", time())
-                // ];
-                // $this->db->where("id", $id);
-                // if(!$this->db->update($tabel, $sql_data))
-                // {
-                //     $error = $this->db->error();
-                // }
-                // $this->db->db_debug = $db_debug;
                 echo 1;
                 return;
             } else {

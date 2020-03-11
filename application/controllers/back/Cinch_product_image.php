@@ -133,6 +133,17 @@ class Cinch_product_image extends Admin_Controller
                 $errors[] = "活動時間不可為空";
             }
             $activities_time=explode('~',$activities_time);
+            //同一時間上架限制為一筆
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("cinch_product_image", ['state' , 'activities_time_start'], [1 ,  $activities_time[0]]);
+	        	if(count($count) >= 1){
+	                $errors[] = "同一時間上架限制為一筆";
+	        	}
+            }
+            //必須大於當前時間
+            if($activities_time[0] < date("Y-m-d H:i:s", time())){
+	            $errors[] = "必須大於當前時間";
+            }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -210,6 +221,14 @@ class Cinch_product_image extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+        		$model = $this->Data_helper_model->get_model_in_id("cinch_product_image", $id);
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("cinch_product_image", [$field,'activities_time_start'], [$value , $model->activities_time_start ]);
+	        	if(count($count) >= 1){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "cinch_product_image", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;

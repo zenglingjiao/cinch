@@ -188,9 +188,14 @@
                     data: 'id=' + this.value + '&set=' + poststate+ '&field=state',
                     //async : false, //同步方式
                     success : function(redata) {
-                        if(redata>0)
+                        if(redata)
                         {
+                        	if(redata==1){
 
+                        	}else{
+                        		sweetAlert(redata);
+                            	$('#table-javascript').bootstrapTable('refresh');
+                        	}
                         }
                         else
                         {

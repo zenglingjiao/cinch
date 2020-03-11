@@ -130,6 +130,7 @@ class Proposita extends Admin_Controller
             $activities_time = mb_strlen(trim(isset($_POST['activities_time']) ?: "")) == 0 ? "" : trim($_POST['activities_time']);
 
 
+
             if ($title == "") {
                 $errors[] = "標題不可為空";
             }
@@ -140,6 +141,13 @@ class Proposita extends Admin_Controller
                 $errors[] = "網址不可為空";
             }
            
+           //狀態不為0時
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("proposita", ['state'], [1]);
+	        	if(count($count) >= 5){
+	                $errors[] = "最多上架五筆";
+	        	}
+            }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -219,6 +227,13 @@ class Proposita extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("proposita", [$field], [$value]);
+	        	if(count($count) >= 5){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "proposita", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;
