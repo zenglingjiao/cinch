@@ -160,42 +160,15 @@
                             </li>
                         </ul>
                     </li>
-                    <!-- <li>
-                        <a class="<?= isset($active_label) ? $active_label : "" ?>" href="<?php echo base_url('back/Label_state/label_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">標籤管理</span></a>
-                    </li>
-
-                    <li>
-                        <a class="<?= isset($active_goods) ? $active_goods : "" ?>" href="<?php echo base_url('back/Goods/goods_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">物品管理</span></a>
-
-                    </li>
-                    <li>
-                        <a class="<?= isset($active_orders) ? $active_orders : "" ?>" href="<?php echo base_url('back/Orders/orders_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">訂單管理</span></a>
-
-                    </li>
+                    <!-- 
                     <li>
                         <a class="<?= isset($active_broadcast) ? $active_broadcast : "" ?>" href="<?php echo base_url('back/Push_broadcast/broadcast_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">推播管理</span></a>
 
                     </li>
                     <li>
-                        <a class="<?= isset($active_evaluate) ? $active_evaluate : "" ?>" href="<?php echo base_url('back/Evaluate/evaluate_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">評價管理</span></a>
-
-                    </li>
-                    <li>
-                        <a class="<?= isset($active_impeach) ? $active_impeach : "" ?>" href="<?php echo base_url('back/Impeach/impeach_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">檢舉回報管理</span></a>
-                    </li>
-                    <li>
                         <a class="<?= isset($active_activities) ? $active_activities : "" ?>" href="<?php echo base_url('back/Exchange_activities/activities_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">兌換活動管理</span></a>
                     </li>
-                    <li>
-                        <a class="<?= isset($active_faq) ? $active_faq : "" ?>" href="<?php echo base_url('back/Faq/faq_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">常見問題管理</span></a>
-                    </li>
-                    <li>
-                        <a class="<?= isset($active_ratings) ? $active_ratings : "" ?>" href="<?php echo base_url('back/User_ratings/ratings_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">用戶評級管理</span></a>
-                    </li>
-                    <li>
-                        <a class="<?= isset($active_versions) ? $active_versions : "" ?>" href="<?php echo base_url('back/Versions/versions_edit') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">版本資訊</span></a>
-
-                    </li> -->
+							-->
                 </ul>
             </div>
             <!-- END Side Content -->
