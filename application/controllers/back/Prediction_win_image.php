@@ -133,6 +133,16 @@ class Prediction_win_image extends Admin_Controller
                 $errors[] = "活動時間不可為空";
             }
             $activities_time=explode('~',$activities_time);
+
+            if($activities_time[0] < date("Y-m-d H:i:s", time())){
+                $errors[] = "不能早於當前時間";
+            }
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("prediction_win_image", ['state' ,'activities_time_start' ,'id !='], [1 ,$activities_time[0] ,$id]);
+	        	if(count($count) >= 1){
+	                $errors[] = "同一時間上架限制為一筆";
+	        	}
+            }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -210,18 +220,17 @@ class Prediction_win_image extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+
+        	if(!empty($value)){
+        		$model = $this->Data_helper_model->get_model_in_id("prediction_win_image", $id);
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("prediction_win_image", [$field ,'activities_time_start'], [$value ,$model->activities_time_start]);
+	        	if(count($count) >= 1){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "prediction_win_image", $field, $value)) {
-                // $db_debug = $this->db->db_debug;
-                // $this->db->db_debug = FALSE;
-                // $sql_data = [
-                //     "updated_at"=>date("Y-m-d H:i:s", time())
-                // ];
-                // $this->db->where("id", $id);
-                // if(!$this->db->update($tabel, $sql_data))
-                // {
-                //     $error = $this->db->error();
-                // }
-                // $this->db->db_debug = $db_debug;
+                
                 echo 1;
                 return;
             } else {

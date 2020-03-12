@@ -194,7 +194,10 @@
                     success : function(redata) {
                         if(redata>0)
                         {
-
+                        	if(redata == 2){
+                        		sweetAlert("上架限制為八筆");
+                           	 	$('#table-javascript').bootstrapTable('refresh');
+                        	}
                         }
                         else
                         {

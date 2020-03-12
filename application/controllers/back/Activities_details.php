@@ -31,7 +31,7 @@ class Activities_details extends Admin_Controller
                 'activities_details.id',
                 'activities_details.type',
                 'activities_details.title',
-                // 'activities_details.goods_type_id',
+                'activities_details.added_at',
                 // 'activities_details.purchase_way',
                 // 'activities_details.pic',
                 'activities_details.created_at',
@@ -154,7 +154,25 @@ class Activities_details extends Admin_Controller
 //            if ($name == "") {
 //                $errors[] = "分類名稱不可為空";
 //            }
-
+            if($added_at < date("Y-m-d H:i:s", time())){
+               $errors[] = "上架時間不能早於當前時間";
+            }
+            //同一時間同一類型上架限制為一筆
+            if($state){
+            	//1團體2個人
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("activities_details", ['state' , 'added_at' ,'id !=' , 'type'], [1 ,$added_at ,$id ,$type]);
+            	if($type == 1){
+            		if(count($count) >= 1){
+		                $errors[] = "同一時間團體上架限制為一筆";
+		        	}
+            	}else{
+            		if(count($count) >= 1){
+		                $errors[] = "同一時間個人上架限制為一筆";
+		        	}
+            	}
+            	
+	        
+            }
             $up_img_src = "";
             $img_scoring = "";
             $img_schedule = "";
@@ -294,6 +312,15 @@ class Activities_details extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+        		$model = $this->Data_helper_model->get_model_in_id("activities_details", $id);
+	        	
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("activities_details", [$field , 'type' , 'added_at'], [$value , $model->type ,$model->added_at]);
+	        	if(count($count) >= 1){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "activities_details", $field, $value)) {
               
                 echo 1;

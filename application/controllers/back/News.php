@@ -92,11 +92,8 @@ class News extends Admin_Controller
                     $data['model'] = [
                         "id" => $model->id,
                         "title" => $model->title,
-                        "integral" => $model->integral,
-                        "activities_time" => $model->activities_time_start.'~'.$model->activities_time_end,
-//                        "activities_time" => $model->activities_time_end,
+                        "added_time" => $model->added_time,
                         "content" => $model->content,
-                        "sort" => $model->sort,
                         "imgs" => $model->imgs,
                         "state" => $model->state,
                         "created_at" => (isset($model->created_at)) ? $model->created_at : "",
@@ -138,6 +135,13 @@ class News extends Admin_Controller
             }
             if ($added_time == "") {
                 $errors[] = "上架時間不可為空";
+            }
+            //上架
+            if($state){
+            	if($added_time < date("Y-m-d H:i:s", time()))
+	           	{
+	                $errors[] = "上架時間不可早於當前時間";
+	            }
             }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {

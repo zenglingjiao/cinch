@@ -131,7 +131,13 @@ class Hot_film extends Admin_Controller
             if ($url == "") {
                 $errors[] = "網址不可為空";
             }
-            
+            //上架限制為至多五筆
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("hot_film", ['state'], [1]);
+	        	if(count($count) >= 5){
+	                $errors[] = "上架限制為至多五筆";
+	        	}
+            }
             if (!empty($id)) {
                 //
                 if (!empty($errors)) {
@@ -188,6 +194,13 @@ class Hot_film extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("hot_film", [$field], [$value]);
+	        	if(count($count) >= 5){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "hot_film", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;

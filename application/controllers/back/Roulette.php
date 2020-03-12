@@ -147,6 +147,13 @@ class Roulette extends Admin_Controller
             if($row->sum+$odds>100){
                  $errors[] = "獎項機率相加不得超過100%";
             }
+            //上架限制為八筆
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("roulette", ['state'], [1]);
+	        	if(count($count) >= 8){
+	                $errors[] = "上架限制為八筆";
+	        	}
+            }
             if (!empty($id)) {
                 //
                 if (!empty($errors)) {
@@ -203,6 +210,13 @@ class Roulette extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+	        	$count=$this->Data_helper_model->get_model_list_in_fileds("roulette", [$field], [$value]);
+	        	if(count($count) >= 8){
+	                echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "roulette", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;

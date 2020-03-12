@@ -195,7 +195,11 @@
                     success : function(redata) {
                         if(redata>0)
                         {
-
+                        	if(redata==2){
+                        		sweetAlert("同一時間同一類型上架限制為一筆");
+                            	$('#table-javascript').bootstrapTable('refresh');
+                        	}
+                        	
                         }
                         else
                         {
@@ -243,6 +247,12 @@
             valign: 'center',
             sortable: true
         }, {
+            field: 'added_at',
+            title: '時間',
+            align: 'center',
+            valign: 'center',
+            sortable: true
+        },{
             field: 'state',
             title: '關閉／開啟',
             align: 'center',

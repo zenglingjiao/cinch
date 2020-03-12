@@ -195,10 +195,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div v-for="(x,x_index) in update_file" class="form-group picss" v-show="update_file&&x.name&&update_file.length>0" >
+                                    <div  class="form-group picss" v-show="update_file&&update_file.length>0" >
                                         <label class="col-md-2 control-label sr-only"></label>
                                         <div class="col-md-7">
-                                            <div class="sort_img_list">
+                                            <div class="sort_img_list" v-for="(x,x_index) in update_file" style="float: left;width: 150px;height: 250px;margin-left: 10px;">
                                                 <div class="sort_img" >
                                                     <div class="form-group-t">
                                                         <button type="button" class="btn btn-warning" @click="update_file.splice(x_index,1);awards_explain.splice(x_index,1);delimg(x_index);">刪除</button>
@@ -206,7 +206,7 @@
                                                     <div class="form-group-z">
                                                         <div id="preimg">
                                                             <div class='imgContainer'>
-                                                                <a :download="x.name" :data-name="x.name" target="_blank" :href="x.src"><img style="width: 200px;height: 200px" title='分類圖' class="src_list" :src="x.src"  onerror=this.onerror=null;this.src="assets/images/no.jpg" alt='图片'/></a>
+                                                                <a :download="x.name" :data-name="x.name" target="_blank" :href="x.src"><img style="width: 150px;height: 150px" title='分類圖' class="src_list" :src="x.src"  onerror=this.onerror=null;this.src="assets/images/no.jpg" alt='图片'/></a>
                                                             </div>
 					                                        <input type="text" class="form-control" v-model="awards_explain[x_index]" :name="'awards_explain'+x_index" />
                                                         </div>
@@ -219,7 +219,7 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">上架時間</label>
                                         <div class="col-md-7">
-                                            <input placeholder="比賽期間" value="<?php echo isset($model['added_at'])?$model['competition_period']:""; ?>"  name="added_at" id="added_at" class=" form-control dateStart" type="text" readonly>
+                                            <input placeholder="比賽期間" value="<?php echo isset($model['added_at'])?$model['added_at']:""; ?>"  name="added_at" id="added_at" class=" form-control dateStart" type="text" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
