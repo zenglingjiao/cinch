@@ -64,17 +64,6 @@
                         <a class="<?= isset($active_member) ? $active_member : "" ?>" href="<?php echo base_url('back/Members/member_list') ?>"><i class="si si-users"></i><span class="sidebar-mini-hide">會員管理</span></a>
 
                     </li> -->
-                   <!--  <li class="<?= isset($open_goods_class)?$open_goods_class:""?>">
-                        <a class="nav-submenu" data-toggle="nav-submenu" href="javascript:void(0);"><i class="si si-user"></i><span class="sidebar-mini-hide">物品分類管理</span></a>
-                        <ul>
-                            <li>
-                                <a class="<?= isset($active_main_class)?$active_main_class:""?>" href="<?php echo base_url('back/Goods_class/main_class_list')?>">主分類管理</a>
-                            </li>
-                            <li>
-                                <a class="<?= isset($active_small_class)?$active_small_class:""?>" href="<?php echo base_url('back/Goods_class/small_class_list')?>">小分類管理</a>
-                            </li>
-                        </ul>
-                    </li> -->
                     <li class="<?= isset($open_home)?$open_home:""?>">
                         <a class="nav-submenu" data-toggle="nav-submenu" href="javascript:void(0);"><i class="si si-user"></i><span class="sidebar-mini-hide">主頁</span></a>
                         <ul>
