@@ -28,7 +28,26 @@ class Front extends Public_Controller
 
     public function test()
     {
+    	$params=[
+    		'partnerID'=>173,
+    		'invoke'=>'lcqrtask',
+    		'token'=>'6486b2812055eb9ffa881275d2af7d02',
+    		'formData'=>'{"task_encrypt":"186c211e0892b74a"}',
 
+    	];
+    	$url='http://60.250.137.141/CinchAPP/team.php';
+    	$ch = curl_init();//初始化
+	    curl_setopt($ch, CURLOPT_URL, $url);//抓取指定网页
+	    curl_setopt($ch, CURLOPT_HEADER, 0);//设置header
+	    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);//要求结果为字符串且输出到屏幕上
+	    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 1000);
+	    curl_setopt($ch, CURLOPT_POST, 1);//post提交方式
+	    curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
+	    $res = curl_exec($ch);//运行curl
+	    curl_close($ch);
+	    // return ($data);
+	    $data['res'] =json_decode($res,true);
+		$this->load->view("Front/test",$data);
     }
 
     public function test_img()
