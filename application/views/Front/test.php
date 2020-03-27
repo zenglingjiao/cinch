@@ -115,7 +115,7 @@
                 <!--    </div>-->
                 <!--</div>-->
             </div>
-            <div class="btn btn-block btn-anniu btn-lg">加入任務</div>
+            <div class="btn btn-block btn-anniu btn-lg" id="btn">加入任務</div>
 
         </div>
     </div>
@@ -183,6 +183,61 @@
                 console.log('complete', xhr)
             }
         })
+        var download_schema ='switching://switching.com?good_id=<?php echo isset($goods->id)?$goods->id :0; ?>';/***打开app的协议，有安卓同事提供***/
+    	//var download_schema ='taobao://';/***打开app的协议，有安卓同事提供***/
+		var universal_link = 'http://d.alphaqr.com/9l76';//ios下载地址
+		var getVersionUrl = 'http://d.alphaqr.com/Switching';//Android移动端下载地址
+		var u = navigator.userAgent.toLocaleLowerCase();
+		//console.log(u);
+		var isWeixin = u.match(/MicroMessenger/i) == 'micromessenger'; //判断是不是微信浏览器
+		var isAndroid = u.indexOf('android') > -1 || u.indexOf('linux') > -1; //android终端或者uc浏览器
+		var isiOS = !! u.match(/(iphone|ipod|ipad|mac)/i);
+		 
+		$("#btn").click(function(){
+			// alert('1');
+		    // alert(isAndroid);
+		    //alert(isiOS);
+		    if (isAndroid) {
+		        android1();
+		    }
+		    if (isiOS) {
+		        ios();
+		    }
+		});
+		// function openApp() {
+		//     alert('1');
+		//     // alert(isAndroid);
+		//     //alert(isiOS);
+		//     if (isAndroid) {
+		//         android1();
+		//     }
+		//     if (isiOS) {
+		//         ios();
+		//     }
+		//     //alert("调用下载失败"); //此处弹窗时，是没有version参数，如果在app中打开，是会有这个参数的
+		// }
+		 
+		function android1() {
+		    //如果是微信,直接下载
+		    if (isWeixin) {
+		        window.location.href = getVersionUrl; /***Android移动端下载地址***/
+		    } else {
+		        window.location.href = download_schema; /***打开app的协议，有安卓同事提供***/
+		        window.location.href = download_schema; window.location.href = download_schema; 
+		        window.setTimeout(function () {
+		            //window.location.href = "Android下载地址";/***Android移动端下载地址***/
+		            window.location.href = getVersionUrl; /***Android移动端下载地址***/
+		        }, 200);
+		    }
+		}
+		 
+		function ios() {
+		    window.location.href = download_schema;
+		    window.setTimeout(function () {
+		            window.location.href = universal_link; /***ios移动端下载地址***/
+		    }, 200);
+		}
+
     });
 
    
