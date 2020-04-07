@@ -221,18 +221,21 @@
             valign: 'bottom',
             sortable: false,
             visible:false
-        },{
-            field: 'sort',
-            title: '排序',
-            align: 'center',
-            valign: 'center',
-            sortable: true
         }, {
             field: 'title',
-            title: '活動標題',
+            title: '標題',
             align: 'center',
             valign: 'center',
             sortable: true
+        },{
+            field: 'sort',
+            title: '期間',
+            align: 'center',
+            valign: 'center',
+            sortable: true,
+            formatter:function (value, row, index) {
+                return  row.activities_time_start+'~'+row.activities_time_end;
+            }
         },{
             field: 'imgs',
             title: '圖片',

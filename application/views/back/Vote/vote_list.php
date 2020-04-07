@@ -220,7 +220,7 @@
             visible:false
         },{
             field: 'email',
-            title: '郵箱',
+            title: 'E-MAIL',
             align: 'center',
             valign: 'center',
             sortable: true

@@ -134,7 +134,7 @@ class Master_image extends Admin_Controller
             }
             
             if ($activities_time == "") {
-                $errors[] = "活動時間不可為空";
+                $errors[] = "期間不可為空";
             }
             $activities_time=explode('~',$activities_time);
             $up_img_src = "";

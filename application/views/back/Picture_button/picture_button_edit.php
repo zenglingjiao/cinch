@@ -92,9 +92,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">活动時間：</label>
+                                        <label class="col-md-2 control-label">期間</label>
                                         <div class="col-md-7">
-                                            <input placeholder="活动時間" value="<?php echo isset($model['activities_time'])?$model['activities_time']:""; ?>"  name="activities_time" id="activities_time" class=" form-control dateStart" type="text" readonly>
+                                            <input placeholder="期間" value="<?php echo isset($model['activities_time'])?$model['activities_time']:""; ?>"  name="activities_time" id="activities_time" class=" form-control dateStart" type="text" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">

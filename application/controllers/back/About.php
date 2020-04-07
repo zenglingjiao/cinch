@@ -30,6 +30,8 @@ class About extends Admin_Controller
                 'about_us.id',
                 'about_us.title',
                 'about_us.sort',
+                'about_us.activities_time_start',
+                'about_us.activities_time_end',
                 'about_us.imgs',
                 'about_us.created_at',
                 'about_us.state',
@@ -62,10 +64,10 @@ class About extends Admin_Controller
             //echo $this->db->last_query();
             exit;
         } else {
-            $data['title'] = "認識我們Banner列表";
+            $data['title'] = "認識我們主圖列表";
             $data['open_about'] = "open";
             $data['active_about'] = "active";
-            $data['h_title'] = "認識我們Banner管理";
+            $data['h_title'] = "認識我們主圖管理";
             $data['edit'] = base_url('back/About/about_edit/');
             $data['api_list'] = base_url('back/About/about_list');
             $data['api_delete'] = base_url('back/About/about_delete');
@@ -84,16 +86,17 @@ class About extends Admin_Controller
             $data['active_about'] = "active";
             $data['list'] = base_url('back/About/about_list');
             $data['edit'] = base_url('back/About/about_edit/');
-            $data['list_title'] = "認識我們Banner列表";
+            $data['list_title'] = "認識我們主圖列表";
             if (!empty($id)) {
                 $id = (int)$id;
-                $data['title'] = "認識我們Banner編輯";
+                $data['title'] = "認識我們主圖編輯";
                 $model = $this->Data_helper_model->get_model_in_id("about_us", $id);
                 if (isset($model)) {
                     $data['model'] = [
                         "id" => $model->id,
                         "title" => $model->title,
                         "sort" => $model->sort,
+                        "activities_time" => $model->activities_time_start.'~'.$model->activities_time_end,
                         "imgs" => $model->imgs,
                         "state" => $model->state,
                         "created_at" => (isset($model->created_at)) ? $model->created_at : "",
@@ -105,7 +108,7 @@ class About extends Admin_Controller
                     return_get_msg("信息錯誤", base_url('back/About/about_list'));
                 }
             } else {
-                $data['title'] = "新增認識我們Banner";
+                $data['title'] = "新增認識我們主圖";
                 $this->load->view("back/About/about_edit", $data);
             }
         }
@@ -121,7 +124,7 @@ class About extends Admin_Controller
             $title = mb_strlen(trim(isset($api_obj['title']) ?: "")) == 0 ? "" : trim($api_obj['title']);
             $sort = mb_strlen(trim(isset($api_obj['sort']) ?: "")) == 0 ? "" : trim($api_obj['sort']);
             $state = mb_strlen(trim(isset($api_obj['state']) ?: "")) == 0 ? "" : trim($api_obj['state']);
-
+            $activities_time = mb_strlen(trim(isset($_POST['activities_time']) ?: "")) == 0 ? "" : trim($_POST['activities_time']);
 
             if ($title == "") {
                 $errors[] = "標題不可為空";
@@ -133,7 +136,7 @@ class About extends Admin_Controller
 	                $errors[] = "最多上架三筆";
 	        	}
             }
-            $up_img_src = "";
+            $activities_time=explode('~',$activities_time);
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
                 foreach ($_FILES as $k => $file) {
@@ -153,6 +156,8 @@ class About extends Admin_Controller
                     return_post_json("err", $error, "", null);
                 }
                 $sql_data = [
+                    "activities_time_start" => $activities_time[0],
+                    "activities_time_end" => $activities_time[1],
                     "title" => $title,
                     "sort" => $sort,
                     "state" => $state ? 1 : 0 ,
@@ -184,6 +189,8 @@ class About extends Admin_Controller
                 }
 
                 $sql_data = [
+                	"activities_time_start" => $activities_time[0],
+                    "activities_time_end" => $activities_time[1],
                     "title" => $title,
                     "imgs" => $up_img_src,
                     "sort" => $sort,

@@ -66,10 +66,10 @@ class Proposition extends Admin_Controller
             //echo $this->db->last_query();
             exit;
         } else {
-            $data['title'] = "兌換活動列表";
+            $data['title'] = "纖奇主張列表";
             $data['open_home'] = "open";
             $data['active_proposition'] = "active";
-            $data['h_title'] = "兌換活動管理";
+            $data['h_title'] = "纖奇主張管理";
             $data['edit'] = base_url('back/Proposition/proposition_edit/');
             $data['api_list'] = base_url('back/Proposition/proposition_list');
             $data['api_delete'] = base_url('back/Proposition/proposition_delete');
@@ -88,10 +88,10 @@ class Proposition extends Admin_Controller
             $data['active_proposition'] = "active";
             $data['list'] = base_url('back/Proposition/proposition_list');
             $data['edit'] = base_url('back/Proposition/proposition_edit/');
-            $data['list_title'] = "兌換活動列表";
+            $data['list_title'] = "纖奇主張列表";
             if (!empty($id)) {
                 $id = (int)$id;
-                $data['title'] = "兌換活動編輯";
+                $data['title'] = "纖奇主張編輯";
                 $model = $this->Data_helper_model->get_model_in_id("proposition", $id);
                 if (isset($model)) {
                     $data['model'] = [
@@ -111,7 +111,7 @@ class Proposition extends Admin_Controller
                     return_get_msg("信息錯誤", base_url('back/Proposition/proposition_list'));
                 }
             } else {
-                $data['title'] = "新增兌換活動";
+                $data['title'] = "新增纖奇主張";
                 $this->load->view("back/Proposition/proposition_edit", $data);
             }
         }

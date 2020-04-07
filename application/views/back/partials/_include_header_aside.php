@@ -88,7 +88,7 @@
                         <a class="nav-submenu" data-toggle="nav-submenu" href="javascript:void(0);"><i class="si si-user"></i><span class="sidebar-mini-hide">認識我們</span></a>
                         <ul>
                             <li>
-                                <a class="<?= isset($active_about)?$active_about:""?>" href="<?php echo base_url('back/About/about_list')?>">認識我們Banner編輯</a>
+                                <a class="<?= isset($active_about)?$active_about:""?>" href="<?php echo base_url('back/About/about_list')?>">認識我們主圖管理</a>
                             </li>
                         </ul>
                     </li>

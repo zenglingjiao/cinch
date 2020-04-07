@@ -77,7 +77,7 @@
                                     <input type="hidden" name="id" value="<?php echo isset($model['id'])?$model['id']:""?>">
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">活动標題</label>
+                                        <label class="col-md-2 control-label">標題</label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" v-model="model.title" name="title" />
                                         </div>
@@ -112,9 +112,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">排序</label>
+                                        <label class="col-md-2 control-label">期間</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.sort" name="sort" />
+                                            <input placeholder="期間" value="<?php echo isset($model['activities_time'])?$model['activities_time']:""; ?>"  name="activities_time" id="activities_time" class=" form-control dateStart" type="text" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -306,6 +306,7 @@
                 if(this.update_file&&this.update_file.file){
                     fd.append("up_file", this.update_file.file[0]);
                 }
+                fd.append("activities_time",document.getElementById('activities_time').value);
                 fd.append("json_obj", JSON.stringify(this.model));
                 this.$http.post(
                     this.api_model_edit,

@@ -77,7 +77,7 @@
                                     <input type="hidden" name="id" value="<?php echo isset($model['id'])?$model['id']:""?>">
 
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">活动標題</label>
+                                        <label class="col-md-2 control-label">標題</label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" v-model="model.title" name="title" />
                                         </div>

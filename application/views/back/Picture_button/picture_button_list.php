@@ -240,7 +240,7 @@
             }
         }, {
             field: 'activities_time',
-            title: '時間',
+            title: '期間',
             align: 'center',
             valign: 'center',
             sortable: true,

@@ -83,7 +83,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">時間</label>
+                                        <label class="col-md-2 control-label">上架時間</label>
                                         <div class="col-md-7">
                                             <input placeholder="活动時間" value="<?php echo isset($model['added_time'])?$model['added_time']:""; ?>"  name="added_time" id="added_time" class=" form-control dateStart" type="text" readonly>
                                         </div>
