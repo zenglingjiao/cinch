@@ -80,7 +80,7 @@
                                         <label class="col-md-2 control-label">類型</label>
                                         <div class="col-md-7">
                                             <select class="form-control" name="type" id="type" placeholder="請選擇" v-model="model.type">
-                                                <option value="">請選擇</option>
+                                                <!-- <option value="">請選擇</option> -->
                                                 <option value="1">圖片</option>
                                                 <option value="2">文字</option>
                                             </select>
@@ -88,7 +88,7 @@
                                     </div>
                                     <template v-if="model.type==2">
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">活动標題</label>
+                                        <label class="col-md-2 control-label">標題</label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" v-model="model.title" name="title" />
                                         </div>
@@ -268,7 +268,9 @@
     var vue_obj = new Vue({
         el: '#main-container',
         data: {
-            model: {},
+            model: {
+            	type:1,
+            },
             update_file: {},
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
