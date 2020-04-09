@@ -71,10 +71,10 @@ class Activities_details extends Admin_Controller
             //echo $this->db->last_query();
             exit;
         } else {
-            $data['title'] = "活动详情列表";
+            $data['title'] = "活動詳情列表";
             $data['open_challenge'] = "open";
             $data['active_activities_details'] = "active";
-            $data['h_title'] = "活动详情管理";
+            $data['h_title'] = "活動詳情管理";
             $data['api_edit'] = base_url('back/Activities_details/activities_details_edit/');
             $data['api_list'] = base_url('back/Activities_details/activities_details_list');
             $data['api_delete'] = base_url('back/Activities_details/activities_details_delete');
@@ -93,10 +93,10 @@ class Activities_details extends Admin_Controller
             $data['active_activities_details'] = "active";
             $data['api_list'] = base_url('back/Activities_details/activities_details_list');
             $data['api_edit'] = base_url('back/Activities_details/activities_details_edit');
-            $data['list_title'] = "活动详情列表";
+            $data['list_title'] = "活動詳情列表";
             if (!empty($id)) {
                 $id = (int)$id;
-                $data['title'] = "活动详情編輯";
+                $data['title'] = "活動詳情編輯";
                 $model = $this->Data_helper_model->get_model_in_id("activities_details", $id);
                 if (isset($model)) {
                     $data['model'] = [
@@ -123,7 +123,7 @@ class Activities_details extends Admin_Controller
                     return_get_msg("信息錯誤", base_url('back/Activities_details/activities_details_list'));
                 }
             } else {
-                $data['title'] = "活动详情新增";
+                $data['title'] = "活動詳情新增";
                 $this->load->view("back/Activities_details/activities_details_edit", $data);
             }
         }

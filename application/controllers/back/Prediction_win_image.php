@@ -138,10 +138,11 @@ class Prediction_win_image extends Admin_Controller
                 $errors[] = "不能早於當前時間";
             }
             if($state){
-            	$count=$this->Data_helper_model->get_model_list_in_fileds("prediction_win_image", ['state' ,'activities_time_start' ,'id !='], [1 ,$activities_time[0] ,$id]);
-	        	if(count($count) >= 1){
-	                $errors[] = "同一時間上架限制為一筆";
-	        	}
+            	if($this->verify_time($activities_time[0],$activities_time[1],$id)){
+
+	            }else{
+	            	$errors[] = "同一時間上架限制為一筆";
+	            }
             }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
@@ -223,9 +224,10 @@ class Prediction_win_image extends Admin_Controller
 
         	if(!empty($value)){
         		$model = $this->Data_helper_model->get_model_in_id("prediction_win_image", $id);
-	        	$count=$this->Data_helper_model->get_model_list_in_fileds("prediction_win_image", [$field ,'activities_time_start'], [$value ,$model->activities_time_start]);
-	        	if(count($count) >= 1){
-	                echo 2;
+	        	if($this->verify_time($model->activities_time_start,$model->activities_time_end,$model->id)){
+	                
+	        	}else{
+	        		echo 2;
 	                return;
 	        	}
         	}
@@ -268,6 +270,23 @@ class Prediction_win_image extends Admin_Controller
         }
     }
 
+    public function verify_time($a,$b,$id)
+    {
+    	//參數為空
+    	if(empty($a) || empty($b)){
+    		return false;
+    	}
+    	//同一時間上架限制為一筆
+        //得到有交集的情况：X < B AND A < Y
+        $sql="select * from prediction_win_image where id != ? and state=1  and activities_time_start < ? and activities_time_end > ?";
+        $query=$this->db->query($sql,array($id,$b,$a));
+        $row=$query->row();
+        if(!empty($row)){
+            return false;
+        }else{
+        	return true;
+        }
+    }
 
 
 }

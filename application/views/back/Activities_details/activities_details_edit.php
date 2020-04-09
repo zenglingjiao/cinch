@@ -46,7 +46,7 @@
                 </div>
                 <div class="col-sm-5 text-right hidden-xs">
                     <ol class="breadcrumb push-10-t">
-                        <li><a class="link-effect" href="<?php echo base_url('back/Admin/index')?>">回首页</a></li>
+                        <li><a class="link-effect" href="<?php echo base_url('back/Admin/index')?>">回首頁</a></li>
                         <li><a class="link-effect" href="<?= isset($api_list)?$api_list:"/"?>"><?= isset($list_title)?$list_title:"列表"?></a></li>
                         <li><?php echo isset($model->id)&&$model->id > 0?isset($title)?$title:"編輯頁":isset($title)?$title:"新增頁" ?></li>
                     </ol>
