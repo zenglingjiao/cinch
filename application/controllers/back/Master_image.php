@@ -137,6 +137,18 @@ class Master_image extends Admin_Controller
                 $errors[] = "期間不可為空";
             }
             $activities_time=explode('~',$activities_time);
+
+            if($activities_time[0] < date("Y-m-d H:i:s")){
+                $errors[] = "上架時間不能小於當前時間";
+            }
+            if($state){
+	            if($this->verify_time($activities_time[0],$activities_time[1],$id)){
+
+	            }else{
+	            	$errors[] = "同一時間上架限制為一筆";
+	            }
+	            
+        	}
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -214,6 +226,15 @@ class Master_image extends Admin_Controller
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
+        	if(!empty($value)){
+                $model = $this->Data_helper_model->get_model_in_id("master_image", $id);
+	        	if($this->verify_time($model->activities_time_start,$model->activities_time_end,$model->id)){
+	                
+	        	}else{
+	        		echo 2;
+	                return;
+	        	}
+        	}
             if ($this->Data_helper_model->tabel_status($id, "master_image", $field, $value)) {
                 // $db_debug = $this->db->db_debug;
                 // $this->db->db_debug = FALSE;
@@ -263,6 +284,26 @@ class Master_image extends Admin_Controller
         }
     }
 
+    public function verify_time($a,$b,$id)
+    {
+    	//參數為空
+    	if(empty($a) || empty($b)){
+    		return false;
+    	}
+    	//同一時間上架限制為一筆
+        $sql="select * from master_image where id != ? and state=1 and ? BETWEEN activities_time_start and activities_time_end";
+        $query=$this->db->query($sql,array($id,$a));
+        $time_start=$query->row();
 
+        $sql="select * from master_image where id != ? and state=1 and ? BETWEEN activities_time_start and activities_time_end";
+        $query=$this->db->query($sql,array($id,$b));
+        $time_end=$query->row();
+
+        if(!empty($time_start) || !empty($time_end)){
+            return false;
+        }else{
+        	return true;
+        }
+    }
 
 }

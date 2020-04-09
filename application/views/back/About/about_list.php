@@ -191,7 +191,7 @@
                         if(redata>0)
                         {
                         	if(redata==2){
-                        		sweetAlert("最多上架3筆");
+                        		sweetAlert("同一時間上架限制為一筆");
                             	$('#table-javascript').bootstrapTable('refresh');
                         	}
                         }

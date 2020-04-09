@@ -29,8 +29,6 @@ class Proposition extends Admin_Controller
             $type = mb_strlen(trim(isset($_POST['type']) ?: "")) == 0 ? "" : trim($_POST['type']);
             $field = array(
                 'proposition.id',
-                'proposition.title',
-                'proposition.sort',
                 'proposition.imgs',
                 'proposition.type',
                 'proposition.created_at',
@@ -96,10 +94,8 @@ class Proposition extends Admin_Controller
                 if (isset($model)) {
                     $data['model'] = [
                         "id" => $model->id,
-                        "title" => $model->title,
                         "content" => $model->content,
                         "type" => $model->type,
-                        "sort" => $model->sort,
                         "imgs" => $model->imgs,
                         "state" => $model->state,
                         "created_at" => (isset($model->created_at)) ? $model->created_at : "",
@@ -125,36 +121,23 @@ class Proposition extends Admin_Controller
             $api_obj = json_decode($json_obj, TRUE);
 
             $id = mb_strlen(trim(isset($api_obj['id']) ?: "")) == 0 ? "" : trim($api_obj['id']);
-            $title = mb_strlen(trim(isset($api_obj['title']) ?: "")) == 0 ? "" : trim($api_obj['title']);
             $content = mb_strlen(trim(isset($api_obj['content']) ?: "")) == 0 ? "" : trim($api_obj['content']);
-            $sort = mb_strlen(trim(isset($api_obj['sort']) ?: "")) == 0 ? "" : trim($api_obj['sort']);
             $state = mb_strlen(trim(isset($api_obj['state']) ?: "")) == 0 ? "" : trim($api_obj['state']);
             $type = mb_strlen(trim(isset($api_obj['type']) ?: "")) == 0 ? "" : trim($api_obj['type']);
 
-            if($type==2){
-                if ($title == "") {
-                    $errors[] = "標題不可為空";
-                }
-                if ($content == "") {
-                    $errors[] = "內容不可為空";
-                }
-                //狀態不為0時
-	            if($state){
-	            	$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,2]);
-		        	if(count($count) >= 1){
-		                $errors[] = "文字最多上架一筆";
-		        	}
-	            }
-            }else{
-            	//狀態不為0時
-	            if($state){
-	            	$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,1]);
-		        	if(count($count) >= 3){
-		                $errors[] = "圖片最多上架三筆";
-		        	}
-	            }
+            if ($content == "") {
+                $errors[] = "內容不可為空";
             }
-
+            if ($type == "") {
+                $errors[] = "類型不可為空";
+            }
+            //狀態不為0時
+            if($state){
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type','id !='], [1,$type,$id]);
+	        	if(count($count) >= 1){
+	                $errors[] = "上架限制為清潤活各一筆";
+	        	}
+            }
             $up_img_src = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
@@ -176,9 +159,7 @@ class Proposition extends Admin_Controller
                 }
                 $sql_data = [
                     "content" => $content,
-                    "title" => $title,
                     "type" => $type,
-                    "sort" => $sort,
                     "state" => $state ? 1 : 0 ,
                     "updated_at" => date("Y-m-d H:i:s", time())
                 ];
@@ -210,9 +191,7 @@ class Proposition extends Admin_Controller
                 $sql_data = [
                     "content" => $content,
                     "type" => $type,
-                    "title" => $title,
                     "imgs" => $up_img_src,
-                    "sort" => $sort,
                     "state" => $state ? 1 : 0,
                     "created_at" => date("Y-m-d H:i:s", time())
                 ];
@@ -236,20 +215,13 @@ class Proposition extends Admin_Controller
         if ($id != "" && $field != "") {
         	$model = $this->Data_helper_model->get_model_in_id("proposition", $id);
         	if(!empty($value)){
-	        	//1圖片2文字
-	        	if($model->type==2){
-	        		$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,2]);
-		        	if(count($count) >= 1){
-		                echo 2;
-                		return;
-		        	}
-	        	}else{
-	        		$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type'], [1,1]);
-		        	if(count($count) >= 3){
-		                echo 3;
-                		return;
-		        	}
+	        	
+        		$count=$this->Data_helper_model->get_model_list_in_fileds("proposition", ['state','type','id !='], [1,$model->type,$model->id]);
+	        	if(count($count) >= 1){
+	                echo 2;
+            		return;
 	        	}
+	        	
 	        }
             if ($this->Data_helper_model->tabel_status($id, "proposition", $field, $value)) {
                 // $db_debug = $this->db->db_debug;

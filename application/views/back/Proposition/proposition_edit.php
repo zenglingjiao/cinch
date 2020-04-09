@@ -81,26 +81,13 @@
                                         <div class="col-md-7">
                                             <select class="form-control" name="type" id="type" placeholder="請選擇" v-model="model.type">
                                                 <!-- <option value="">請選擇</option> -->
-                                                <option value="1">圖片</option>
-                                                <option value="2">文字</option>
+                                                <option value="1">清</option>
+                                                <option value="2">潤</option>
+                                                <option value="3">活</option>
                                             </select>
                                         </div>
                                     </div>
-                                    <template v-if="model.type==2">
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">標題</label>
-                                        <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.title" name="title" />
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="col-md-2 control-label">內容</label>
-                                        <div class="col-md-7">
-                                            <textarea class="form-control" id="contact1-msg" v-model="model.content" name="content" rows="7" placeholder=""></textarea>
-                                        </div>
-                                    </div>
-                                    </template>
-                                    <template v-if="model.type==1">
+                                    
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">圖片</label>
                                         <div class="col-md-3">
@@ -130,11 +117,10 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </template>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">排序</label>
+                                        <label class="col-md-2 control-label">內容</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.sort" name="sort" />
+                                            <textarea class="form-control" id="contact1-msg" v-model="model.content" name="content" rows="7" placeholder=""></textarea>
                                         </div>
                                     </div>
                                     <div class="form-group">

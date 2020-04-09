@@ -76,8 +76,9 @@
                                         <label class="control-label" for="">類型：</label>
                                         <select name="type" id="type" class="form-control">
                                             <option value=""></option>
-                                            <option value="2">文字</option>
-                                            <option value="1">圖片</option>
+                                            <option value="1">清</option>
+                                            <option value="2">潤</option>
+                                            <option value="3">活</option>
                                         </select>
                                     </div>
 <!--                                    <div class="form-group">-->
@@ -199,10 +200,7 @@
                         if(redata>0)
                         {
                         	if(redata==2){
-                        		sweetAlert("文字最多上架1筆");
-                            	$('#table-javascript').bootstrapTable('refresh');
-                        	}else if(redata==3){
-                        		sweetAlert("圖片最多上架3筆");
+                        		sweetAlert("上架限制為清潤活各一筆");
                             	$('#table-javascript').bootstrapTable('refresh');
                         	}
                         }
@@ -233,12 +231,6 @@
             sortable: false,
             visible:false
         },{
-            field: 'sort',
-            title: '排序',
-            align: 'center',
-            valign: 'center',
-            sortable: true
-        },{
             field: 'type',
             title: '類型',
             align: 'center',
@@ -246,9 +238,11 @@
             // sortable: true
             formatter:function (value, row, index) {
                   if(value==1 || value=='1'){
-                        return '圖片';
+                        return '清';
+                  }else if(value==2 || value=='2'){
+                        return '潤';
                   }else{
-                        return '文字';
+                        return '活';
                   }
             }
         }, {

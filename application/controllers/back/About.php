@@ -129,14 +129,20 @@ class About extends Admin_Controller
             if ($title == "") {
                 $errors[] = "標題不可為空";
             }
+            
+            $activities_time=explode('~',$activities_time);
+            
+            if($activities_time[0] < date("Y-m-d H:i:s")){
+                $errors[] = "上架時間不能小於當前時間";
+            }
             //狀態不為0時
             if($state){
-            	$count=$this->Data_helper_model->get_model_list_in_fileds("about_us", ['state'], [1]);
-	        	if(count($count) >= 3){
-	                $errors[] = "最多上架三筆";
-	        	}
+            	if($this->verify_time($activities_time[0],$activities_time[1],$id)){
+
+	            }else{
+	            	$errors[] = "同一時間上架限制為一筆";
+	            }
             }
-            $activities_time=explode('~',$activities_time);
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
                 foreach ($_FILES as $k => $file) {
@@ -217,9 +223,11 @@ class About extends Admin_Controller
 
         if ($id != "" && $field != "") {
         	if(!empty($value)){
-	        	$count=$this->Data_helper_model->get_model_list_in_fileds("about_us", [$field], [$value]);
-	        	if(count($count) >= 3){
-	                echo 2;
+	        	$model = $this->Data_helper_model->get_model_in_id("about_us", $id);
+	        	if($this->verify_time($model->activities_time_start,$model->activities_time_end,$model->id)){
+	                
+	        	}else{
+	        		echo 2;
 	                return;
 	        	}
         	}
@@ -272,6 +280,28 @@ class About extends Admin_Controller
         }
     }
 
+
+    public function verify_time($a,$b,$id)
+    {
+    	//參數為空
+    	if(empty($a) || empty($b)){
+    		return false;
+    	}
+    	//同一時間上架限制為一筆
+        $sql="select * from about_us where id != ? and state=1 and ? BETWEEN activities_time_start and activities_time_end";
+        $query=$this->db->query($sql,array($id,$a));
+        $time_start=$query->row();
+
+        $sql="select * from about_us where id != ? and state=1 and ? BETWEEN activities_time_start and activities_time_end";
+        $query=$this->db->query($sql,array($id,$b));
+        $time_end=$query->row();
+
+        if(!empty($time_start) || !empty($time_end)){
+            return false;
+        }else{
+        	return true;
+        }
+    }
 
 
 }

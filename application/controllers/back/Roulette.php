@@ -149,7 +149,7 @@ class Roulette extends Admin_Controller
             }
             //上架限制為八筆
             if($state){
-            	$count=$this->Data_helper_model->get_model_list_in_fileds("roulette", ['state'], [1]);
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("roulette", ['state','id !='], [1,$id]);
 	        	if(count($count) >= 8){
 	                $errors[] = "上架限制為八筆";
 	        	}
