@@ -144,16 +144,19 @@ class Picture_button extends Admin_Controller
             }
             //同一時間上架限制為主圖一筆，按鈕五個
             if($state){
-            	//1圖片2按鈕
-            	$count=$this->Data_helper_model->get_model_list_in_fileds("picture_button", ['state' , 'type' ,'activities_time_start'], [1 , $type , $activities_time[0]]);
+            	
             	if($type == 1){
-		        	if(count($count) >= 1){
-		                $errors[] = "同一時間主圖最多上架一筆";
-		        	}
+		        	if($this->verify_time($activities_time[0],$activities_time[1],$id,$type)){
+
+		            }else{
+		            	$errors[] = "同一時間主圖最多上架一筆";
+		            }
             	}else{
-		        	if(count($count) >= 5){
-		                $errors[] = "同一時間按鈕最多上架五個";
-		        	}
+		        	if($this->verify_time($activities_time[0],$activities_time[1],$id,$type)){
+
+		            }else{
+		            	$errors[] = "同一時間按鈕最多上架五個";
+		            }
             	}
             	
             }
@@ -243,15 +246,14 @@ class Picture_button extends Admin_Controller
         				echo '小於當前時間不能上架';
 			            return;
         			}
-        			$count=$this->Data_helper_model->get_model_list_in_fileds("picture_button", [$field , 'type' , 'activities_time_start'], [$value, $model->type , $model->activities_time_start]);
         			//1圖片2按鈕
         			if($model->type == 1){
-        				if(count($count) >= 1){
+        				if(!$this->verify_time($model->activities_time_start,$model->activities_time_end,$model->id,$model->type)){
 			                echo '同一時間最多上架圖片一筆';
 			                return;
 			        	}
         			}else{
-        				if(count($count) >= 5){
+        				if(!$this->verify_time($model->activities_time_start,$model->activities_time_end,$model->id,$model->type)){
 			                echo '同一時間最多上架按鈕五筆';
 			                return;
 			        	}
@@ -299,6 +301,31 @@ class Picture_button extends Admin_Controller
         }
     }
 
+    public function verify_time($a,$b,$id,$type)
+    {
+    	//參數為空
+    	if(empty($a) || empty($b)){
+    		return false;
+    	}
+		//同一時間上架限制為主圖一筆，按鈕五個
+    	//得到有交集的情况：X < B AND A < Y
+        $sql="select * from picture_button where id != ? and state=1 and  type=?  and activities_time_start < ? and activities_time_end > ?";
+        $query=$this->db->query($sql,array($id,$type,$b,$a));
+        $res=$query->result();
+        if($type == 1){
+        	if(count($res) >=1){
+	            return false;
+	        }else{
+	        	return true;
+	        }
+        }else{
+        	if(count($res) >=5){
+	            return false;
+	        }else{
+	        	return true;
+	        }
+        }
+    }
 
 
 }

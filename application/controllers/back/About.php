@@ -288,15 +288,11 @@ class About extends Admin_Controller
     		return false;
     	}
     	//同一時間上架限制為一筆
-        $sql="select * from about_us where id != ? and state=1 and ? BETWEEN activities_time_start and activities_time_end";
-        $query=$this->db->query($sql,array($id,$a));
-        $time_start=$query->row();
-
-        $sql="select * from about_us where id != ? and state=1 and ? BETWEEN activities_time_start and activities_time_end";
-        $query=$this->db->query($sql,array($id,$b));
-        $time_end=$query->row();
-
-        if(!empty($time_start) || !empty($time_end)){
+        //得到有交集的情况：X < B AND A < Y
+        $sql="select * from about_us where id != ? and state=1  and activities_time_start < ? and activities_time_end > ?";
+        $query=$this->db->query($sql,array($id,$b,$a));
+        $row=$query->row();
+        if(!empty($row)){
             return false;
         }else{
         	return true;
