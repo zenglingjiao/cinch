@@ -84,4 +84,28 @@ class Front extends Public_Controller
         echo "完成";
     }
 
+    //獲取cinch主張
+    public function get_proposition()
+    {
+    	$data = $this->Data_helper_model->get_model_list_in_fileds_orderby('proposition', ['state'], [1], 'id', 'desc');
+        return return_app_json("200", "獲取成功", $data);
+    }
+    //獲取主力產品
+    public function get_major_product()
+    {
+    	$data = $this->Data_helper_model->get_model_list_in_fileds_orderby('major_product', ['state'], [1], 'id', 'desc');
+        return return_app_json("200", "獲取成功", $data);
+    }
+    //獲取宣傳影片
+    public function get_propaganda_film()
+    {
+    	$data = $this->Data_helper_model->get_model_list_in_fileds_orderby('propaganda_film', ['state'], [1], 'id', 'desc');
+        return return_app_json("200", "獲取成功", $data);
+    }
+    //獲取產品索取
+    public function get_products_for()
+    {
+    	$data = $this->Data_helper_model->get_model_in_id('products_for',1);
+        return return_app_json("200", "獲取成功", $data);
+    }
 }
