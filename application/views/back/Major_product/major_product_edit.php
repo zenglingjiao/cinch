@@ -189,7 +189,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-10 col-md-offset-2 text-right">
-                                            <button class="btn btn-lg btn-inverse" type="button" @click="model_edit">確認</button>
+                                            <button class="btn btn-lg btn-inverse" type="button" @click="is_pass">確認</button>
                                         </div>
                                     </div>
                                 </form>
@@ -348,6 +348,48 @@
                     }
                 }
                 //console.log(file);
+            },
+            is_pass:function(){
+            	if (!$('#addform').valid()) {
+                    validator.focusInvalid();
+                    return false;
+                }
+            	var bool=this;
+            	if (this.update_file) {
+		        	var img = new Image;
+		    		img.onload = function(){        
+		    		    console.log(img.height);
+		    		    console.log(img.width);
+		 	   			var width = img.width;
+		 	   			var height=img.height;
+		 	   			var filesize = img
+		 	   			if(width!=293 || height!=191){
+		 	   			    sweetAlert({
+						        title: '正確尺寸為：293＊191，確定要上傳？',
+						        text: null,
+						        type: "warning",
+						        showCancelButton: true,
+						        confirmButtonColor: "#33A0E8",
+						        confirmButtonText: "確定",
+						        cancelButtonText: "取消",
+						        cancelButtonClass: 'btn-white btn-md waves-effect',
+						        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
+						        closeOnConfirm: false,
+						        closeOnCancel: true
+						    }, function (isConfirm) {
+						        if (isConfirm) {
+						        	bool.model_edit();
+						        } else { }
+						    });
+		 	   			}else{
+		 	   				bool.model_edit();
+		 	   			}
+		    		};
+		 	   		img.οnerrοr=function(){
+		 	   	    	alert("error!");
+		 	   	    };
+		 	   	    img.src=this.update_file.src;
+		        }
             },
             model_edit:function () {
                 if (!$('#addform').valid()) {
