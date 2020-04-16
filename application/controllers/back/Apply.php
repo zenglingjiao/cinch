@@ -219,6 +219,7 @@ class Apply extends Admin_Controller
                     "type" => $type,
                     "name" => $name,
                     "no" => $no,
+                    "imgs" => $up_img_src,
                     "manifesto" => $manifesto,
                     "phone" => $phone,
                     "crew1_name" => $crew1_name,

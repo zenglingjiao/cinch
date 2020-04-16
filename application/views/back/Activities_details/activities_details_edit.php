@@ -206,7 +206,7 @@
                                                     <div class="form-group-z">
                                                         <div id="preimg">
                                                             <div class='imgContainer'>
-                                                                <a :download="x.name" :data-name="x.name" target="_blank" :href="x.src"><img style="width: 150px;height: 150px" title='分類圖' class="src_list" :src="x.src"  onerror=this.onerror=null;this.src="assets/images/no.jpg" alt='图片'/></a>
+                                                                <a :download="x.name" :data-name="x.name" target="_blank" :href="x.src"><img style="width: 150px;height: 150px" title='分類圖' class="src_list" :id="'img'+x_index" :src="x.src"  onerror=this.onerror=null;this.src="assets/images/no.jpg" alt='图片'/></a>
                                                             </div>
 					                                        <input type="text" class="form-control" v-model="awards_explain[x_index]" :name="'awards_explain'+x_index" />
                                                         </div>
@@ -239,7 +239,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-10 col-md-offset-2 text-right">
-                                            <button class="btn btn-lg btn-inverse" type="button" @click="model_edit">確認</button>
+                                            <button class="btn btn-lg btn-inverse" type="button" @click="is_pass(1)">確認</button>
                                         </div>
                                     </div>
                                 </form>
@@ -291,6 +291,12 @@
                 // has_upimg: {
                 //     required: true
                 // },
+                has_img_schedule: {
+                    required: true
+                },
+               has_img_scoring: {
+                    required: true
+                }, 
             },
             messages: {
                 class_type: {
@@ -302,6 +308,12 @@
                 has_upimg: {
                     required: "請選擇分類圖",
                 },
+                has_img_schedule: {
+                    required: "請選擇賽程圖",
+                },
+                has_img_scoring: {
+                    required: "請選擇計分圖",
+                },
 
             },
             errorPlacement: function (error, element) { //指定错误信息位置
@@ -309,6 +321,12 @@
                 if(eid == "has_upimg"){
 
                     console.log(eid);
+                    error.appendTo(element.parent().parent()); //将错误信息添加当前元素的父结点后面
+                }else if(eid == "has_img_schedule"){
+                	 console.log(eid);
+                    error.appendTo(element.parent().parent()); //将错误信息添加当前元素的父结点后面
+                }else if(eid == "has_img_scoring"){
+                	 console.log(eid);
                     error.appendTo(element.parent().parent()); //将错误信息添加当前元素的父结点后面
                 }
                 else {
@@ -424,8 +442,8 @@
                             type: "img"
                         };
                         console.log(this.class_name);
-                        this.model.imgs="1";
-                        $("#has_upimg").focus();
+                        this.model.img_scoring="1";
+                        $("#has_img_scoring").focus();
                     }
                 }
                 //console.log(file);
@@ -454,8 +472,8 @@
                             src: getObjectURL(file[0]),
                             type: "img"
                         };
-                        this.model.imgs="1";
-                        $("#has_upimg").focus();
+                        this.model.img_schedule="1";
+                        $("#has_img_schedule").focus();
                     }
                 }
                 //console.log(file);
@@ -499,6 +517,143 @@
                     }
                 }
                 //console.log(file);
+            },
+            is_pass:function(num){
+            	if (!$('#addform').valid()) {
+                    validator.focusInvalid();
+                    return false;
+                }
+                //递归，num=4跳出
+                if(num ==4 ){
+                	this.model_edit();
+                }
+                //this赋值给bool，不然在sweetalert里面会冲突
+            	var bool=this;
+                console.log(num);
+                switch(num) {
+				     case 1:
+				        var img = new Image;
+			    		img.onload = function(){        
+			    		    console.log(img.height);
+			    		    console.log(img.width);
+			 	   			var width = img.width;
+			 	   			var height=img.height;
+			 	   			var filesize = img
+			 	   			if(width!=1920 || height!=1080){
+			 	   			    sweetAlert({
+							        title: '賽程時間表正確尺寸為：1920＊1080，確定要上傳？',
+							        text: null,
+							        type: "warning",
+							        showCancelButton: true,
+							        confirmButtonColor: "#33A0E8",
+							        confirmButtonText: "確定",
+							        cancelButtonText: "取消",
+							        cancelButtonClass: 'btn-white btn-md waves-effect',
+							        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
+							        closeOnConfirm: false,
+							        closeOnCancel: true
+							    }, function (isConfirm) {
+							        if (isConfirm) {
+							        	num++;
+							        	bool.is_pass(num);
+							        } else { }
+							    });
+			 	   			}else{
+			 	   				console.log(2);
+			 	   				num++;
+							    bool.is_pass(num);
+			 	   			}
+			    		};
+			 	   		img.οnerrοr=function(){
+			 	   	    	alert("error!");
+			 	   	    };
+			 	   	    img.src=this.img_schedule.src;
+				        break;
+				     case 2:
+				        var img = new Image;
+			    		img.onload = function(){        
+			    		    console.log(img.height);
+			    		    console.log(img.width);
+			 	   			var width = img.width;
+			 	   			var height=img.height;
+			 	   			var filesize = img
+			 	   			if(width!=1920 || height!=1080){
+			 	   			    sweetAlert({
+							        title: '計分方式正確尺寸為：1920＊100，確定要上傳？',
+							        text: null,
+							        type: "warning",
+							        showCancelButton: true,
+							        confirmButtonColor: "#33A0E8",
+							        confirmButtonText: "確定",
+							        cancelButtonText: "取消",
+							        cancelButtonClass: 'btn-white btn-md waves-effect',
+							        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
+							        closeOnConfirm: false,
+							        closeOnCancel: true
+							    }, function (isConfirm) {
+							        if (isConfirm) {
+							        	num++;
+							        	bool.is_pass(num);
+							        } else { }
+							    });
+			 	   			}else{
+			 	   				console.log(2);
+			 	   				num++;
+							    bool.is_pass(num);
+			 	   			}
+			    		};
+			 	   		img.οnerrοr=function(){
+			 	   	    	alert("error!");
+			 	   	    };
+			 	   	    img.src=this.img_scoring.src;
+				        break;
+				    case 3:
+				    	var pass=1;
+				    	for(k in this.update_file){
+				    		//获取图片尺寸
+				    		var img = document.getElementById("img"+k);
+							this.dispose_img(img, function(dimensions){
+								if(dimensions.w != 227 || dimensions.h !=185){
+									pass=2;
+								}
+							});
+				    	}
+				    	console.log(pass);
+				    	if(pass==2){
+				    		sweetAlert({
+						        title: '活動獎項正確尺寸為：227＊185，確定要上傳？',
+						        text: null,
+						        type: "warning",
+						        showCancelButton: true,
+						        confirmButtonColor: "#33A0E8",
+						        confirmButtonText: "確定",
+						        cancelButtonText: "取消",
+						        cancelButtonClass: 'btn-white btn-md waves-effect',
+						        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
+						        closeOnConfirm: false,
+						        closeOnCancel: true
+						    }, function (isConfirm) {
+						        if (isConfirm) {
+						        	num++;
+						        	bool.is_pass(num);
+						        } else { }
+						    });
+				    	}else{
+				    		console.log('a');
+				    		num++;
+						    bool.is_pass(num);
+				    	}
+				        break;    
+				     default:
+				        console.log(3);
+				        break;
+				} 
+            },
+            dispose_img:function(oImg, callback){
+            	var nWidth, nHeight;
+			　　nWidth = oImg.naturalWidth;
+			　　nHeight = oImg.naturalHeight;
+			　　callback({w: nWidth, h:nHeight});
             },
             model_edit:function () {
                 if (!$('#addform').valid()) {

@@ -271,10 +271,10 @@ class Activities_details extends Admin_Controller
 //                if ($storage_titme == "") {
 //                    $errors[] = "存放時間不可為空";
 ////                }
-//                if (!empty($errors)) {
-//                    $error = implode(", ", $errors);
-//                    return_post_json("err", $error, "", null);
-//                }
+               if (!empty($errors)) {
+                   $error = implode(", ", $errors);
+                   return_post_json("err", $error, "", null);
+               }
 
 
                 $sql_data = [
