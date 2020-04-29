@@ -364,9 +364,9 @@
 		 	   			var width = img.width;
 		 	   			var height=img.height;
 		 	   			var filesize = img
-		 	   			if(width!=80 || height!=80){
+		 	   			if(width!=79 || height!=75){
 		 	   			    sweetAlert({
-						        title: '正確尺寸為：80＊80，確定要上傳？',
+						        title: '正確尺寸為：79＊75，確定要上傳？',
 						        text: null,
 						        type: "warning",
 						        showCancelButton: true,

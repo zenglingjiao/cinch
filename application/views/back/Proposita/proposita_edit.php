@@ -322,9 +322,9 @@
 		 	   			var width = img.width;
 		 	   			var height=img.height;
 		 	   			var filesize = img
-		 	   			if(width!=220 || height!=275){
+		 	   			if(width!=157 || height!=197){
 		 	   			    sweetAlert({
-						        title: '正確尺寸為：220＊275，確定要上傳？',
+						        title: '正確尺寸為：157＊197，確定要上傳？',
 						        text: null,
 						        type: "warning",
 						        showCancelButton: true,

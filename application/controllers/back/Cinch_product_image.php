@@ -63,10 +63,10 @@ class Cinch_product_image extends Admin_Controller
             //echo $this->db->last_query();
             exit;
         } else {
-            $data['title'] = "纖奇保證主圖列表";
+            $data['title'] = "纖奇產品主圖列表";
             $data['open_cinch_product'] = "open";
             $data['active_cinch_product_image'] = "active";
-            $data['h_title'] = "纖奇保證主圖管理";
+            $data['h_title'] = "纖奇產品主圖管理";
             $data['edit'] = base_url('back/Cinch_product_image/cinch_product_image_edit/');
             $data['api_list'] = base_url('back/Cinch_product_image/cinch_product_image_list');
             $data['api_delete'] = base_url('back/Cinch_product_image/cinch_product_image_delete');
@@ -85,10 +85,10 @@ class Cinch_product_image extends Admin_Controller
             $data['active_cinch_product_image'] = "active";
             $data['list'] = base_url('back/Cinch_product_image/cinch_product_image_list');
             $data['edit'] = base_url('back/Cinch_product_image/cinch_product_image_edit/');
-            $data['list_title'] = "纖奇保證主圖列表";
+            $data['list_title'] = "纖奇產品主圖列表";
             if (!empty($id)) {
                 $id = (int)$id;
-                $data['title'] = "纖奇保證主圖編輯";
+                $data['title'] = "纖奇產品主圖編輯";
                 $model = $this->Data_helper_model->get_model_in_id("cinch_product_image", $id);
                 if (isset($model)) {
                     $data['model'] = [
@@ -107,7 +107,7 @@ class Cinch_product_image extends Admin_Controller
                     return_get_msg("信息錯誤", base_url('back/Cinch_product_image/cinch_product_image_list'));
                 }
             } else {
-                $data['title'] = "新增纖奇保證主圖";
+                $data['title'] = "新增纖奇產品主圖";
                 $this->load->view("back/Cinch_product_image/cinch_product_image_edit", $data);
             }
         }

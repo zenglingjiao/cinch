@@ -577,9 +577,9 @@
 			 	   			var width = img.width;
 			 	   			var height=img.height;
 			 	   			var filesize = img
-			 	   			if(width!=1920 || height!=1080){
+			 	   			if(width!=1440 || height!=216){
 			 	   			    sweetAlert({
-							        title: '計分方式正確尺寸為：1920＊100，確定要上傳？',
+							        title: '計分方式正確尺寸為：1440＊216，確定要上傳？',
 							        text: null,
 							        type: "warning",
 							        showCancelButton: true,

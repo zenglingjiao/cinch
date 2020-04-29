@@ -309,9 +309,9 @@
 		 	   			var width = img.width;
 		 	   			var height=img.height;
 		 	   			var filesize = img
-		 	   			if(width!=1920 || height!=600){
+		 	   			if(width!=1440 || height!=600){
 		 	   			    sweetAlert({
-						        title: '正確尺寸為：1920＊600，確定要上傳？',
+						        title: '正確尺寸為：1440＊600，確定要上傳？',
 						        text: null,
 						        type: "warning",
 						        showCancelButton: true,
