@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="132px" height="132px" viewBox="0 0 132 132" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 63.1 (92452) - https://sketch.com -->
+    <title>我想要cinch食譜</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="4.54747351e-13" width="132" height="131.599994"></rect>
+        <linearGradient x1="-73.9937031%" y1="-172.972566%" x2="62.208877%" y2="90.5284654%" id="linearGradient-3">
+            <stop stop-color="#A3A3A3" offset="0%"></stop>
+            <stop stop-color="#FFFFFF" stop-opacity="0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-4">
+            <stop stop-color="#A6D16E" offset="0%"></stop>
+            <stop stop-color="#649B1C" offset="100%"></stop>
+        </linearGradient>
+        <path d="M11.6164891,28 C9.0837751,50.9089884 14.3548978,59.9254647 27.4298571,55.0494288 C40.5048164,50.1733929 35.2336937,41.1569167 11.6164891,28 Z" id="path-5"></path>
+        <filter x="-32.0%" y="-30.0%" width="189.7%" height="174.1%" filterUnits="objectBoundingBox" id="filter-6">
+            <feOffset dx="3" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.980392157   0 0 0 0 0.556862745   0 0 0 0 0.0156862745  0 0 0 0.813565341 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="100%" y1="37.5%" x2="50%" y2="55.1986706%" id="linearGradient-7">
+            <stop stop-color="#FFCE73" offset="0%"></stop>
+            <stop stop-color="#FFBD52" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-8">
+            <stop stop-color="#A6D16E" offset="0%"></stop>
+            <stop stop-color="#649B1C" offset="100%"></stop>
+        </linearGradient>
+        <path d="M66.7692308,11 C69.7879486,11 72.3554085,12.9465552 73.3024916,15.6617782 C76.9494632,15.8586646 79.8461538,18.901016 79.8461538,22.625 C79.8461538,24.0631323 79.4141534,25.3996088 78.6737622,26.5098926 C82.7521257,26.7011312 86,30.0934301 86,34.25 C86,38.5302068 82.5560365,42 78.3076923,42 C76.3270989,42 74.5213343,41.245855 73.1578605,40.0070331 C68.7997085,42.0339329 66.4392187,44.491076 66.0766121,47.3784349 C65.6117707,51.0798684 65.100158,57.1465693 64.5417742,65.5785376 L56.708362,64.3672976 C59.8841862,55.031011 60.9604856,48.8848282 59.9372603,45.9287491 C59.2335308,43.8956874 58.1731507,41.3400215 56.75612,38.2617512 C55.8174801,38.672002 54.7813216,38.9 53.6923077,38.9 C49.4439635,38.9 46,35.4302068 46,31.15 C46,27.7580109 48.1629073,24.8749847 51.1749974,23.824499 C50.8147634,22.9820908 50.6153846,22.0520037 50.6153846,21.075 C50.6153846,17.2228139 53.7149517,14.1 57.5384615,14.1 C58.6359066,14.1 59.6737107,14.3572689 60.5956991,14.8152109 C61.739398,12.551121 64.074521,11 66.7692308,11 Z M60.5685394,34.6257568 C60.2445939,35.2755205 59.832564,35.8730038 59.3482376,36.402319 L61.4720982,42.3667259 C61.9712374,39.9787898 62.3486341,37.9382142 62.6042884,36.2449989 C61.844415,35.8136418 61.1583179,35.2653959 60.5685394,34.6257568 Z M70.881129,36.2768808 C69.685463,36.9489032 68.3094135,37.3368108 66.8444925,37.3496698 L66.8440311,40.6682741 C68.5183468,39.4161263 70.0131663,38.3628163 71.3284897,37.5083441 C71.1450208,37.1149354 70.9954758,36.7031905 70.881129,36.2768808 Z" id="path-9"></path>
+        <filter x="-25.0%" y="-20.2%" width="170.0%" height="151.3%" filterUnits="objectBoundingBox" id="filter-10">
+            <feOffset dx="4" dy="3" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="4" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.980392157   0 0 0 0 0.556862745   0 0 0 0 0.0156862745  0 0 0 0.813565341 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-11">
+            <stop stop-color="#FFFBF3" offset="0%"></stop>
+            <stop stop-color="#FFEAC5" offset="100%"></stop>
+        </linearGradient>
+        <polygon id="path-12" points="20 40 34 40 34 78 27 71.7249603 20 78"></polygon>
+        <filter x="-53.6%" y="-22.4%" width="250.0%" height="155.3%" filterUnits="objectBoundingBox" id="filter-13">
+            <feOffset dx="3" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.980392157   0 0 0 0 0.556862745   0 0 0 0 0.0156862745  0 0 0 0.813565341 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <linearGradient x1="50%" y1="0%" x2="50%" y2="100%" id="linearGradient-14">
+            <stop stop-color="#A6D16E" offset="0%"></stop>
+            <stop stop-color="#649B1C" offset="100%"></stop>
+        </linearGradient>
+        <circle id="path-15" cx="96.5" cy="6.5" r="6.5"></circle>
+        <filter x="-57.7%" y="-65.4%" width="261.5%" height="261.5%" filterUnits="objectBoundingBox" id="filter-16">
+            <feOffset dx="3" dy="2" in="SourceAlpha" result="shadowOffsetOuter1"></feOffset>
+            <feGaussianBlur stdDeviation="3" in="shadowOffsetOuter1" result="shadowBlurOuter1"></feGaussianBlur>
+            <feColorMatrix values="0 0 0 0 0.980392157   0 0 0 0 0.556862745   0 0 0 0 0.0156862745  0 0 0 0.344842657 0" type="matrix" in="shadowBlurOuter1"></feColorMatrix>
+        </filter>
+        <filter x="-88.7%" y="-282.8%" width="277.4%" height="665.7%" filterUnits="objectBoundingBox" id="filter-17">
+            <feGaussianBlur stdDeviation="28.559997" in="SourceGraphic"></feGaussianBlur>
+        </filter>
+    </defs>
+    <g id="我想要cinch食譜" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Cinch交朋友principle-flatten">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <use id="蒙版" fill="#D8D8D8" opacity="0" xlink:href="#path-1"></use>
+            <g mask="url(#mask-2)">
+                <g id="编组-3">
+                    <circle id="椭圆形" fill="url(#linearGradient-3)" cx="65.799997" cy="65.799997" r="65.799997"></circle>
+                    <g id="编组" transform="translate(10.000000, 14.000000)">
+                        <g id="路径">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-6)" xlink:href="#path-5"></use>
+                            <use fill="url(#linearGradient-4)" fill-rule="evenodd" xlink:href="#path-5"></use>
+                        </g>
+                        <path d="M108,40 C108,69.8233765 83.8233765,94 54,94 C24.1766235,94 0,69.8233765 0,40 L0,40 Z" id="形状结合" fill="url(#linearGradient-7)"></path>
+                        <g id="形状结合" transform="translate(66.000000, 38.289269) rotate(15.000000) translate(-66.000000, -38.289269) ">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-10)" xlink:href="#path-9"></use>
+                            <use fill="url(#linearGradient-8)" fill-rule="evenodd" xlink:href="#path-9"></use>
+                        </g>
+                        <g id="矩形">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-13)" xlink:href="#path-12"></use>
+                            <use fill="url(#linearGradient-11)" fill-rule="evenodd" xlink:href="#path-12"></use>
+                        </g>
+                        <text id="纖奇食譜" font-family="PingFangSC-Regular, PingFang SC" font-size="6" font-weight="normal" line-spacing="7" fill="#FDB03E">
+                            <tspan x="24.068" y="48">纖</tspan>
+                            <tspan x="24.068" y="55">奇</tspan>
+                            <tspan x="24.068" y="62">食</tspan>
+                            <tspan x="24.068" y="69">譜</tspan>
+                        </text>
+                        <g id="椭圆形">
+                            <use fill="black" fill-opacity="1" filter="url(#filter-16)" xlink:href="#path-15"></use>
+                            <use fill="url(#linearGradient-14)" fill-rule="evenodd" xlink:href="#path-15"></use>
+                        </g>
+                    </g>
+                </g>
+                <ellipse id="椭圆形" fill="#FF893F" opacity="0.204241071" filter="url(#filter-17)" cx="65.5499969" cy="108.722058" rx="48.3071155" ry="15.1459256"></ellipse>
+            </g>
+        </g>
+    </g>
+</svg>
