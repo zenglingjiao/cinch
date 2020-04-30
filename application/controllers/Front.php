@@ -112,7 +112,7 @@ class Front extends Public_Controller
     //獲取纖奇保證主圖
     public function get_pledge_image()
     {
-        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('pledge_image', ['state'], [1], 'id', 'desc');
+        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('pledge_image', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
         return return_app_json("200", "獲取成功", $data);
     }
     //獲取見證者
@@ -124,19 +124,40 @@ class Front extends Public_Controller
     //獲取纖奇產品
     public function get_cinch_product()
     {
-        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('cinch_product', ['state'], [1], 'id', 'desc');
-        return return_app_json("200", "獲取成功", $data);
+
+        $offset   = mb_strlen(trim(isset($_POST['offset']) ?: "")) == 0 ? 0 : (int) trim($_POST['offset']);
+        $limit    = mb_strlen(trim(isset($_POST['limit']) ?: "")) == 0 ? 6 : (int) trim($_POST['limit']);
+        $classify = mb_strlen(trim(isset($_POST['classify']) ?: "")) == 0 ? "" : trim($_POST['classify']);
+        if (empty($classify)) {
+            return return_app_json("104", "参数错误", []);
+        }
+
+        $this->db->from('cinch_product');
+        $this->db->where('state', 1);
+        $this->db->where('classify', $classify);
+        $this->db->order_by('id', 'desc');
+        //把查询条件克隆
+        $db_count = clone($this->db);
+        $total = $db_count->count_all_results();
+
+        $this->db->limit($limit);
+        $this->db->offset($offset * $limit);
+
+        $query = $this->db->get();
+        $data  = $query->result();
+        
+        return return_app_json("200", "獲取成功", ['total'=>$total,'rows'=>$data]);
     }
-    //獲取纖奇保證主圖
+    //獲取纖奇产品主圖
     public function get_cinch_product_image()
     {
-        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('cinch_product_image', ['state'], [1], 'id', 'desc');
+        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('cinch_product_image', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
         return return_app_json("200", "獲取成功", $data);
     }
     //獲取認識我們主圖
     public function get_about_us()
     {
-        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('about_us', ['state'], [1], 'id', 'desc');
+        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('about_us', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
         return return_app_json("200", "獲取成功", $data);
     }
     //新增客戶索取
@@ -159,5 +180,11 @@ class Front extends Public_Controller
         } else {
             return_app_json("104", "送出失敗", []);
         }
+    }
+    //獲取主页主圖
+    public function get_master_image()
+    {
+        $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('master_image', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
+        return return_app_json("200", "獲取成功", $data);
     }
 }

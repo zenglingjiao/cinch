@@ -238,7 +238,7 @@
               if(value==1){
                     return 'cleanse清';
               }else if(value == 2){
-                    return 'nourish調';
+                    return 'nourish潤';
               }else if(value == 3){
                     return 'energize活';
               }else if(value == 4){

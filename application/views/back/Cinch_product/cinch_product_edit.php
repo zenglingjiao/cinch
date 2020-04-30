@@ -82,7 +82,7 @@
                                             <select class="form-control" name="classify" id="classify" placeholder="請選擇" v-model="model.classify">
                                                 <option value="">請選擇</option>
                                                 <option value="1">cleanse清</option>
-                                                <option value="2">nourish調</option>
+                                                <option value="2">nourish潤</option>
                                                 <option value="3">energize活</option>
                                                 <option value="4">推薦組合</option>
                                             </select>
