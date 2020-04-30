@@ -113,6 +113,9 @@ class Front extends Public_Controller
     public function get_pledge_image()
     {
         $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('pledge_image', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
+        if(empty($data)){
+        	$data=$this->Data_helper_model->get_model_list_in_fileds_orderby('pledge_image', ['state'], [1], 'id', 'desc');
+        }
         return return_app_json("200", "獲取成功", $data);
     }
     //獲取見證者
@@ -152,12 +155,18 @@ class Front extends Public_Controller
     public function get_cinch_product_image()
     {
         $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('cinch_product_image', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
+        if(empty($data)){
+        	$data=$this->Data_helper_model->get_model_list_in_fileds_orderby('cinch_product_image', ['state'], [1], 'id', 'desc');
+        }
         return return_app_json("200", "獲取成功", $data);
     }
     //獲取認識我們主圖
     public function get_about_us()
     {
         $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('about_us', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
+        if(empty($data)){
+        	$data=$this->Data_helper_model->get_model_list_in_fileds_orderby('about_us', ['state'], [1], 'id', 'desc');
+        }
         return return_app_json("200", "獲取成功", $data);
     }
     //新增客戶索取
@@ -185,6 +194,9 @@ class Front extends Public_Controller
     public function get_master_image()
     {
         $data = $this->Data_helper_model->get_model_list_in_fileds_orderby('master_image', ['state', 'activities_time_start <', 'activities_time_end >'], [1, date('Y-m-d H:i:s'), date('Y-m-d H:i:s')], 'id', 'desc');
+        if(empty($data)){
+        	$data=$this->Data_helper_model->get_model_list_in_fileds_orderby('master_image', ['state'], [1], 'id', 'desc');
+        }
         return return_app_json("200", "獲取成功", $data);
     }
 }
