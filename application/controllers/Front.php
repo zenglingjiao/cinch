@@ -138,7 +138,7 @@ class Front extends Public_Controller
         $this->db->from('cinch_product');
         $this->db->where('state', 1);
         $this->db->where('classify', $classify);
-        $this->db->order_by('id', 'desc');
+        $this->db->order_by('sort', 'asc');
         //把查询条件克隆
         $db_count = clone($this->db);
         $total = $db_count->count_all_results();
