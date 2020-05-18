@@ -130,11 +130,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">賽程時間表</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-7">
                                             <div class="btn btn_en btn-success" onclick="document.getElementById('upload1').click();"><i class="fa fa-image"></i>瀏覽
                                                 <input type="file" data-input="false" @change="tirgger_file_img_schedule($event,'up_img')" id="upload1" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_schedule" name="has_img_schedule" id="has_img_schedule" style="opacity: 0;position: absolute;" />
                                             </div>
+                                            <span style="color: red;" v-if="size1">尺寸限制：1920＊1080</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_schedule&&img_schedule.name&&img_schedule.name.length>0">
@@ -143,7 +144,7 @@
                                             <div class="sort_img_list">
                                                 <div class="sort_img">
                                                     <div class="form-group-t">
-                                                        <button type="button" class="btn btn-warning" @click="img_schedule={};model.img_schedule='';">刪除</button>
+                                                        <button type="button" class="btn btn-warning" @click="img_schedule={};model.img_schedule='';size1=0;">刪除</button>
                                                     </div>
                                                     <div class="form-group-z">
                                                         <div id="preimg">
@@ -159,11 +160,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">計分方式</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-7">
                                             <div class="btn btn_en btn-success" onclick="document.getElementById('upload').click();"><i class="fa fa-image"></i>瀏覽
                                                 <input type="file" data-input="false" @change="tirgger_file_img_scoring($event,'up_img')" id="upload" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_scoring" name="has_img_scoring" id="has_img_scoring" style="opacity: 0;position: absolute;" />
                                             </div>
+                                            <span style="color: red;" v-if="size2">尺寸限制：1440＊216</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_scoring&&img_scoring.name&&img_scoring.name.length>0">
@@ -172,7 +174,7 @@
                                             <div class="sort_img_list">
                                                 <div class="sort_img">
                                                     <div class="form-group-t">
-                                                        <button type="button" class="btn btn-warning" @click="img_scoring={};model.img_scoring='';">刪除</button>
+                                                        <button type="button" class="btn btn-warning" @click="img_scoring={};model.img_scoring='';size2=0;">刪除</button>
                                                     </div>
                                                     <div class="form-group-z">
                                                         <div id="preimg">
@@ -188,11 +190,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">獎項</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-7">
                                             <div class="btn btn_en btn-success" onclick="document.getElementById('upload2').click();"><i class="fa fa-image"></i>瀏覽
                                                 <input type="file" name="upimg" data-input="false"  @change="tirgger_file($event,'up_img')" id="upload2" accept="image/*" data-badge="false" style="display: none">
                                                 <input type="text" :value="update_file" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
                                             </div>
+                                            <span style="color: red;" v-if="size3">尺寸限制：227＊185</span>
                                         </div>
                                     </div>
                                     <div  class="form-group picss" v-show="update_file&&update_file.length>0" >
@@ -239,7 +242,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-10 col-md-offset-2 text-right">
-                                            <button class="btn btn-lg btn-inverse" type="button" @click="is_pass(1)">確認</button>
+                                            <button class="btn btn-lg btn-inverse" type="button" @click="model_edit">確認</button>
                                         </div>
                                     </div>
                                 </form>
@@ -365,6 +368,9 @@
             awards_explain:[],
             img_scoring: {},
             img_schedule: {},
+            size1:0,//初始為0，尺寸不對就為1
+            size2:0,//初始為0，尺寸不對就為1
+            size3:0,//初始為0，尺寸不對就為1
             api_model_edit:"<?php echo isset($api_edit)?$api_edit:""?>",
         },
         mounted: function () {
@@ -381,12 +387,15 @@
                     for (let k in this.model.awards_imgs) {
                         this.update_file.push ({name: '設備圖', file: null, src: this.model.awards_imgs[k], type: 'img'});
                     }
+                    this.is_pass(3);
                 }
                 if(this.model.img_scoring){
                     this.img_scoring = {name: '設備圖', file: null, src: this.model.img_scoring, type: 'img'};
+                    this.is_pass(2);
                 }
                 if(this.model.img_schedule){
                     this.img_schedule = {name: '設備圖', file: null, src: this.model.img_schedule, type: 'img'};
+                    this.is_pass(1);
                 }
                 if(this.model.awards_explain){
                 	// console.log(this.model.awards_explain);
@@ -443,6 +452,7 @@
                         };
                         console.log(this.class_name);
                         this.model.img_scoring="1";
+                        this.is_pass(2);
                         $("#has_img_scoring").focus();
                     }
                 }
@@ -473,6 +483,7 @@
                             type: "img"
                         };
                         this.model.img_schedule="1";
+                        this.is_pass(1);
                         $("#has_img_schedule").focus();
                     }
                 }
@@ -513,22 +524,20 @@
                         }
 
                         this.model.pic="1";
+                        this.is_pass(3);
                         $("#has_upimg").focus();
                     }
                 }
                 //console.log(file);
             },
             is_pass:function(num){
-            	if (!$('#addform').valid()) {
-                    validator.focusInvalid();
-                    return false;
-                }
+                //this赋值给this_，不然在sweetalert里面会冲突
+				let this_=this;
                 //递归，num=4跳出
                 if(num ==4 ){
-                	this.model_edit();
+                	return;
+                	// this.model_edit();
                 }
-                //this赋值给bool，不然在sweetalert里面会冲突
-            	var bool=this;
                 console.log(num);
                 switch(num) {
 				     case 1:
@@ -540,28 +549,9 @@
 			 	   			var height=img.height;
 			 	   			var filesize = img
 			 	   			if(width!=1920 || height!=1080){
-			 	   			    sweetAlert({
-							        title: '賽程時間表正確尺寸為：1920＊1080，確定要上傳？',
-							        text: null,
-							        type: "warning",
-							        showCancelButton: true,
-							        confirmButtonColor: "#33A0E8",
-							        confirmButtonText: "確定",
-							        cancelButtonText: "取消",
-							        cancelButtonClass: 'btn-white btn-md waves-effect',
-							        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
-							        closeOnConfirm: false,
-							        closeOnCancel: true
-							    }, function (isConfirm) {
-							        if (isConfirm) {
-							        	num++;
-							        	bool.is_pass(num);
-							        } else { }
-							    });
+                				this_.size1=1;	
 			 	   			}else{
-			 	   				console.log(2);
-			 	   				num++;
-							    bool.is_pass(num);
+                				this_.size1=0;	
 			 	   			}
 			    		};
 			 	   		img.οnerrοr=function(){
@@ -578,28 +568,9 @@
 			 	   			var height=img.height;
 			 	   			var filesize = img
 			 	   			if(width!=1440 || height!=216){
-			 	   			    sweetAlert({
-							        title: '計分方式正確尺寸為：1440＊216，確定要上傳？',
-							        text: null,
-							        type: "warning",
-							        showCancelButton: true,
-							        confirmButtonColor: "#33A0E8",
-							        confirmButtonText: "確定",
-							        cancelButtonText: "取消",
-							        cancelButtonClass: 'btn-white btn-md waves-effect',
-							        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
-							        closeOnConfirm: false,
-							        closeOnCancel: true
-							    }, function (isConfirm) {
-							        if (isConfirm) {
-							        	num++;
-							        	bool.is_pass(num);
-							        } else { }
-							    });
+			 	   			    this_.size2=1;	
 			 	   			}else{
-			 	   				console.log(2);
-			 	   				num++;
-							    bool.is_pass(num);
+			 	   				this_.size2=0;	
 			 	   			}
 			    		};
 			 	   		img.οnerrοr=function(){
@@ -611,7 +582,7 @@
 				    	var pass=1;
 				    	for(k in this.update_file){
 				    		//获取图片尺寸
-				    		var img = document.getElementById("img"+k);
+				    		var img = $("#img"+k);
 							this.dispose_img(img, function(dimensions){
 								if(dimensions.w != 227 || dimensions.h !=185){
 									pass=2;
@@ -620,28 +591,9 @@
 				    	}
 				    	console.log(pass);
 				    	if(pass==2){
-				    		sweetAlert({
-						        title: '活動獎項正確尺寸為：227＊185，確定要上傳？',
-						        text: null,
-						        type: "warning",
-						        showCancelButton: true,
-						        confirmButtonColor: "#33A0E8",
-						        confirmButtonText: "確定",
-						        cancelButtonText: "取消",
-						        cancelButtonClass: 'btn-white btn-md waves-effect',
-						        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
-						        closeOnConfirm: false,
-						        closeOnCancel: true
-						    }, function (isConfirm) {
-						        if (isConfirm) {
-						        	num++;
-						        	bool.is_pass(num);
-						        } else { }
-						    });
+				    		this_.size3=1;	
 				    	}else{
-				    		console.log('a');
-				    		num++;
-						    bool.is_pass(num);
+				    		this_.size3=0;	
 				    	}
 				        break;    
 				     default:

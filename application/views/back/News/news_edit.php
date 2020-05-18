@@ -96,11 +96,12 @@
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">圖片</label>
-                                        <div class="col-md-3">
+                                        <div class="col-md-7">
                                             <div class="btn btn_en btn-success" onclick="document.getElementById('upload').click();"><i class="fa fa-image"></i>瀏覽
                                                 <input type="file" data-input="false" @change="tirgger_file($event,'up_img')" id="upload" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.imgs" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
                                             </div>
+                                            <span style="color: red;" v-if="size2">尺寸限制：1198＊495</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="update_file&&update_file.name&&update_file.name.length>0">
@@ -109,7 +110,7 @@
                                             <div class="sort_img_list">
                                                 <div class="sort_img">
                                                     <div class="form-group-t">
-                                                        <button type="button" class="btn btn-warning" @click="update_file={};model.imgs='';">刪除</button>
+                                                        <button type="button" class="btn btn-warning" @click="update_file={};model.imgs='';size2=0;">刪除</button>
                                                     </div>
                                                     <div class="form-group-z">
                                                         <div id="preimg">
@@ -141,7 +142,7 @@
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-10 col-md-offset-2 text-right">
-                                            <button class="btn btn-lg btn-inverse" type="button" @click="is_pass">確認</button>
+                                            <button class="btn btn-lg btn-inverse" type="button" @click="model_edit">確認</button>
                                         </div>
                                     </div>
                                 </form>
@@ -256,6 +257,7 @@
         data: {
             model: {},
             update_file: {},
+            size2:0,//初始為0，尺寸不對就為1
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
         mounted: function () {
@@ -269,6 +271,7 @@
                 }
                 if(this.model.imgs){
                     this.update_file = {name: '設備圖', file: null, src: this.model.imgs, type: 'img'};
+                        this.is_pass();
                 }
 
             }
@@ -296,17 +299,14 @@
                             type: "img"
                         };
                         this.model.imgs="1";
+                        this.is_pass();
                         $("#has_upimg").focus();
                     }
                 }
                 //console.log(file);
             },
             is_pass:function(){
-            	if (!$('#addform').valid()) {
-                    validator.focusInvalid();
-                    return false;
-                }
-            	var bool=this;
+				let this_=this;
             	if (this.update_file) {
 		        	var img = new Image;
 		    		img.onload = function(){        
@@ -316,25 +316,9 @@
 		 	   			var height=img.height;
 		 	   			var filesize = img
 		 	   			if(width!=1198 || height!=495){
-		 	   			    sweetAlert({
-						        title: '正確尺寸為：1198＊495，確定要上傳？',
-						        text: null,
-						        type: "warning",
-						        showCancelButton: true,
-						        confirmButtonColor: "#33A0E8",
-						        confirmButtonText: "確定",
-						        cancelButtonText: "取消",
-						        cancelButtonClass: 'btn-white btn-md waves-effect',
-						        confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
-						        closeOnConfirm: false,
-						        closeOnCancel: true
-						    }, function (isConfirm) {
-						        if (isConfirm) {
-						        	bool.model_edit();
-						        } else { }
-						    });
+                			this_.size2=1;	
 		 	   			}else{
-		 	   				bool.model_edit();
+                			this_.size2=0;	
 		 	   			}
 		    		};
 		 	   		img.οnerrοr=function(){
