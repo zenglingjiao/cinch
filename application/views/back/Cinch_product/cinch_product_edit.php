@@ -143,7 +143,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file($event,'up_img')" id="upload" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.imgs" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" v-if="size2">尺寸限制：260＊260</span>
+                                            <span style="color: red;" >尺寸限制：260＊260</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="update_file&&update_file.name&&update_file.name.length>0">
@@ -152,7 +152,7 @@
                                             <div class="sort_img_list">
                                                 <div class="sort_img">
                                                     <div class="form-group-t">
-                                                        <button type="button" class="btn btn-warning" @click="update_file={};model.imgs='';size2=0;">刪除</button>
+                                                        <button type="button" class="btn btn-warning" @click="update_file={};model.imgs='';">刪除</button>
                                                     </div>
                                                     <div class="form-group-z">
                                                         <div id="preimg">
@@ -317,7 +317,6 @@
         data: {
             model: {},
             update_file: {},
-            size2:0,//初始為0，尺寸不對就為1
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
         mounted: function () {
@@ -331,7 +330,6 @@
                 }
                 if(this.model.imgs){
                     this.update_file = {name: '設備圖', file: null, src: this.model.imgs, type: 'img'};
-                    this.is_pass();
                 }
 
             }
@@ -359,33 +357,10 @@
                             type: "img"
                         };
                         this.model.imgs="1";
-                        this.is_pass();
                         $("#has_upimg").focus();
                     }
                 }
                 //console.log(file);
-            },
-            is_pass:function(){
-				let this_=this;
-            	if (this.update_file) {
-		        	var img = new Image;
-		    		img.onload = function(){        
-		    		    console.log(img.height);
-		    		    console.log(img.width);
-		 	   			var width = img.width;
-		 	   			var height=img.height;
-		 	   			var filesize = img
-		 	   			if(width!=260 || height!=260){
-                			this_.size2=1;	
-		 	   			}else{
-                			this_.size2=0;	
-		 	   			}
-		    		};
-		 	   		img.οnerrοr=function(){
-		 	   	    	alert("error!");
-		 	   	    };
-		 	   	    img.src=this.update_file.src;
-		        }
             },
             model_edit:function () {
                 if (!$('#addform').valid()) {

@@ -135,7 +135,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file_img_schedule($event,'up_img')" id="upload1" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_schedule" name="has_img_schedule" id="has_img_schedule" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" v-if="size1">尺寸限制：1920＊1080</span>
+                                            <span style="color: red;" >尺寸限制：1920＊1080</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_schedule&&img_schedule.name&&img_schedule.name.length>0">
@@ -144,7 +144,7 @@
                                             <div class="sort_img_list">
                                                 <div class="sort_img">
                                                     <div class="form-group-t">
-                                                        <button type="button" class="btn btn-warning" @click="img_schedule={};model.img_schedule='';size1=0;">刪除</button>
+                                                        <button type="button" class="btn btn-warning" @click="img_schedule={};model.img_schedule='';">刪除</button>
                                                     </div>
                                                     <div class="form-group-z">
                                                         <div id="preimg">
@@ -165,7 +165,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file_img_scoring($event,'up_img')" id="upload" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_scoring" name="has_img_scoring" id="has_img_scoring" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" v-if="size2">尺寸限制：1440＊216</span>
+                                            <span style="color: red;" >尺寸限制：1440＊216</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_scoring&&img_scoring.name&&img_scoring.name.length>0">
@@ -174,7 +174,7 @@
                                             <div class="sort_img_list">
                                                 <div class="sort_img">
                                                     <div class="form-group-t">
-                                                        <button type="button" class="btn btn-warning" @click="img_scoring={};model.img_scoring='';size2=0;">刪除</button>
+                                                        <button type="button" class="btn btn-warning" @click="img_scoring={};model.img_scoring='';">刪除</button>
                                                     </div>
                                                     <div class="form-group-z">
                                                         <div id="preimg">
@@ -195,7 +195,7 @@
                                                 <input type="file" name="upimg" data-input="false"  @change="tirgger_file($event,'up_img')" id="upload2" accept="image/*" data-badge="false" style="display: none">
                                                 <input type="text" :value="update_file" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" v-if="size3">尺寸限制：227＊185</span>
+                                            <span style="color: red;" >尺寸限制：227＊185</span>
                                         </div>
                                     </div>
                                     <div  class="form-group picss" v-show="update_file&&update_file.length>0" >
@@ -368,9 +368,6 @@
             awards_explain:[],
             img_scoring: {},
             img_schedule: {},
-            size1:0,//初始為0，尺寸不對就為1
-            size2:0,//初始為0，尺寸不對就為1
-            size3:0,//初始為0，尺寸不對就為1
             api_model_edit:"<?php echo isset($api_edit)?$api_edit:""?>",
         },
         mounted: function () {
@@ -387,15 +384,12 @@
                     for (let k in this.model.awards_imgs) {
                         this.update_file.push ({name: '設備圖', file: null, src: this.model.awards_imgs[k], type: 'img'});
                     }
-                    this.is_pass(3);
                 }
                 if(this.model.img_scoring){
                     this.img_scoring = {name: '設備圖', file: null, src: this.model.img_scoring, type: 'img'};
-                    this.is_pass(2);
                 }
                 if(this.model.img_schedule){
                     this.img_schedule = {name: '設備圖', file: null, src: this.model.img_schedule, type: 'img'};
-                    this.is_pass(1);
                 }
                 if(this.model.awards_explain){
                 	// console.log(this.model.awards_explain);
@@ -452,7 +446,6 @@
                         };
                         console.log(this.class_name);
                         this.model.img_scoring="1";
-                        this.is_pass(2);
                         $("#has_img_scoring").focus();
                     }
                 }
@@ -483,7 +476,6 @@
                             type: "img"
                         };
                         this.model.img_schedule="1";
-                        this.is_pass(1);
                         $("#has_img_schedule").focus();
                     }
                 }
@@ -524,83 +516,82 @@
                         }
 
                         this.model.pic="1";
-                        this.is_pass(3);
                         $("#has_upimg").focus();
                     }
                 }
                 //console.log(file);
             },
-            is_pass:function(num){
-                //this赋值给this_，不然在sweetalert里面会冲突
-				let this_=this;
-                //递归，num=4跳出
-                if(num ==4 ){
-                	return;
-                	// this.model_edit();
-                }
-                console.log(num);
-                switch(num) {
-				     case 1:
-				        var img = new Image;
-			    		img.onload = function(){        
-			    		    console.log(img.height);
-			    		    console.log(img.width);
-			 	   			var width = img.width;
-			 	   			var height=img.height;
-			 	   			var filesize = img
-			 	   			if(width!=1920 || height!=1080){
-                				this_.size1=1;	
-			 	   			}else{
-                				this_.size1=0;	
-			 	   			}
-			    		};
-			 	   		img.οnerrοr=function(){
-			 	   	    	alert("error!");
-			 	   	    };
-			 	   	    img.src=this.img_schedule.src;
-				        break;
-				     case 2:
-				        var img = new Image;
-			    		img.onload = function(){        
-			    		    console.log(img.height);
-			    		    console.log(img.width);
-			 	   			var width = img.width;
-			 	   			var height=img.height;
-			 	   			var filesize = img
-			 	   			if(width!=1440 || height!=216){
-			 	   			    this_.size2=1;	
-			 	   			}else{
-			 	   				this_.size2=0;	
-			 	   			}
-			    		};
-			 	   		img.οnerrοr=function(){
-			 	   	    	alert("error!");
-			 	   	    };
-			 	   	    img.src=this.img_scoring.src;
-				        break;
-				    case 3:
-				    	var pass=1;
-				    	for(k in this.update_file){
-				    		//获取图片尺寸
-				    		var img = $("#img"+k);
-							this.dispose_img(img, function(dimensions){
-								if(dimensions.w != 227 || dimensions.h !=185){
-									pass=2;
-								}
-							});
-				    	}
-				    	console.log(pass);
-				    	if(pass==2){
-				    		this_.size3=1;	
-				    	}else{
-				    		this_.size3=0;	
-				    	}
-				        break;    
-				     default:
-				        console.log(3);
-				        break;
-				} 
-            },
+    //         is_pass:function(num){
+    //             //this赋值给this_，不然在sweetalert里面会冲突
+				// let this_=this;
+    //             //递归，num=4跳出
+    //             if(num ==4 ){
+    //             	return;
+    //             	// this.model_edit();
+    //             }
+    //             console.log(num);
+    //             switch(num) {
+				//      case 1:
+				//         var img = new Image;
+			 //    		img.onload = function(){        
+			 //    		    console.log(img.height);
+			 //    		    console.log(img.width);
+			 // 	   			var width = img.width;
+			 // 	   			var height=img.height;
+			 // 	   			var filesize = img
+			 // 	   			if(width!=1920 || height!=1080){
+    //             				this_.size1=1;	
+			 // 	   			}else{
+    //             				this_.size1=0;	
+			 // 	   			}
+			 //    		};
+			 // 	   		img.οnerrοr=function(){
+			 // 	   	    	alert("error!");
+			 // 	   	    };
+			 // 	   	    img.src=this.img_schedule.src;
+				//         break;
+				//      case 2:
+				//         var img = new Image;
+			 //    		img.onload = function(){        
+			 //    		    console.log(img.height);
+			 //    		    console.log(img.width);
+			 // 	   			var width = img.width;
+			 // 	   			var height=img.height;
+			 // 	   			var filesize = img
+			 // 	   			if(width!=1440 || height!=216){
+			 // 	   			    this_.size2=1;	
+			 // 	   			}else{
+			 // 	   				this_.size2=0;	
+			 // 	   			}
+			 //    		};
+			 // 	   		img.οnerrοr=function(){
+			 // 	   	    	alert("error!");
+			 // 	   	    };
+			 // 	   	    img.src=this.img_scoring.src;
+				//         break;
+				//     case 3:
+				//     	var pass=1;
+				//     	for(k in this.update_file){
+				//     		//获取图片尺寸
+				//     		var img = $("#img"+k);
+				// 			this.dispose_img(img, function(dimensions){
+				// 				if(dimensions.w != 227 || dimensions.h !=185){
+				// 					pass=2;
+				// 				}
+				// 			});
+				//     	}
+				//     	console.log(pass);
+				//     	if(pass==2){
+				//     		this_.size3=1;	
+				//     	}else{
+				//     		this_.size3=0;	
+				//     	}
+				//         break;    
+				//      default:
+				//         console.log(3);
+				//         break;
+				// } 
+    //         },
             dispose_img:function(oImg, callback){
             	var nWidth, nHeight;
 			　　nWidth = oImg.naturalWidth;
