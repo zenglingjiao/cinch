@@ -121,7 +121,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內容</label>
                                         <div class="col-md-7">
-                                            <textarea class="form-control" id="contact1-msg" v-model="model.content" name="content" rows="7" placeholder=""></textarea>
+                                            <textarea @input="textarea_num()" maxlength="40" class="form-control" id="contact1-msg" v-model="model.content" name="content" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder}}/40</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -189,9 +190,10 @@
                 // title: {
                 //     required: true
                 // },
-                // content: {
-                //     required: true
-                // },
+                content: {
+                    required: true,
+                    maxlength:40,
+                },
                 // integral: {
                 //     required: true
                 // },
@@ -206,9 +208,10 @@
                 // title: {
                 //     required: "請輸入標題",
                 // },
-                // content: {
-                //     required: "請輸入內容",
-                // },
+                content: {
+                    required: "請輸入內容",
+                    maxlength: "最多只能40個",
+                },
                 // integral: {
                 //     required: "請輸入積分",
                 // },
@@ -257,7 +260,9 @@
         data: {
             model: {
             	type:1,
+            	content:'',
             },
+            remainder:40,
             update_file: {},
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
@@ -275,8 +280,16 @@
                 }
 
             }
+			this.textarea_num();
+
         },
         methods: {
+        	textarea_num:function () {
+				var textarea_num=this.model.content.length;
+				this.remainder = 40-textarea_num;
+				console.log(textarea_num);
+				console.log(this.remainder);
+			},
             tirgger_file: function (event) {
                 var file = event.target.files; // (利用console.log输出看file文件对象)
                 if (file) {

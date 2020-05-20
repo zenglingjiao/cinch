@@ -79,49 +79,52 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">產品名</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.product_name" name="product_name" />
+                                            <input maxlength="10" type="text" class="form-control" v-model="model.product_name" name="product_name" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">副標題</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.subhead" name="subhead" />
+                                            <input maxlength="20" type="text" class="form-control" v-model="model.subhead" name="subhead" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">小標1</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.crosshead1" name="crosshead1" />
+                                            <input maxlength="20" type="text" class="form-control" v-model="model.crosshead1" name="crosshead1" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內文1</label>
                                         <div class="col-md-7">
-                                            <textarea class="form-control" id="contact1-msg" v-model="model.content1" name="content1" rows="7" placeholder=""></textarea>
+                                            <textarea @input="textarea_num('content1')" maxlength="40" class="form-control" id="contact1-msg" v-model="model.content1" name="content1" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder1}}/40</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">小標2</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.crosshead2" name="crosshead2" />
+                                            <input maxlength="20" type="text" class="form-control" v-model="model.crosshead2" name="crosshead2" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內文2</label>
                                         <div class="col-md-7">
-                                            <textarea class="form-control" id="contact1-msg" v-model="model.content2" name="content2" rows="7" placeholder=""></textarea>
+                                            <textarea @input="textarea_num('content2')" maxlength="40" class="form-control" id="contact1-msg" v-model="model.content2" name="content2" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder2}}/40</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">小標3</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.crosshead3" name="crosshead3" />
+                                            <input maxlength="20" type="text" class="form-control" v-model="model.crosshead3" name="crosshead3" />
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內文3</label>
                                         <div class="col-md-7">
-                                            <textarea class="form-control" id="contact1-msg" v-model="model.content3" name="content3" rows="7" placeholder=""></textarea>
+                                            <textarea @input="textarea_num('content3')" maxlength="40" class="form-control" id="contact1-msg" v-model="model.content3" name="content3" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder3}}/40</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -305,6 +308,9 @@
         data: {
             model: {},
             update_file: {},
+            remainder1:40,
+            remainder2:40,
+            remainder3:40,
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
         mounted: function () {
@@ -319,10 +325,30 @@
                 if(this.model.imgs){
                     this.update_file = {name: '設備圖', file: null, src: this.model.imgs, type: 'img'};
                 }
-
             }
+			this.textarea_num('all');
         },
         methods: {
+        	textarea_num:function (event) {
+        		switch(event){
+        			case 'all':
+						this.remainder1 = 40-this.model.content1.length;
+						this.remainder2 = 40-this.model.content2.length;
+						this.remainder3 = 40-this.model.content3.length;
+        				break;
+        			case 'content1':
+						this.remainder1 = 40-this.model.content1.length;
+        				break;
+        			case 'content2':
+						this.remainder2 = 40-this.model.content2.length;
+        				break;
+        			case 'content3':
+						this.remainder3 = 40-this.model.content3.length;
+        				break;
+        			default:
+        				break;
+        		}
+			},
             tirgger_file: function (event) {
                 var file = event.target.files; // (利用console.log输出看file文件对象)
                 if (file) {

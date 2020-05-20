@@ -86,7 +86,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內容</label>
                                         <div class="col-md-7">
-                                            <textarea class="form-control" id="contact1-msg" v-model="model.content" name="content" rows="7" placeholder=""></textarea>
+                                            <textarea @input="textarea_num()" maxlength="200" class="form-control" id="content" v-model="model.content" name="content" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder}}/200</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -197,7 +198,8 @@
                     required: true
                 },
                 content: {
-                    required: true
+                    required: true,
+                    maxlength:200,
                 },
                 integral: {
                     required: true
@@ -215,6 +217,7 @@
                 },
                 content: {
                     required: "請輸入內容",
+                    maxlength: "最多只能200個",
                 },
                 integral: {
                     required: "請輸入積分",
@@ -262,8 +265,11 @@
     var vue_obj = new Vue({
         el: '#main-container',
         data: {
-            model: {},
+            model: {
+            	content:'',
+            },
             update_file: {},
+            remainder:200,
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
         mounted: function () {
@@ -278,10 +284,17 @@
                 if(this.model.imgs){
                     this.update_file = {name: '設備圖', file: null, src: this.model.imgs, type: 'img'};
                 }
-
             }
+			this.textarea_num();
+
         },
         methods: {
+        	textarea_num:function () {
+				var textarea_num=this.model.content.length;
+				this.remainder = 200-textarea_num;
+				console.log(textarea_num);
+				console.log(this.remainder);
+			},
             tirgger_file: function (event) {
                 var file = event.target.files; // (利用console.log输出看file文件对象)
                 if (file) {
