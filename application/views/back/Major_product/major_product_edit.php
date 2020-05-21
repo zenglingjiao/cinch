@@ -79,19 +79,22 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">產品名</label>
                                         <div class="col-md-7">
-                                            <input maxlength="10" type="text" class="form-control" v-model="model.product_name" name="product_name" />
+                                            <input @input="textarea_num('product_name')" maxlength="10" type="text" class="form-control" v-model="model.product_name" name="product_name" />
+                                            <div class="text-right">{{product_name}}/10</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">副標題</label>
                                         <div class="col-md-7">
-                                            <input maxlength="20" type="text" class="form-control" v-model="model.subhead" name="subhead" />
+                                            <input @input="textarea_num('subhead')" maxlength="20" type="text" class="form-control" v-model="model.subhead" name="subhead" />
+                                            <div class="text-right">{{subhead}}/20</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">小標1</label>
                                         <div class="col-md-7">
-                                            <input maxlength="20" type="text" class="form-control" v-model="model.crosshead1" name="crosshead1" />
+                                            <input @input="textarea_num('crosshead1')" maxlength="20" type="text" class="form-control" v-model="model.crosshead1" name="crosshead1" />
+                                            <div class="text-right">{{crosshead1}}/20</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -104,7 +107,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">小標2</label>
                                         <div class="col-md-7">
-                                            <input maxlength="20" type="text" class="form-control" v-model="model.crosshead2" name="crosshead2" />
+                                            <input @input="textarea_num('crosshead2')" maxlength="20" type="text" class="form-control" v-model="model.crosshead2" name="crosshead2" />
+                                            <div class="text-right">{{crosshead2}}/20</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -117,7 +121,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">小標3</label>
                                         <div class="col-md-7">
-                                            <input maxlength="20" type="text" class="form-control" v-model="model.crosshead3" name="crosshead3" />
+                                            <input @input="textarea_num('crosshead3')" maxlength="20" type="text" class="form-control" v-model="model.crosshead3" name="crosshead3" />
+                                            <div class="text-right">{{crosshead2}}/20</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -311,6 +316,11 @@
             remainder1:40,
             remainder2:40,
             remainder3:40,
+            product_name:10,
+            subhead:20,
+            crosshead1:20,
+            crosshead2:20,
+            crosshead3:20,
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
         mounted: function () {
@@ -335,6 +345,11 @@
 						this.remainder1 = 40-this.model.content1.length;
 						this.remainder2 = 40-this.model.content2.length;
 						this.remainder3 = 40-this.model.content3.length;
+						this.crosshead1 = 20-this.model.crosshead1.length;
+						this.crosshead2 = 20-this.model.crosshead2.length;
+						this.crosshead3 = 20-this.model.crosshead3.length;
+						this.product_name = 10-this.model.product_name.length;
+						this.subhead = 20-this.model.subhead.length;
         				break;
         			case 'content1':
 						this.remainder1 = 40-this.model.content1.length;
@@ -344,6 +359,21 @@
         				break;
         			case 'content3':
 						this.remainder3 = 40-this.model.content3.length;
+        				break;
+        			case 'crosshead1':
+						this.crosshead1 = 20-this.model.crosshead1.length;
+        				break;
+        			case 'crosshead2':
+						this.crosshead2 = 20-this.model.crosshead2.length;
+        				break;
+        			case 'crosshead3':
+						this.crosshead3 = 20-this.model.crosshead3.length;
+        				break;
+        			case 'product_name':
+						this.product_name = 10-this.model.product_name.length;
+        				break;
+        			case 'subhead':
+						this.subhead = 20-this.model.subhead.length;
         				break;
         			default:
         				break;
