@@ -117,7 +117,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file($event,'up_img')" id="upload" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.imgs" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" >尺寸限制：79＊75</span>
+                                            <span style="color: red;" >尺寸限制：80＊75</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="update_file&&update_file.name&&update_file.name.length>0">

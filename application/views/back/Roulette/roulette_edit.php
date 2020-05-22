@@ -79,7 +79,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">贈品名</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.name" name="name" />
+                                            <input @input="textarea_num()" maxlength="8" type="text" class="form-control" v-model="model.name" name="name" />
+                                            <div class="text-right">{{name}}/8</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -227,6 +228,7 @@
         data: {
             model: {},
             update_file: {},
+            name:8,
             api_model_edit:"<?php echo isset($edit)?$edit:""?>",
         },
         mounted: function () {
@@ -243,8 +245,14 @@
                 }
 
             }
+			this.textarea_num();
+
         },
         methods: {
+        	textarea_num:function () {
+				var textarea_num=this.model.name.length;
+				this.name = 8-textarea_num;
+			},
             tirgger_file: function (event) {
                 var file = event.target.files; // (利用console.log输出看file文件对象)
                 if (file) {

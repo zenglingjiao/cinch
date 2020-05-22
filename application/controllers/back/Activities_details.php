@@ -105,7 +105,7 @@ class Activities_details extends Admin_Controller
                         "title" => $model->title,
                         "qualification" => $model->qualification,
                         "announcements_activities" => $model->announcements_activities,
-                        "announcements_apply" => $model->announcements_apply,
+                        // "announcements_apply" => $model->announcements_apply,
                         "entry" => $model->entry,
                         "competition_period" => $model->competition_period,
                         "apply_period" => $model->apply_period,
@@ -149,7 +149,7 @@ class Activities_details extends Admin_Controller
             $qualification = mb_strlen(trim(isset($api_obj['qualification']) ?: "")) == 0 ? "" : trim($api_obj['qualification']);
             $announcements_activities = mb_strlen(trim(isset($api_obj['announcements_activities']) ?: "")) == 0 ? "" : trim($api_obj['announcements_activities']);
             $state = mb_strlen(trim(isset($api_obj['state']) ?: "")) == 0 ? "" : trim($api_obj['state']);
-            $announcements_apply = mb_strlen(trim(isset($api_obj['announcements_apply']) ?: "")) == 0 ? "" : trim($api_obj['announcements_apply']);
+            // $announcements_apply = mb_strlen(trim(isset($api_obj['announcements_apply']) ?: "")) == 0 ? "" : trim($api_obj['announcements_apply']);
             $entry = mb_strlen(trim(isset($api_obj['entry']) ?: "")) == 0 ? "" : trim($api_obj['entry']);
 //            if ($name == "") {
 //                $errors[] = "分類名稱不可為空";
@@ -213,7 +213,7 @@ class Activities_details extends Admin_Controller
                     "title" => $title,
                     "qualification" => $qualification,
                     "announcements_activities" => $announcements_activities,
-                    "announcements_apply" => $announcements_apply,
+                    // "announcements_apply" => $announcements_apply,
                     "entry" => $entry,
                     "competition_period" => $competition_period,
                     "apply_period" => $apply_period,
@@ -282,7 +282,7 @@ class Activities_details extends Admin_Controller
                     "title" => $title,
                     "qualification" => $qualification,
                     "announcements_activities" => $announcements_activities,
-                    "announcements_apply" => $announcements_apply,
+                    // "announcements_apply" => $announcements_apply,
                     "entry" => $entry,
                     "competition_period" => $competition_period,
                     "apply_period" => $apply_period,

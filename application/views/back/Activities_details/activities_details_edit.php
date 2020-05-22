@@ -95,7 +95,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">報名資格</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.qualification" name="qualification" />
+                                            <input @input="textarea_num('qualification')" maxlength="100" type="text" class="form-control" v-model="model.qualification" name="qualification" />
+                                            <div class="text-right">{{qualification}}/100</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -104,16 +105,17 @@
                                             <input type="text" class="form-control" v-model="model.announcements_activities" name="announcements_activities" />
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-2 control-label">報名注意事項</label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" v-model="model.announcements_apply" name="announcements_apply" />
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">參賽辦法</label>
                                         <div class="col-md-7">
-                                            <input type="text" class="form-control" v-model="model.entry" name="entry" />
+                                            <input @input="textarea_num('entry')" maxlength="100" type="text" class="form-control" v-model="model.entry" name="entry" />
+                                            <div class="text-right">{{entry}}/100</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -135,7 +137,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file_img_schedule($event,'up_img')" id="upload1" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_schedule" name="has_img_schedule" id="has_img_schedule" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" >尺寸限制：1920＊1080</span>
+                                            <span style="color: red;" >尺寸限制：1140*1024</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_schedule&&img_schedule.name&&img_schedule.name.length>0">
@@ -165,7 +167,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file_img_scoring($event,'up_img')" id="upload" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_scoring" name="has_img_scoring" id="has_img_scoring" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" >尺寸限制：1440＊216</span>
+                                            <span style="color: red;" >尺寸限制：1440*217</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_scoring&&img_scoring.name&&img_scoring.name.length>0">
@@ -195,7 +197,7 @@
                                                 <input type="file" name="upimg" data-input="false"  @change="tirgger_file($event,'up_img')" id="upload2" accept="image/*" data-badge="false" style="display: none">
                                                 <input type="text" :value="update_file" name="has_upimg" id="has_upimg" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" >尺寸限制：227＊185</span>
+                                            <span style="color: red;" >尺寸限制：227*186</span>
                                         </div>
                                     </div>
                                     <div  class="form-group picss" v-show="update_file&&update_file.length>0" >
@@ -368,6 +370,8 @@
             awards_explain:[],
             img_scoring: {},
             img_schedule: {},
+            qualification:100,
+            entry:100,
             api_model_edit:"<?php echo isset($api_edit)?$api_edit:""?>",
         },
         mounted: function () {
@@ -397,8 +401,25 @@
                 }
                 
             }
+            
+			this.qualification = 100-this.model.qualification.length;
+			this.entry = 100-this.model.entry.length;
+
         },
         methods: {
+        	textarea_num:function (event) {
+        		switch(event){
+        			case 'qualification':
+						this.qualification = 100-this.model.qualification.length;
+        				break;
+        			case 'entry':
+						this.entry = 100-this.model.entry.length;
+        				break;
+        			default :
+        				break;
+        		}
+				
+			},
             delimg:function(event){
                 if(this.model.awards_imgs.length>0){
                     this.model.awards_imgs.splice(event,1);
