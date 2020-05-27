@@ -156,7 +156,7 @@ class Major_product extends Admin_Controller
             // }
             //狀態不為0時
             if($state){
-            	$count=$this->Data_helper_model->get_model_list_in_fileds("major_product", ['state'], [1]);
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("major_product", ['state','id !='], [1,$id]);
 	        	if(count($count) >= 3){
 	                $errors[] = "最多上架三筆";
 	        	}

@@ -77,7 +77,7 @@
                                         <select name="classify" id="classify" class="form-control">
                                             <option value=""></option>
                                             <option value="1">cleanse清</option>
-                                            <option value="2">nourish調</option>
+                                            <option value="2">nourish潤</option>
                                             <option value="3">energize活</option>
                                             <option value="4">推薦組合</option>
                                         </select>
