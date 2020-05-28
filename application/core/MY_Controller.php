@@ -95,6 +95,12 @@ class App_Controller extends MY_Controller
             || strtolower($this->router->method) == "get_class"//獲取分類
             || strtolower($this->router->method) == "test4"
             || strtolower($this->router->method) == "get_terms"
+            || strtolower($this->router->method) == "get_news_list"
+            || strtolower($this->router->method) == "get_activities_details_list"
+            || strtolower($this->router->method) == "get_hot_film_list"
+            || strtolower($this->router->method) == "get_prediction_win_image"
+            || strtolower($this->router->method) == "get_apply"
+            || strtolower($this->router->method) == "add_apply"
             || strtolower($this->router->method) == "password_change") {
             //放行
         } else if (mb_strlen(trim(isset($token) ?: "")) == 0) {

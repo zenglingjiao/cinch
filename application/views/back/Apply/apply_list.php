@@ -225,7 +225,7 @@
             valign: 'center',
             sortable: true,
             formatter:function (value, row, index) {
-                if(value==1){
+                if(value==2){
                     return '個人';
                 }else{
                     return '團體';

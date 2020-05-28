@@ -81,13 +81,13 @@
                                         <div class="col-md-7">
                                             <select class="form-control" name="type" id="type" placeholder="請選擇" v-model="model.type">
                                                 <option value="">請選擇</option>
-                                                <option value="1">個人</option>
-                                                <option value="2">團體</option>
+                                                <option value="1">團體</option>
+                                                <option value="2">個人</option>
                                             </select>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label"><template v-if="model.type==2">隊長</template>姓名</label>
+                                        <label class="col-md-2 control-label"><template v-if="model.type==1">隊長</template>姓名</label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" v-model="model.name" name="name" />
                                         </div>
@@ -98,7 +98,7 @@
                                             <input type="text" class="form-control" v-model="model.no" name="no" />
                                         </div>
                                     </div>
-                                    <div class="form-group" v-if="model.type==2">
+                                    <div class="form-group" v-if="model.type==1">
                                         <label class="col-md-2 control-label">手機</label>
                                         <div class="col-md-7">
                                             <input type="text" class="form-control" v-model="model.phone" name="phone" />
@@ -140,7 +140,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <template v-if="model.type==2">
+                                    <template v-if="model.type==1">
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">組員1姓名</label>
                                         <div class="col-md-3">
