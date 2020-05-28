@@ -121,7 +121,7 @@
                         <a class="nav-submenu" data-toggle="nav-submenu" href="javascript:void(0);"><i class="si si-user"></i><span class="sidebar-mini-hide">挑戰賽</span></a>
                         <ul>
                             <li>
-                                <a class="<?= isset($active_picture_button)?$active_picture_button:""?>" href="<?php echo base_url('back/Picture_button/picture_button_list')?>">挑戰賽主圖與按鈕管理</a>
+                                <a class="<?= isset($active_picture_button)?$active_picture_button:""?>" href="<?php echo base_url('back/Picture_button/picture_button_list')?>">挑戰賽主圖管理</a>
                             </li>
                              <li>
                                 <a class="<?= isset($active_news)?$active_news:""?>" href="<?php echo base_url('back/News/news_list')?>">最新消息管理</a>

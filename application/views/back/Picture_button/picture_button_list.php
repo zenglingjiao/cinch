@@ -247,20 +247,22 @@
             formatter:function (value, row, index) {
                 return  row.activities_time_start+'~'+row.activities_time_end;
             }
-        },  {
-            field: 'type',
-            title: '類型',
-            align: 'center',
-            valign: 'center',
-            sortable: true,
-            formatter:function (value, row, index) {
-                if(value==1){
-                    return '圖片';
-                }else{
-                    return '按鈕';
-                }
-            }
-        },{
+        }, 
+        //  {
+        //     field: 'type',
+        //     title: '類型',
+        //     align: 'center',
+        //     valign: 'center',
+        //     sortable: true,
+        //     formatter:function (value, row, index) {
+        //         if(value==1){
+        //             return '圖片';
+        //         }else{
+        //             return '按鈕';
+        //         }
+        //     }
+        // },
+        {
             field: 'state',
             title: '關閉／開啟',
             align: 'center',

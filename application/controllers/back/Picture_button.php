@@ -58,16 +58,17 @@ class Picture_button extends Admin_Controller
             }
             //$this->db->join("aauth_user_to_group", 'aauth_user_to_group.user_id = aauth_users.id and aauth_user_to_group.group_id !=3', 'left');
             //$this->db->join("aauth_groups", 'aauth_user_to_group.group_id = aauth_groups.id and aauth_groups.id !=3', 'left');
+            $this->db->where('type', 1);
 
             $data = $this->Data_helper_model->get_tabel_list($this->db, $_POST, "picture_button");
             echo json_encode($data);
             //echo $this->db->last_query();
             exit;
         } else {
-            $data['title'] = "挑戰賽主圖與按鈕列表";
+            $data['title'] = "挑戰賽主圖列表";
             $data['open_challenge'] = "open";
             $data['active_picture_button'] = "active";
-            $data['h_title'] = "挑戰賽主圖與按鈕管理";
+            $data['h_title'] = "挑戰賽主圖管理";
             $data['edit'] = base_url('back/Picture_button/picture_button_edit/');
             $data['api_list'] = base_url('back/Picture_button/picture_button_list');
             $data['api_delete'] = base_url('back/Picture_button/picture_button_delete');
@@ -86,10 +87,10 @@ class Picture_button extends Admin_Controller
             $data['active_picture_button'] = "active";
             $data['list'] = base_url('back/Picture_button/picture_button_list');
             $data['edit'] = base_url('back/Picture_button/picture_button_edit/');
-            $data['list_title'] = "挑戰賽主圖與按鈕列表";
+            $data['list_title'] = "挑戰賽主圖列表";
             if (!empty($id)) {
                 $id = (int)$id;
-                $data['title'] = "挑戰賽主圖與按鈕編輯";
+                $data['title'] = "挑戰賽主圖編輯";
                 $model = $this->Data_helper_model->get_model_in_id("picture_button", $id);
                 if (isset($model)) {
                     $data['model'] = [
@@ -109,7 +110,7 @@ class Picture_button extends Admin_Controller
                     return_get_msg("信息錯誤", base_url('back/Picture_button/picture_button_list'));
                 }
             } else {
-                $data['title'] = "新增挑戰賽主圖與按鈕";
+                $data['title'] = "新增挑戰賽主圖";
                 $this->load->view("back/Picture_button/picture_button_edit", $data);
             }
         }
@@ -125,7 +126,8 @@ class Picture_button extends Admin_Controller
             $id = mb_strlen(trim(isset($api_obj['id']) ?: "")) == 0 ? "" : trim($api_obj['id']);
             $title = mb_strlen(trim(isset($api_obj['title']) ?: "")) == 0 ? "" : trim($api_obj['title']);
             $content = mb_strlen(trim(isset($api_obj['content']) ?: "")) == 0 ? "" : trim($api_obj['content']);
-            $type = mb_strlen(trim(isset($api_obj['type']) ?: "")) == 0 ? "" : trim($api_obj['type']);
+            // $type = mb_strlen(trim(isset($api_obj['type']) ?: "")) == 0 ? "" : trim($api_obj['type']);
+            $type = 1;
             $state = mb_strlen(trim(isset($api_obj['state']) ?: "")) == 0 ? "" : trim($api_obj['state']);
             $activities_time = mb_strlen(trim(isset($_POST['activities_time']) ?: "")) == 0 ? "" : trim($_POST['activities_time']);
 
