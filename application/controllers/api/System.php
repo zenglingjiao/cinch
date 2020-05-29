@@ -149,8 +149,8 @@ class System extends App_Controller
         $data = $this->Data_helper_model->get_tabel_list($this->db, $_POST, "activities_details");
         // var_dump($this->db->last_query());exit();
         foreach ($data['rows'] as $key => $value) {
-        	$data['rows'][$key]['awards_imgs'] = json_decode($value['awards_imgs']);
-        	$data['rows'][$key]['awards_explain'] = json_decode($value['awards_explain']);
+            $data['rows'][$key]['awards_imgs']    = json_decode($value['awards_imgs']);
+            $data['rows'][$key]['awards_explain'] = json_decode($value['awards_explain']);
         }
         if ($data) {
             return return_app_json('200', '獲取成功', $data);
@@ -186,6 +186,7 @@ class System extends App_Controller
     {
         $type       = mb_strlen(trim(isset($_POST['type']) ?: "")) == 0 ? "" : trim($_POST['type']);
         $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+        $team_name  = mb_strlen(trim(isset($_POST['team_name']) ?: "")) == 0 ? "" : trim($_POST['team_name']);
         $no         = mb_strlen(trim(isset($_POST['no']) ?: "")) == 0 ? "" : trim($_POST['no']);
         $manifesto  = mb_strlen(trim(isset($_POST['manifesto']) ?: "")) == 0 ? "" : trim($_POST['manifesto']);
         $imgs       = mb_strlen(trim(isset($_POST['imgs']) ?: "")) == 0 ? "" : trim($_POST['imgs']);
@@ -202,6 +203,7 @@ class System extends App_Controller
         $sql_data = [
             "type"       => $type,
             "name"       => $name,
+            "team_name"  => $team_name,
             "no"         => $no,
             "manifesto"  => $manifesto,
             "imgs"       => $imgs,
@@ -258,7 +260,7 @@ class System extends App_Controller
             $this->db->like('apply.name', $name);
             $this->db->group_end();
         }
- 		
+
         $data = $this->Data_helper_model->get_tabel_list($this->db, $_POST, "apply");
         // var_dump($this->db->last_query());exit();
         if ($data) {
@@ -266,6 +268,59 @@ class System extends App_Controller
         } else {
             return return_app_json("102", "獲取失敗", []);
         }
+    }
+
+    //投票
+    public function vote()
+    {
+        $email = mb_strlen(trim(isset($_POST['email']) ?: "")) == 0 ? "" : trim($_POST['email']);
+        $phone = mb_strlen(trim(isset($_POST['phone']) ?: "")) == 0 ? "" : trim($_POST['phone']);
+
+        $query = $this->db->where('email', $email)
+            ->where('email', $email)
+            ->like('created_at', date('Y-m-d'))
+            ->get('vote');
+        $res = $query->row();
+        if ($res) {
+            return return_app_json('104', '今日已投过', null);
+        }
+        $sql_data = [
+            "email"      => $email,
+            "phone"      => $phone,
+            "created_at" => date("Y-m-d H:i:s", time()),
+        ];
+        if ($this->db->insert("vote", $sql_data)) {
+            return return_app_json('200', '投票成功', null);
+        } else {
+            return return_app_json('104', '投票失败', null);
+        }
+    }
+
+    //抽奖
+    public function lottery()
+    {
+        $data = $this->Data_helper_model->get_model_list_in_fileds('roulette', [], []);
+       	$sum=0;//總數
+        foreach ($data as $key => $value) {
+        	$sum+=$value->odds;
+        }
+        $start=0;//區間開始
+        $i=1;//區間結束
+        foreach ($data as $key => $value) {
+        	$start +=$value->odds;
+        	$data[$key]->qj=[$i,$start];
+        	$i = $start+1;
+        }
+        $num = rand(1,	$sum) ; //隨機數
+        $j;//中獎獎品
+        foreach ($data as $key => $value) {
+        	if($num >=$value->qj[0] && $num <=$value->qj[1]){
+        		$j=$value;
+        	}
+        }
+        // var_dump($data);exit();
+        return return_app_json('200', '投票成功', $j);
+        var_dump($data);exit();
     }
 
 }

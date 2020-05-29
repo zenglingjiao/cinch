@@ -93,6 +93,7 @@ class Apply extends Admin_Controller
                         "id" => $model->id,
                         "type" => $model->type,
                         "name" => $model->name,
+                        "team_name" => $model->team_name,
                         "no" => $model->no,
                         "manifesto" => $model->manifesto,
                         "imgs" => $model->imgs,
@@ -129,6 +130,7 @@ class Apply extends Admin_Controller
 
             $id = mb_strlen(trim(isset($api_obj['id']) ?: "")) == 0 ? "" : trim($api_obj['id']);
             $type = mb_strlen(trim(isset($api_obj['type']) ?: "")) == 0 ? "" : trim($api_obj['type']);
+            $team_name = mb_strlen(trim(isset($api_obj['team_name']) ?: "")) == 0 ? "" : trim($api_obj['team_name']);
             $name = mb_strlen(trim(isset($api_obj['name']) ?: "")) == 0 ? "" : trim($api_obj['name']);
             $no = mb_strlen(trim(isset($api_obj['no']) ?: "")) == 0 ? "" : trim($api_obj['no']);
             $manifesto = mb_strlen(trim(isset($api_obj['manifesto']) ?: "")) == 0 ? "" : trim($api_obj['manifesto']);
@@ -177,6 +179,7 @@ class Apply extends Admin_Controller
                 $sql_data = [
                     "type" => $type,
                     "name" => $name,
+                    "team_name" => $team_name,
                     "no" => $no,
                     "manifesto" => $manifesto,
                     "phone" => $phone,
@@ -218,6 +221,7 @@ class Apply extends Admin_Controller
                 $sql_data = [
                     "type" => $type,
                     "name" => $name,
+                    "team_name" => $team_name,
                     "no" => $no,
                     "imgs" => $up_img_src,
                     "manifesto" => $manifesto,

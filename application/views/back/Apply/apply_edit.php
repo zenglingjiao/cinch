@@ -86,6 +86,12 @@
                                             </select>
                                         </div>
                                     </div>
+                                    <div class="form-group" v-if="model.type==1">
+                                        <label class="col-md-2 control-label">隊名</label>
+                                        <div class="col-md-7">
+                                            <input type="text" class="form-control" v-model="model.team_name" name="team_name" />
+                                        </div>
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-md-2 control-label"><template v-if="model.type==1">隊長</template>姓名</label>
                                         <div class="col-md-7">
