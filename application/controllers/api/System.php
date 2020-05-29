@@ -275,13 +275,17 @@ class System extends App_Controller
     {
         $email = mb_strlen(trim(isset($_POST['email']) ?: "")) == 0 ? "" : trim($_POST['email']);
         $phone = mb_strlen(trim(isset($_POST['phone']) ?: "")) == 0 ? "" : trim($_POST['phone']);
+        $apply_id = mb_strlen(trim(isset($_POST['apply_id']) ?: "")) == 0 ? "" : trim($_POST['apply_id']);
 
+        $this->load->driver('lock', array('adapter' => 'file', 'key_prefix' => ''));
+        $this->lock->lock('vote');
         $query = $this->db->where('email', $email)
-            ->where('email', $email)
+            ->where('phone', $phone)
             ->like('created_at', date('Y-m-d'))
             ->get('vote');
         $res = $query->row();
         if ($res) {
+            $this->lock->unlock('vote');
             return return_app_json('104', '今日已投过', null);
         }
         $sql_data = [
@@ -290,8 +294,15 @@ class System extends App_Controller
             "created_at" => date("Y-m-d H:i:s", time()),
         ];
         if ($this->db->insert("vote", $sql_data)) {
+            //票数加1
+            $this->db->where('id',$apply_id)
+                    ->set('poll','poll+1',false)
+                    ->update('apply');
+
+            $this->lock->unlock('vote');
             return return_app_json('200', '投票成功', null);
         } else {
+            $this->lock->unlock('vote');
             return return_app_json('104', '投票失败', null);
         }
     }
@@ -299,6 +310,8 @@ class System extends App_Controller
     //抽奖
     public function lottery()
     {
+        $this->load->driver('lock', array('adapter' => 'file', 'key_prefix' => ''));
+        $this->lock->lock('lottery');
         $data = $this->Data_helper_model->get_model_list_in_fileds('roulette', [], []);
        	$sum=0;//總數
         foreach ($data as $key => $value) {
@@ -319,8 +332,58 @@ class System extends App_Controller
         	}
         }
         // var_dump($data);exit();
-        return return_app_json('200', '投票成功', $j);
-        var_dump($data);exit();
+        $model=[
+            'id' => $j->id,
+            'name' => $j->name,
+        ];
+        $this->lock->unlock('lottery');
+        return return_app_json('200', '成功', $model);
+        // var_dump($data);exit();
+    }
+    //獎品列表
+    public function get_roulette()
+    {
+        $query=$this->db->select(['id','name'])->where('state',1)->get('roulette');
+        $data=$query->result();
+        return return_app_json('200', '成功', $data);
+        // var_dump($data);exit();
+    }
+    //领取奖品
+    public function get_prize()
+    {
+        $awards = mb_strlen(trim(isset($_POST['awards']) ?: "")) == 0 ? "" : trim($_POST['awards']);
+        $name = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['session_name()']);
+        $phone = mb_strlen(trim(isset($_POST['phone']) ?: "")) == 0 ? "" : trim($_POST['phone']);
+        $address = mb_strlen(trim(isset($_POST['address']) ?: "")) == 0 ? "" : trim($_POST['address']);
+        
+        $this->load->driver('lock', array('adapter' => 'file', 'key_prefix' => ''));
+        $this->lock->lock('get_prize');
+
+        $roulette = $this->Data_helper_model->get_model_in_id("roulette", $awards);
+        if($roulette->stock < 1){
+            return return_app_json('104', '庫存不足',null);
+        }
+        $sql_data = [
+            "awards" => $awards,
+            "name" => $name,
+            "phone" => $phone,
+            "address" => $address,
+            "created_at" => date("Y-m-d H:i:s", time())
+        ];
+        if ($this->db->insert("winning", $sql_data)) {
+
+            //奖品库存减1
+            $this->db->where('id',$awards)
+                    ->set('stock','stock-1',false)
+                    ->update('roulette');
+
+            $this->lock->unlock('get_prize');
+            return return_app_json('200', '成功', null);
+        } else {
+            $this->lock->unlock('get_prize');
+            return return_app_json('104', '失败',null);
+        }
+
     }
 
 }
