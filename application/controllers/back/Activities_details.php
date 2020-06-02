@@ -110,6 +110,7 @@ class Activities_details extends Admin_Controller
                         "competition_period" => $model->competition_period,
                         "apply_period" => $model->apply_period,
                         "img_schedule" => $model->img_schedule,
+                        "img_schedule_app" => $model->img_schedule_app,
                         "img_scoring" => $model->img_scoring,
                         "added_at" => $model->added_at,
                         "awards_imgs" => json_decode($model->awards_imgs),
@@ -176,6 +177,7 @@ class Activities_details extends Admin_Controller
             $up_img_src = "";
             $img_scoring = "";
             $img_schedule = "";
+            $img_schedule_app = "";
             if (isset($_FILES) && count($_FILES) > 0) {
                 $this->load->library("Custom_upload");
                // var_dump($_FILES );exit();
@@ -189,6 +191,8 @@ class Activities_details extends Admin_Controller
                         	$img_scoring=$path . "/" . $up_img_file_name;
                         }elseif($k=='img_schedule'){
                         	$img_schedule=$path . "/" . $up_img_file_name;
+                        }elseif($k=='img_schedule_app'){
+                        	$img_schedule_app=$path . "/" . $up_img_file_name;
                         }else{
                         	if ($up_img_file_name) {
 	                            $arr[] = $path . "/" . $up_img_file_name;
@@ -246,6 +250,12 @@ class Activities_details extends Admin_Controller
                 } else if (empty($api_obj['img_schedule'])) {
                     $sql_data["img_schedule"] = "";
                 }
+                  //处理赛程图片
+                if ($img_schedule_app != "") {
+                    $sql_data["img_schedule_app"] = $img_schedule_app;
+                } else if (empty($api_obj['img_schedule_app'])) {
+                    $sql_data["img_schedule_app"] = "";
+                }
                 // return_post_json('','','',$sql_data);
                 if ($this->Data_helper_model->update_table_in_fileds(
                     "activities_details",
@@ -287,6 +297,7 @@ class Activities_details extends Admin_Controller
                     "competition_period" => $competition_period,
                     "apply_period" => $apply_period,
                     "img_schedule" => $img_schedule,
+                    "img_schedule_app" => $img_schedule_app,
                     "img_scoring" => $img_scoring,
                     "state" => $state,
                     "added_at" => $added_at,

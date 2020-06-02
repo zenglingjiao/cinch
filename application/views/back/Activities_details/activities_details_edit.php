@@ -131,7 +131,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">賽程時間表</label>
+                                        <label class="col-md-2 control-label">賽程時間表(電腦版)</label>
                                         <div class="col-md-7">
                                             <div class="btn btn_en btn-success" onclick="document.getElementById('upload1').click();"><i class="fa fa-image"></i>瀏覽
                                                 <input type="file" data-input="false" @change="tirgger_file_img_schedule($event,'up_img')" id="upload1" accept="image/*" data-badge="false" style="display:none;">
@@ -152,6 +152,36 @@
                                                         <div id="preimg">
                                                             <div class='imgContainer'>
                                                                 <a :download="img_schedule.name" :data-name="img_schedule.name" target="_blank" :href="img_schedule.src"><img style="width: 200px;height: 200px" title='分類圖' class="src_list" :src="img_schedule.src"  onerror=this.onerror=null;this.src="assets/images/no.jpg" alt='图片'/></a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label">賽程時間表(手機版)</label>
+                                        <div class="col-md-7">
+                                            <div class="btn btn_en btn-success" onclick="document.getElementById('upload3').click();"><i class="fa fa-image"></i>瀏覽
+                                                <input type="file" data-input="false" @change="tirgger_file_img_schedule_app($event,'up_img')" id="upload3" accept="image/*" data-badge="false" style="display:none;">
+                                                <input type="text" :value="model.img_schedule_app" name="has_img_schedule_app" id="has_img_schedule_app" style="opacity: 0;position: absolute;" />
+                                            </div>
+                                            <span style="color: red;" >尺寸限制：1140*1024</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group picss" v-show="img_schedule_app&&img_schedule_app.name&&img_schedule_app.name.length>0">
+                                        <label class="col-md-2 control-label sr-only"></label>
+                                        <div class="col-md-7">
+                                            <div class="sort_img_list">
+                                                <div class="sort_img">
+                                                    <div class="form-group-t">
+                                                        <button type="button" class="btn btn-warning" @click="img_schedule_app={};model.img_schedule_app='';">刪除</button>
+                                                    </div>
+                                                    <div class="form-group-z">
+                                                        <div id="preimg">
+                                                            <div class='imgContainer'>
+                                                                <a :download="img_schedule_app.name" :data-name="img_schedule_app.name" target="_blank" :href="img_schedule_app.src"><img style="width: 200px;height: 200px" title='分類圖' class="src_list" :src="img_schedule_app.src"  onerror=this.onerror=null;this.src="assets/images/no.jpg" alt='图片'/></a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -299,6 +329,9 @@
                 has_img_schedule: {
                     required: true
                 },
+                has_img_schedule_app: {
+                    required: true
+                },
                has_img_scoring: {
                     required: true
                 }, 
@@ -316,6 +349,9 @@
                 has_img_schedule: {
                     required: "請選擇賽程圖",
                 },
+                has_img_schedule_app: {
+                    required: "請選擇賽程圖(手機)",
+                },
                 has_img_scoring: {
                     required: "請選擇計分圖",
                 },
@@ -328,6 +364,9 @@
                     console.log(eid);
                     error.appendTo(element.parent().parent()); //将错误信息添加当前元素的父结点后面
                 }else if(eid == "has_img_schedule"){
+                	 console.log(eid);
+                    error.appendTo(element.parent().parent()); //将错误信息添加当前元素的父结点后面
+                }else if(eid == "has_img_schedule_app"){
                 	 console.log(eid);
                     error.appendTo(element.parent().parent()); //将错误信息添加当前元素的父结点后面
                 }else if(eid == "has_img_scoring"){
@@ -370,6 +409,7 @@
             awards_explain:[],
             img_scoring: {},
             img_schedule: {},
+            img_schedule_app: {},
             qualification:100,
             entry:100,
             api_model_edit:"<?php echo isset($api_edit)?$api_edit:""?>",
@@ -394,6 +434,9 @@
                 }
                 if(this.model.img_schedule){
                     this.img_schedule = {name: '設備圖', file: null, src: this.model.img_schedule, type: 'img'};
+                }
+                if(this.model.img_schedule_app){
+                    this.img_schedule_app = {name: '設備圖', file: null, src: this.model.img_schedule_app, type: 'img'};
                 }
                 if(this.model.awards_explain){
                 	// console.log(this.model.awards_explain);
@@ -498,6 +541,36 @@
                         };
                         this.model.img_schedule="1";
                         $("#has_img_schedule").focus();
+                    }
+                }
+                //console.log(file);
+            },
+            //處理img_schedule圖片
+            tirgger_file_img_schedule_app: function (event) {
+
+                var file = event.target.files; // (利用console.log输出看file文件对象)
+                console.log(file);
+                if (file) {
+                    var fileSize = file[0].size / 1024;
+                    var fileName = file[0].name;
+                    var fileType = file[0].type;
+                    if (fileSize > (10*1024))//10M
+                    {
+                        var jacked = humane.create({
+                            baseCls: 'humane-jackedup',
+                            addnCls: 'humane-jackedup-error',
+                            timeout: 2000
+                        })
+                        jacked.log("已過濾超過10M的文件");
+                    } else {
+                        this.img_schedule_app = {
+                            name: fileName,
+                            file: file,
+                            src: getObjectURL(file[0]),
+                            type: "img"
+                        };
+                        this.model.img_schedule_app="1";
+                        $("#has_img_schedule_app").focus();
                     }
                 }
                 //console.log(file);
@@ -640,6 +713,9 @@
                 }
                 if(this.img_schedule&&this.img_schedule.file){
                     fd.append("img_schedule", this.img_schedule.file[0]);
+                }
+                if(this.img_schedule_app&&this.img_schedule_app.file){
+                    fd.append("img_schedule_app", this.img_schedule_app.file[0]);
                 }
                 if(this.img_scoring&&this.img_scoring.file){
                     fd.append("img_scoring", this.img_scoring.file[0]);
