@@ -337,7 +337,7 @@ class System extends App_Controller
     {
         $this->load->driver('lock', array('adapter' => 'file', 'key_prefix' => ''));
         $this->lock->lock('lottery');
-        $data = $this->Data_helper_model->get_model_list_in_fileds('roulette', [], []);
+        $data = $this->Data_helper_model->get_model_list_in_fileds('roulette', ['state'], [1]);
         $sum  = 0; //總數
         foreach ($data as $key => $value) {
             $sum += $value->odds;
@@ -360,6 +360,7 @@ class System extends App_Controller
         $model = [
             'id'   => $j->id,
             'name' => $j->name,
+            'type' => $j->type,
         ];
         $this->lock->unlock('lottery');
 
@@ -369,13 +370,13 @@ class System extends App_Controller
     //獎品列表
     public function get_roulette()
     {
-        $query = $this->db->select(['id', 'name','odds'])->where('state', 1)->get('roulette');
+        $query = $this->db->select(['id', 'name','odds','type'])->where('state', 1)->get('roulette');
         $data  = $query->result();
         $query = $this->db->select_sum('odds')->where('state', 1)->get('roulette');
         $sum  = $query->row();
-        foreach ($data as $key => $value) {
-        	$data[$key]->degree =intval(360*($value->odds/$sum->odds));
-        }
+        // foreach ($data as $key => $value) {
+        // 	$data[$key]->degree =intval(360*($value->odds/$sum->odds));
+        // }
         return return_app_json('200', '成功', $data);
         // var_dump($data);exit();
     }
