@@ -100,8 +100,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內文1</label>
                                         <div class="col-md-7">
-                                            <textarea @input="textarea_num('content1')" maxlength="40" class="form-control" id="contact1-msg" v-model="model.content1" name="content1" rows="7" placeholder=""></textarea>
-                                            <div class="text-right">{{remainder1}}/40</div>
+                                            <textarea @input="textarea_num('content1')" maxlength="50" class="form-control" id="contact1-msg" v-model="model.content1" name="content1" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder1}}/50</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -114,8 +114,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內文2</label>
                                         <div class="col-md-7">
-                                            <textarea @input="textarea_num('content2')" maxlength="40" class="form-control" id="contact1-msg" v-model="model.content2" name="content2" rows="7" placeholder=""></textarea>
-                                            <div class="text-right">{{remainder2}}/40</div>
+                                            <textarea @input="textarea_num('content2')" maxlength="50" class="form-control" id="contact1-msg" v-model="model.content2" name="content2" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder2}}/50</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -128,8 +128,8 @@
                                     <div class="form-group">
                                         <label class="col-md-2 control-label">內文3</label>
                                         <div class="col-md-7">
-                                            <textarea @input="textarea_num('content3')" maxlength="40" class="form-control" id="contact1-msg" v-model="model.content3" name="content3" rows="7" placeholder=""></textarea>
-                                            <div class="text-right">{{remainder3}}/40</div>
+                                            <textarea @input="textarea_num('content3')" maxlength="50" class="form-control" id="contact1-msg" v-model="model.content3" name="content3" rows="7" placeholder=""></textarea>
+                                            <div class="text-right">{{remainder3}}/50</div>
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -313,9 +313,9 @@
         data: {
             model: {},
             update_file: {},
-            remainder1:40,
-            remainder2:40,
-            remainder3:40,
+            remainder1:50,
+            remainder2:50,
+            remainder3:50,
             product_name:10,
             subhead:20,
             crosshead1:20,
@@ -342,9 +342,9 @@
         	textarea_num:function (event) {
         		switch(event){
         			case 'all':
-						this.remainder1 = 40-this.model.content1.length;
-						this.remainder2 = 40-this.model.content2.length;
-						this.remainder3 = 40-this.model.content3.length;
+						this.remainder1 = 50-this.model.content1.length;
+						this.remainder2 = 50-this.model.content2.length;
+						this.remainder3 = 50-this.model.content3.length;
 						this.crosshead1 = 20-this.model.crosshead1.length;
 						this.crosshead2 = 20-this.model.crosshead2.length;
 						this.crosshead3 = 20-this.model.crosshead3.length;
@@ -352,13 +352,13 @@
 						this.subhead = 20-this.model.subhead.length;
         				break;
         			case 'content1':
-						this.remainder1 = 40-this.model.content1.length;
+						this.remainder1 = 50-this.model.content1.length;
         				break;
         			case 'content2':
-						this.remainder2 = 40-this.model.content2.length;
+						this.remainder2 = 50-this.model.content2.length;
         				break;
         			case 'content3':
-						this.remainder3 = 40-this.model.content3.length;
+						this.remainder3 = 50-this.model.content3.length;
         				break;
         			case 'crosshead1':
 						this.crosshead1 = 20-this.model.crosshead1.length;
