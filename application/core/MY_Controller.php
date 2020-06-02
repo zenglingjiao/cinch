@@ -102,6 +102,7 @@ class App_Controller extends MY_Controller
             || strtolower($this->router->method) == "lottery"
             || strtolower($this->router->method) == "vote"
             || strtolower($this->router->method) == "get_prize"
+            || strtolower($this->router->method) == "get_news_read"
             || strtolower($this->router->method) == "get_roulette"
             || strtolower($this->router->method) == "get_apply"
             || strtolower($this->router->method) == "add_apply"
