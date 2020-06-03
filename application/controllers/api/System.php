@@ -417,5 +417,25 @@ class System extends App_Controller
         }
 
     }
+    //驗證
+    public function verification()
+    {
+        $mb_no = mb_strlen(trim(isset($_POST['mb_no']) ?: "")) == 0 ? "" : trim($_POST['mb_no']);
+    	// https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checkuser&token=31890c5d7b58e2baf4c20f144c2c6f26&formData={"mb_no":"8159675"}
+    	$this->load->helper('curl');
+    	// $mb_no=8159675;
+    	$fordata='{"mb_no":"'.$mb_no.'"}';
+    	$token=md5($fordata);
+    	$url='https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checkuser&token='.$token.'&formData='.$fordata;
+    	$aa=curl_get($url);
+
+	    ob_end_clean();
+	    $this->output
+	        ->set_content_type('application/json', 'utf-8')
+	        ->set_output($aa)
+	        ->_display();
+	    exit;
+
+    }
 
 }

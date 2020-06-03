@@ -133,7 +133,7 @@ class Hot_film extends Admin_Controller
             }
             //上架限制為至多五筆
             if($state){
-            	$count=$this->Data_helper_model->get_model_list_in_fileds("hot_film", ['state'], [1]);
+            	$count=$this->Data_helper_model->get_model_list_in_fileds("hot_film", ['state','id !='], [1,$id]);
 	        	if(count($count) >= 5){
 	                $errors[] = "上架限制為至多五筆";
 	        	}

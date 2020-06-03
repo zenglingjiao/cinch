@@ -137,7 +137,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file_img_schedule($event,'up_img')" id="upload1" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_schedule" name="has_img_schedule" id="has_img_schedule" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" >尺寸限制：1140*1024</span>
+                                            <span style="color: red;" >尺寸限制：1198*500</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_schedule&&img_schedule.name&&img_schedule.name.length>0">
@@ -167,7 +167,7 @@
                                                 <input type="file" data-input="false" @change="tirgger_file_img_schedule_app($event,'up_img')" id="upload3" accept="image/*" data-badge="false" style="display:none;">
                                                 <input type="text" :value="model.img_schedule_app" name="has_img_schedule_app" id="has_img_schedule_app" style="opacity: 0;position: absolute;" />
                                             </div>
-                                            <span style="color: red;" >尺寸限制：1140*1024</span>
+                                            <span style="color: red;" >尺寸限制：450*700</span>
                                         </div>
                                     </div>
                                     <div class="form-group picss" v-show="img_schedule_app&&img_schedule_app.name&&img_schedule_app.name.length>0">
