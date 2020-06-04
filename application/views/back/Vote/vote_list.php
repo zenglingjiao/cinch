@@ -218,15 +218,9 @@
             valign: 'bottom',
             sortable: false,
             visible:false
-        },{
-            field: 'email',
-            title: 'E-MAIL',
-            align: 'center',
-            valign: 'center',
-            sortable: true
         }, {
-            field: 'phone',
-            title: '手機',
+            field: 'account',
+            title: '帳號',
             align: 'center',
             valign: 'center',
             sortable: true

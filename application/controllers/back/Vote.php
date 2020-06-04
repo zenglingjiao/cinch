@@ -28,8 +28,7 @@ class Vote extends Admin_Controller
             $title = mb_strlen(trim(isset($_POST['title']) ?: "")) == 0 ? "" : trim($_POST['title']);
             $field = array(
                 'vote.id',
-                'vote.phone',
-                'vote.email',
+                'vote.account',
                 'vote.created_at',
                 'vote.updated_at'
             );
@@ -37,8 +36,8 @@ class Vote extends Admin_Controller
             $this->db->select($field);
             if ($title != "") {
                 $this->db->group_start();
-                $this->db->like('phone', $title);
-                $this->db->or_like('email', $title);
+                $this->db->like('account', $title);
+                // $this->db->or_like('email', $title);
                 $this->db->group_end();
 
 

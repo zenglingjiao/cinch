@@ -33,7 +33,8 @@ class Winning extends Admin_Controller
                 'winning.address',
                 'winning.awards',
                 'winning.created_at',
-                'winning.updated_at'
+                'winning.updated_at',
+                'roulette.name as awards_name'
             );
 
             $this->db->select($field);
@@ -55,7 +56,7 @@ class Winning extends Admin_Controller
                 $this->db->where('winning.created_at <', date("Y-m-d", strtotime("+1 day", strtotime($c_time[1]))));
             }
             //$this->db->join("aauth_user_to_group", 'aauth_user_to_group.user_id = aauth_users.id and aauth_user_to_group.group_id !=3', 'left');
-            //$this->db->join("aauth_groups", 'aauth_user_to_group.group_id = aauth_groups.id and aauth_groups.id !=3', 'left');
+            $this->db->join("roulette", 'roulette.id = winning.awards', 'left');
 
             $data = $this->Data_helper_model->get_tabel_list($this->db, $_POST, "winning");
             echo json_encode($data);

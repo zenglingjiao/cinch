@@ -225,11 +225,11 @@
             valign: 'center',
             sortable: true
         }, {
-            field: 'awards',
+            field: 'awards_name',
             title: '獎項',
             align: 'center',
             valign: 'center',
-            sortable: true
+            sortable: false
         },{
             field: 'created_at',
             title: '創建時間',
