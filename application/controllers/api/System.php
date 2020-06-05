@@ -384,7 +384,7 @@ class System extends App_Controller
     public function get_prize()
     {
         $awards  = mb_strlen(trim(isset($_POST['awards']) ?: "")) == 0 ? "" : trim($_POST['awards']);
-        $name    = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['session_name()']);
+        $name    = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
         $phone   = mb_strlen(trim(isset($_POST['phone']) ?: "")) == 0 ? "" : trim($_POST['phone']);
         $address = mb_strlen(trim(isset($_POST['address']) ?: "")) == 0 ? "" : trim($_POST['address']);
 

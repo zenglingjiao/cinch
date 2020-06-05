@@ -220,7 +220,7 @@
             visible:false
         }, {
             field: 'account',
-            title: '帳號',
+            title: '手機/E-MAIL',
             align: 'center',
             valign: 'center',
             sortable: true
