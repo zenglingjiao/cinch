@@ -259,16 +259,16 @@ class Vote extends Admin_Controller
 //        var_dump($this->db->last_query());exit();
         $this->excel_generator->set_query($query);
         $this->excel_generator->set_header(array(
-            'ID',
+            // 'ID',
             '手機/E-MAIL',
             '創建時間',
         ));
         $this->excel_generator->set_column(array(
-            'id',
+            // 'id',
             'account',
             'created_at',
         ));
-        $this->excel_generator->set_width(array(25, 30, 30));
+        // $this->excel_generator->set_width(array(25, 30, 30));
         $this->excel_generator->exportTo2007($excel_name . date("YmdHis"));
         return;
     }

@@ -267,7 +267,7 @@ class Winning extends Admin_Controller
 //        var_dump($this->db->last_query());exit();
         $this->excel_generator->set_query($query);
         $this->excel_generator->set_header(array(
-            'ID',
+            // 'ID',
             '姓名',
             '獎項',
             '聯絡電話',
@@ -275,7 +275,7 @@ class Winning extends Admin_Controller
             '創建時間',
         ));
         $this->excel_generator->set_column(array(
-            'id',
+            // 'id',
             'name',
             'awards_name',
             'phone',
