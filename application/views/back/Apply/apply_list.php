@@ -96,7 +96,7 @@
 
             <!-- 表数据容器 -->
             <div class="message-table table-responsive smart-widget">
-
+            	<button type="button" class="btn btn-danger" onclick ="OutExcel()">導出</button>
                 <!--这是表格 -->
                 <table class="table overview-table" id="table-javascript">
 
@@ -276,7 +276,39 @@
             return '<label  class="css-input switch switch-info"><input type="checkbox" value='+row.id+' class="xcheck" name=""><span ></span></label>';
         }
     }
+     //導出
+    function OutExcel() {
+        var searchLength = $("#form_search").serialize();
 
+        sweetAlert({
+            title: '確定要導出嗎',
+            text: null,
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#33A0E8",
+            confirmButtonText: "確定",
+            cancelButtonText: "取消",
+            cancelButtonClass: 'btn-white btn-md waves-effect',
+            confirmButtonClass: 'btn-warning btn-md waves-effect waves-light',
+            closeOnConfirm: false,
+            closeOnCancel: true
+        }, function (isConfirm) {
+            if (isConfirm) {
+                window.open("<?php echo base_url('back/Apply/out_excel')?>" + "?" + $("#form_search").serialize()+"&excel_name=報名");
+                sweetAlert({
+                    title:'成功',
+                    text:'等待跳轉',
+                    timer:3000,
+                    showConfirmButton:false
+                });
+            } else {
+                console.log('導出失敗');
+
+            }
+        });
+        return false;
+
+    }
     function operateFormatter(value, row, index) {
         return [
             '<a class="btn btn-primary" href="<?php echo isset($edit)?$edit:""?>' + row.id + '" title="編輯">編輯</a>',

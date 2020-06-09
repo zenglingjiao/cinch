@@ -106,7 +106,9 @@ class App_Controller extends MY_Controller
             || strtolower($this->router->method) == "get_roulette"
             || strtolower($this->router->method) == "get_apply"
             || strtolower($this->router->method) == "add_apply"
+            || strtolower($this->router->method) == "select_activities_details"
             || strtolower($this->router->method) == "verification"
+            || strtolower($this->router->method) == "verification_new_friends"
             || strtolower($this->router->method) == "password_change") {
             //放行
         } else if (mb_strlen(trim(isset($token) ?: "")) == 0) {

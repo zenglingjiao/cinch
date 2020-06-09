@@ -1,5 +1,7 @@
 <?php
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * Class Goods
@@ -22,18 +24,18 @@ class Client_claim extends Admin_Controller
     {
         if (IS_POST) {
 //            return;
-            $name = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
-            $state = mb_strlen(trim(isset($_POST['state']) ?: "")) == 0 ? "" : trim($_POST['state']);
+            $name   = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+            $state  = mb_strlen(trim(isset($_POST['state']) ?: "")) == 0 ? "" : trim($_POST['state']);
             $c_time = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
-            $title = mb_strlen(trim(isset($_POST['title']) ?: "")) == 0 ? "" : trim($_POST['title']);
-            $field = array(
+            $title  = mb_strlen(trim(isset($_POST['title']) ?: "")) == 0 ? "" : trim($_POST['title']);
+            $field  = array(
                 'client_claim.id',
                 'client_claim.phone',
                 'client_claim.name',
                 'client_claim.email',
                 'client_claim.line_id',
                 'client_claim.created_at',
-                'client_claim.updated_at'
+                'client_claim.updated_at',
             );
 
             $this->db->select($field);
@@ -41,7 +43,6 @@ class Client_claim extends Admin_Controller
                 $this->db->group_start();
                 $this->db->like('name', $title);
                 $this->db->group_end();
-
 
             }
             if ($state != "") {
@@ -62,14 +63,14 @@ class Client_claim extends Admin_Controller
             //echo $this->db->last_query();
             exit;
         } else {
-            $data['title'] = "客戶索取列表";
-            $data['open_client_claim'] = "open";
+            $data['title']               = "客戶索取列表";
+            $data['open_client_claim']   = "open";
             $data['active_client_claim'] = "active";
-            $data['h_title'] = "客戶索取管理";
-            $data['edit'] = base_url('back/Client_claim/client_claim_edit/');
-            $data['api_list'] = base_url('back/Client_claim/client_claim_list');
-            $data['api_delete'] = base_url('back/Client_claim/client_claim_delete');
-            $data['state'] = base_url('back/Client_claim/client_claim_state');
+            $data['h_title']             = "客戶索取管理";
+            $data['edit']                = base_url('back/Client_claim/client_claim_edit/');
+            $data['api_list']            = base_url('back/Client_claim/client_claim_list');
+            $data['api_delete']          = base_url('back/Client_claim/client_claim_delete');
+            $data['state']               = base_url('back/Client_claim/client_claim_state');
             $this->load->view("back/Client_claim/client_claim_list", $data);
         }
     }
@@ -80,22 +81,22 @@ class Client_claim extends Admin_Controller
     public function client_claim_edit($id = "")
     {
         if (IS_GET) {
-            $data['open_client_claim'] = "open";
+            $data['open_client_claim']   = "open";
             $data['active_client_claim'] = "active";
-            $data['list'] = base_url('back/Client_claim/client_claim_list');
-            $data['edit'] = base_url('back/Client_claim/client_claim_edit/');
-            $data['list_title'] = "客戶索取列表";
+            $data['list']                = base_url('back/Client_claim/client_claim_list');
+            $data['edit']                = base_url('back/Client_claim/client_claim_edit/');
+            $data['list_title']          = "客戶索取列表";
             if (!empty($id)) {
-                $id = (int)$id;
+                $id            = (int) $id;
                 $data['title'] = "客戶索取編輯";
-                $model = $this->Data_helper_model->get_model_in_id("client_claim", $id);
+                $model         = $this->Data_helper_model->get_model_in_id("client_claim", $id);
                 if (isset($model)) {
                     $data['model'] = [
-                        "id" => $model->id,
-                        "name" => $model->name,
-                        "phone" => $model->phone,
-                        "email" => $model->email,
-                        "line_id" => $model->line_id,
+                        "id"         => $model->id,
+                        "name"       => $model->name,
+                        "phone"      => $model->phone,
+                        "email"      => $model->email,
+                        "line_id"    => $model->line_id,
                         "created_at" => (isset($model->created_at)) ? $model->created_at : "",
                     ];
 //                    var_dump($data);exit();
@@ -111,19 +112,18 @@ class Client_claim extends Admin_Controller
         }
         if (IS_POST) {
 //            return;
-            $errors = [];
+            $errors   = [];
             $json_obj = mb_strlen(trim(isset($_POST['json_obj']) ?: "")) == 0 ? "" : trim($_POST['json_obj']);
             if ($json_obj == "") {
                 $errors[] = '請補全相關資料';
             }
-            $api_obj = json_decode($json_obj, TRUE);
+            $api_obj = json_decode($json_obj, true);
 
-            $id = mb_strlen(trim(isset($api_obj['id']) ?: "")) == 0 ? "" : trim($api_obj['id']);
-            $name = mb_strlen(trim(isset($api_obj['name']) ?: "")) == 0 ? "" : trim($api_obj['name']);
-            $phone = mb_strlen(trim(isset($api_obj['phone']) ?: "")) == 0 ? "" : trim($api_obj['phone']);
-            $email = mb_strlen(trim(isset($api_obj['email']) ?: "")) == 0 ? "" : trim($api_obj['email']);
+            $id      = mb_strlen(trim(isset($api_obj['id']) ?: "")) == 0 ? "" : trim($api_obj['id']);
+            $name    = mb_strlen(trim(isset($api_obj['name']) ?: "")) == 0 ? "" : trim($api_obj['name']);
+            $phone   = mb_strlen(trim(isset($api_obj['phone']) ?: "")) == 0 ? "" : trim($api_obj['phone']);
+            $email   = mb_strlen(trim(isset($api_obj['email']) ?: "")) == 0 ? "" : trim($api_obj['email']);
             $line_id = mb_strlen(trim(isset($api_obj['line_id']) ?: "")) == 0 ? "" : trim($api_obj['line_id']);
-
 
             if ($name == "") {
                 $errors[] = "姓名不可為空";
@@ -137,7 +137,7 @@ class Client_claim extends Admin_Controller
             if ($line_id == "") {
                 $errors[] = "Line-ID不可為空";
             }
-            
+
             if (!empty($id)) {
                 //
                 if (!empty($errors)) {
@@ -145,14 +145,13 @@ class Client_claim extends Admin_Controller
                     return_post_json("err", $error, "", null);
                 }
                 $sql_data = [
-                    "name" => $name,
-                    "phone" => $phone,
-                    "email" => $email,
-                    "line_id" => $line_id,
-                    "updated_at" => date("Y-m-d H:i:s", time())
+                    "name"       => $name,
+                    "phone"      => $phone,
+                    "email"      => $email,
+                    "line_id"    => $line_id,
+                    "updated_at" => date("Y-m-d H:i:s", time()),
                 ];
 
-               
                 if ($this->Data_helper_model->update_table_in_fileds(
                     "client_claim",
                     ["id"],
@@ -172,11 +171,11 @@ class Client_claim extends Admin_Controller
                 }
 
                 $sql_data = [
-                    "name" => $name,
-                    "phone" => $phone,
-                    "email" => $email,
-                    "line_id" => $line_id,
-                    "created_at" => date("Y-m-d H:i:s", time())
+                    "name"       => $name,
+                    "phone"      => $phone,
+                    "email"      => $email,
+                    "line_id"    => $line_id,
+                    "created_at" => date("Y-m-d H:i:s", time()),
                 ];
                 if ($this->db->insert("client_claim", $sql_data)) {
                     return_post_json("ok", "新增成功", base_url('back/Client_claim/client_claim_list'), null);
@@ -192,7 +191,7 @@ class Client_claim extends Admin_Controller
      */
     public function client_claim_state()
     {
-        $id = mb_strlen(trim(isset($_POST['id']) ?: "")) == 0 ? "" : trim($_POST['id']);
+        $id    = mb_strlen(trim(isset($_POST['id']) ?: "")) == 0 ? "" : trim($_POST['id']);
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
@@ -220,7 +219,6 @@ class Client_claim extends Admin_Controller
         }
     }
 
-
     /**
      * 刪除狀態標籤
      */
@@ -229,8 +227,8 @@ class Client_claim extends Admin_Controller
         $selectid = mb_strlen(trim(isset($_POST['selectid']) ?: "")) == 0 ? "" : trim($_POST['selectid']);
         if (!empty($selectid)) {
             $id_list = explode(",", $selectid);
-            $is_ok = 0;
-            $is_err = 0;
+            $is_ok   = 0;
+            $is_err  = 0;
             foreach ($id_list as $val) {
                 if ($this->Data_helper_model->del_model_in_id('client_claim', $val)) {
                     $is_ok++;
@@ -245,6 +243,68 @@ class Client_claim extends Admin_Controller
         }
     }
 
+    //導出專案
+    public function out_excel()
+    {
+        // return;
+        $user_id = $this->session->userdata('id');
+        if (isset($user_id) && $user_id > 0) {
+        } else {
+            return_get_msg("請重新登入", base_url('back/Admin/login'));
+        }
+        $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+        $c_time     = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
+        $excel_name = mb_strlen(trim(isset($_GET['excel_name']) ?: "")) == 0 ? "導出訂單" : trim($_GET['excel_name']);
+        $field      = array(
+            'client_claim.id',
+            'client_claim.phone',
+            'client_claim.name',
+            'client_claim.email',
+            'client_claim.line_id',
+            'client_claim.created_at',
+            'client_claim.updated_at',
+        );
 
+        $this->db->select($field);
+        if ($name != "") {
+            $this->db->group_start();
+            $this->db->like('members_role.name', $name);
+            $this->db->or_like('project.dealer_company_name', $name);
+            $this->db->or_like('c.nick_name', $name);
+            $this->db->group_end();
+
+        }
+        // if ($state != "") {
+        //     $this->db->where('state', $state);
+        // }
+
+        if ($c_time != "") {
+            $c_time = explode("~", $c_time);
+            $this->db->where('client_claim.created_at >=', $c_time[0]);
+            //日期必須小於加一天的。 有時間<=就好，不需要加一天。
+            $this->db->where('client_claim.created_at <', date("Y-m-d", strtotime("+1 day", strtotime($c_time[1]))));
+        }
+
+        $this->load->library("Excel_generator");
+
+        $query = $this->db->get('client_claim');
+//        var_dump($this->db->last_query());exit();
+        $this->excel_generator->set_query($query);
+        $this->excel_generator->set_header(array(
+            'ID',
+            '姓名',
+            '手機',
+            '創建時間',
+        ));
+        $this->excel_generator->set_column(array(
+            'id',
+            'name',
+            'phone',
+            'created_at',
+        ));
+        $this->excel_generator->set_width(array(25, 30, 30, 30));
+        $this->excel_generator->exportTo2007($excel_name . date("YmdHis"));
+        return;
+    }
 
 }

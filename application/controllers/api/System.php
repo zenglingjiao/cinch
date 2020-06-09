@@ -120,12 +120,12 @@ class System extends App_Controller
         //     return return_app_json("102", "獲取失敗", []);
         // }
     }
-     //獲取最新消息詳情
+    //獲取最新消息詳情
     public function get_news_read()
     {
-      
+
         $news_id = mb_strlen(trim(isset($_POST['news_id']) ?: "")) == 0 ? "" : trim($_POST['news_id']);
-        $field = array(
+        $field   = array(
             'news.id',
             'news.title',
             'news.imgs',
@@ -135,7 +135,7 @@ class System extends App_Controller
         $this->db->select($field);
         $this->db->where('news.state', 1);
         $this->db->where('news.id', $news_id);
-        $query=$this->db->get('news');
+        $query = $this->db->get('news');
 
         $data = $query->row();
         if ($data) {
@@ -183,6 +183,27 @@ class System extends App_Controller
         }
 
     }
+    //查詢是否有活動
+    public function select_activities_details()
+    {
+        $type = mb_strlen(trim(isset($_POST['type']) ?: "")) == 0 ? "" : trim($_POST['type']);
+        if (empty($type)) {
+            return return_app_json("104", "參數錯誤", null);
+        }
+        //1团体2个人
+        $this->db->where('state', 1);
+        $this->db->where('type', $type);
+        $query = $this->db->get("activities_details");
+        $data  = $query->row();
+        // var_dump($this->db->last_query());exit();
+
+        if ($data) {
+            return return_app_json('200', '獲取成功', null);
+        } else {
+            return return_app_json("104", "獲取失敗", null);
+        }
+
+    }
     //獲取熱門影音
     public function get_hot_film_list()
     {
@@ -219,10 +240,10 @@ class System extends App_Controller
         $crew1_no   = mb_strlen(trim(isset($_POST['crew1_no']) ?: "")) == 0 ? "" : trim($_POST['crew1_no']);
         $crew2_name = mb_strlen(trim(isset($_POST['crew2_name']) ?: "")) == 0 ? "" : trim($_POST['crew2_name']);
         $crew2_no   = mb_strlen(trim(isset($_POST['crew2_no']) ?: "")) == 0 ? "" : trim($_POST['crew2_no']);
-        $crew3_name = mb_strlen(trim(isset($_POST['crew3_name']) ?: "")) == 0 ? "" : trim($_POST['crew3_name']);
-        $crew3_no   = mb_strlen(trim(isset($_POST['crew3_no']) ?: "")) == 0 ? "" : trim($_POST['crew3_no']);
-        $crew4_name = mb_strlen(trim(isset($_POST['crew4_name']) ?: "")) == 0 ? "" : trim($_POST['crew4_name']);
-        $crew4_no   = mb_strlen(trim(isset($_POST['crew4_no']) ?: "")) == 0 ? "" : trim($_POST['crew4_no']);
+        // $crew3_name = mb_strlen(trim(isset($_POST['crew3_name']) ?: "")) == 0 ? "" : trim($_POST['crew3_name']);
+        // $crew3_no   = mb_strlen(trim(isset($_POST['crew3_no']) ?: "")) == 0 ? "" : trim($_POST['crew3_no']);
+        // $crew4_name = mb_strlen(trim(isset($_POST['crew4_name']) ?: "")) == 0 ? "" : trim($_POST['crew4_name']);
+        // $crew4_no   = mb_strlen(trim(isset($_POST['crew4_no']) ?: "")) == 0 ? "" : trim($_POST['crew4_no']);
 
         $sql_data = [
             "type"       => $type,
@@ -236,10 +257,10 @@ class System extends App_Controller
             "crew1_no"   => $crew1_no,
             "crew2_name" => $crew2_name,
             "crew2_no"   => $crew2_no,
-            "crew3_name" => $crew3_name,
-            "crew3_no"   => $crew3_no,
-            "crew4_name" => $crew4_name,
-            "crew4_no"   => $crew4_no,
+            // "crew3_name" => $crew3_name,
+            // "crew3_no"   => $crew3_no,
+            // "crew4_name" => $crew4_name,
+            // "crew4_no"   => $crew4_no,
             "created_at" => date("Y-m-d H:i:s", time()),
         ];
         if ($this->db->insert("apply", $sql_data)) {
@@ -300,7 +321,7 @@ class System extends App_Controller
     {
         $account  = mb_strlen(trim(isset($_POST['account']) ?: "")) == 0 ? "" : trim($_POST['account']);
         $apply_id = mb_strlen(trim(isset($_POST['apply_id']) ?: "")) == 0 ? "" : trim($_POST['apply_id']);
-        if(empty($account) || empty($apply_id)){
+        if (empty($account) || empty($apply_id)) {
             return return_app_json('104', '投票失败', null);
         }
         $this->load->driver('lock', array('adapter' => 'file', 'key_prefix' => ''));
@@ -323,7 +344,7 @@ class System extends App_Controller
                 ->set('poll', 'poll+1', false)
                 ->update('apply');
             //抽獎
-            $data=$this->lottery();
+            $data = $this->lottery();
             $this->lock->unlock('vote');
             return return_app_json('200', '投票成功', $data);
         } else {
@@ -370,12 +391,12 @@ class System extends App_Controller
     //獎品列表
     public function get_roulette()
     {
-        $query = $this->db->select(['id', 'name','odds','type'])->where('state', 1)->get('roulette');
+        $query = $this->db->select(['id', 'name', 'odds', 'type'])->where('state', 1)->get('roulette');
         $data  = $query->result();
         $query = $this->db->select_sum('odds')->where('state', 1)->get('roulette');
-        $sum  = $query->row();
+        $sum   = $query->row();
         // foreach ($data as $key => $value) {
-        // 	$data[$key]->degree =intval(360*($value->odds/$sum->odds));
+        //     $data[$key]->degree =intval(360*($value->odds/$sum->odds));
         // }
         return return_app_json('200', '成功', $data);
         // var_dump($data);exit();
@@ -421,20 +442,40 @@ class System extends App_Controller
     public function verification()
     {
         $mb_no = mb_strlen(trim(isset($_POST['mb_no']) ?: "")) == 0 ? "" : trim($_POST['mb_no']);
-    	// https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checkuser&token=31890c5d7b58e2baf4c20f144c2c6f26&formData={"mb_no":"8159675"}
-    	$this->load->helper('curl');
-    	// $mb_no=8159675;
-    	$fordata='{"mb_no":"'.$mb_no.'"}';
-    	$token=md5($fordata);
-    	$url='https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checkuser&token='.$token.'&formData='.$fordata;
-    	$aa=curl_get($url);
+        // https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checkuser&token=31890c5d7b58e2baf4c20f144c2c6f26&formData={"mb_no":"8159675"}
+        $this->load->helper('curl');
+        // $mb_no=8159675;
+        $fordata = '{"mb_no":"' . $mb_no . '"}';
+        $token   = md5($fordata);
+        $url     = 'https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checkuser&token=' . $token . '&formData=' . $fordata;
+        $aa      = curl_get($url);
 
-	    ob_end_clean();
-	    $this->output
-	        ->set_content_type('application/json', 'utf-8')
-	        ->set_output($aa)
-	        ->_display();
-	    exit;
+        ob_end_clean();
+        $this->output
+            ->set_content_type('application/json', 'utf-8')
+            ->set_output($aa)
+            ->_display();
+        exit;
+
+    }
+    //驗證新朋友
+    public function verification_new_friends()
+    {
+        $mb_no = mb_strlen(trim(isset($_POST['mb_no']) ?: "")) == 0 ? "" : trim($_POST['mb_no']);
+        // https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checkuser&token=31890c5d7b58e2baf4c20f144c2c6f26&formData={"mb_no":"8159675"}
+        $this->load->helper('curl');
+        // $mb_no=8159675;
+        $fordata = '{"mb_no":"' . $mb_no . '"}';
+        $token   = md5($fordata);
+        $url     = 'https://www.cinch-api.com.tw/CinchAPP/member.php?partnerID=173&invoke=checknewuser&token=' . $token . '&formData=' . $fordata;
+        $aa      = curl_get($url);
+
+        ob_end_clean();
+        $this->output
+            ->set_content_type('application/json', 'utf-8')
+            ->set_output($aa)
+            ->_display();
+        exit;
 
     }
 

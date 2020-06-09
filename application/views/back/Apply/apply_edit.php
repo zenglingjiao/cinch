@@ -158,7 +158,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-md-2 control-label">組員2姓名</label>
+                                        <label class="col-md-2 control-label">新朋友姓名</label>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" v-model="model.crew2_name" name="crew2_name" />
                                         </div>
@@ -167,7 +167,7 @@
                                             <input type="text" class="form-control" v-model="model.crew2_no" name="crew2_no" />
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-2 control-label">組員3姓名</label>
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" v-model="model.crew3_name" name="crew3_name" />
@@ -186,7 +186,7 @@
                                         <div class="col-md-3">
                                             <input type="text" class="form-control" v-model="model.crew4_no" name="crew4_no" />
                                         </div>
-                                    </div>
+                                    </div> -->
                                     </template>
                                     <div class="form-group" v-if="model.id&&model.id>0">
                                         <label class="col-md-2 control-label">建立時間</label>

@@ -1,5 +1,7 @@
 <?php
-if (!defined('BASEPATH')) exit('No direct script access allowed');
+if (!defined('BASEPATH')) {
+    exit('No direct script access allowed');
+}
 
 /**
  * Class Goods
@@ -22,17 +24,17 @@ class Apply extends Admin_Controller
     {
         if (IS_POST) {
 //            return;
-            $name = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
-            $state = mb_strlen(trim(isset($_POST['state']) ?: "")) == 0 ? "" : trim($_POST['state']);
+            $name   = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+            $state  = mb_strlen(trim(isset($_POST['state']) ?: "")) == 0 ? "" : trim($_POST['state']);
             $c_time = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
-            $title = mb_strlen(trim(isset($_POST['title']) ?: "")) == 0 ? "" : trim($_POST['title']);
-            $field = array(
+            $title  = mb_strlen(trim(isset($_POST['title']) ?: "")) == 0 ? "" : trim($_POST['title']);
+            $field  = array(
                 'apply.id',
                 'apply.name',
                 'apply.type',
                 'apply.imgs',
                 'apply.created_at',
-                'apply.updated_at'
+                'apply.updated_at',
             );
 
             $this->db->select($field);
@@ -40,7 +42,6 @@ class Apply extends Admin_Controller
                 $this->db->group_start();
                 $this->db->like('name', $title);
                 $this->db->group_end();
-
 
             }
             if ($state != "") {
@@ -61,14 +62,14 @@ class Apply extends Admin_Controller
             //echo $this->db->last_query();
             exit;
         } else {
-            $data['title'] = "報名列表";
+            $data['title']          = "報名列表";
             $data['open_challenge'] = "open";
-            $data['active_apply'] = "active";
-            $data['h_title'] = "報名管理";
-            $data['edit'] = base_url('back/Apply/apply_edit/');
-            $data['api_list'] = base_url('back/Apply/apply_list');
-            $data['api_delete'] = base_url('back/Apply/apply_delete');
-            $data['state'] = base_url('back/Apply/apply_state');
+            $data['active_apply']   = "active";
+            $data['h_title']        = "報名管理";
+            $data['edit']           = base_url('back/Apply/apply_edit/');
+            $data['api_list']       = base_url('back/Apply/apply_list');
+            $data['api_delete']     = base_url('back/Apply/apply_delete');
+            $data['state']          = base_url('back/Apply/apply_state');
             $this->load->view("back/Apply/apply_list", $data);
         }
     }
@@ -80,32 +81,32 @@ class Apply extends Admin_Controller
     {
         if (IS_GET) {
             $data['open_challenge'] = "open";
-            $data['active_apply'] = "active";
-            $data['list'] = base_url('back/Apply/apply_list');
-            $data['edit'] = base_url('back/Apply/apply_edit/');
-            $data['list_title'] = "報名列表";
+            $data['active_apply']   = "active";
+            $data['list']           = base_url('back/Apply/apply_list');
+            $data['edit']           = base_url('back/Apply/apply_edit/');
+            $data['list_title']     = "報名列表";
             if (!empty($id)) {
-                $id = (int)$id;
+                $id            = (int) $id;
                 $data['title'] = "報名編輯";
-                $model = $this->Data_helper_model->get_model_in_id("apply", $id);
+                $model         = $this->Data_helper_model->get_model_in_id("apply", $id);
                 if (isset($model)) {
                     $data['model'] = [
-                        "id" => $model->id,
-                        "type" => $model->type,
-                        "name" => $model->name,
-                        "team_name" => $model->team_name,
-                        "no" => $model->no,
-                        "manifesto" => $model->manifesto,
-                        "imgs" => $model->imgs,
-                        "phone" => $model->phone,
+                        "id"         => $model->id,
+                        "type"       => $model->type,
+                        "name"       => $model->name,
+                        "team_name"  => $model->team_name,
+                        "no"         => $model->no,
+                        "manifesto"  => $model->manifesto,
+                        "imgs"       => $model->imgs,
+                        "phone"      => $model->phone,
                         "crew1_name" => $model->crew1_name,
-                        "crew1_no" => $model->crew1_no,
+                        "crew1_no"   => $model->crew1_no,
                         "crew2_name" => $model->crew2_name,
-                        "crew2_no" => $model->crew2_no,
-                        "crew3_name" => $model->crew3_name,
-                        "crew3_no" => $model->crew3_no,
-                        "crew4_name" => $model->crew4_name,
-                        "crew4_no" => $model->crew4_no,
+                        "crew2_no"   => $model->crew2_no,
+                        // "crew3_name" => $model->crew3_name,
+                        // "crew3_no" => $model->crew3_no,
+                        // "crew4_name" => $model->crew4_name,
+                        // "crew4_no" => $model->crew4_no,
                         "created_at" => (isset($model->created_at)) ? $model->created_at : "",
                     ];
 //                    var_dump($data);exit();
@@ -121,29 +122,28 @@ class Apply extends Admin_Controller
         }
         if (IS_POST) {
 //            return;
-            $errors = [];
+            $errors   = [];
             $json_obj = mb_strlen(trim(isset($_POST['json_obj']) ?: "")) == 0 ? "" : trim($_POST['json_obj']);
             if ($json_obj == "") {
                 $errors[] = '請補全相關資料';
             }
-            $api_obj = json_decode($json_obj, TRUE);
+            $api_obj = json_decode($json_obj, true);
 
-            $id = mb_strlen(trim(isset($api_obj['id']) ?: "")) == 0 ? "" : trim($api_obj['id']);
-            $type = mb_strlen(trim(isset($api_obj['type']) ?: "")) == 0 ? "" : trim($api_obj['type']);
-            $team_name = mb_strlen(trim(isset($api_obj['team_name']) ?: "")) == 0 ? "" : trim($api_obj['team_name']);
-            $name = mb_strlen(trim(isset($api_obj['name']) ?: "")) == 0 ? "" : trim($api_obj['name']);
-            $no = mb_strlen(trim(isset($api_obj['no']) ?: "")) == 0 ? "" : trim($api_obj['no']);
-            $manifesto = mb_strlen(trim(isset($api_obj['manifesto']) ?: "")) == 0 ? "" : trim($api_obj['manifesto']);
-            $phone = mb_strlen(trim(isset($api_obj['phone']) ?: "")) == 0 ? "" : trim($api_obj['phone']);
+            $id         = mb_strlen(trim(isset($api_obj['id']) ?: "")) == 0 ? "" : trim($api_obj['id']);
+            $type       = mb_strlen(trim(isset($api_obj['type']) ?: "")) == 0 ? "" : trim($api_obj['type']);
+            $team_name  = mb_strlen(trim(isset($api_obj['team_name']) ?: "")) == 0 ? "" : trim($api_obj['team_name']);
+            $name       = mb_strlen(trim(isset($api_obj['name']) ?: "")) == 0 ? "" : trim($api_obj['name']);
+            $no         = mb_strlen(trim(isset($api_obj['no']) ?: "")) == 0 ? "" : trim($api_obj['no']);
+            $manifesto  = mb_strlen(trim(isset($api_obj['manifesto']) ?: "")) == 0 ? "" : trim($api_obj['manifesto']);
+            $phone      = mb_strlen(trim(isset($api_obj['phone']) ?: "")) == 0 ? "" : trim($api_obj['phone']);
             $crew1_name = mb_strlen(trim(isset($api_obj['crew1_name']) ?: "")) == 0 ? "" : trim($api_obj['crew1_name']);
-            $crew1_no = mb_strlen(trim(isset($api_obj['crew1_no']) ?: "")) == 0 ? "" : trim($api_obj['crew1_no']);
+            $crew1_no   = mb_strlen(trim(isset($api_obj['crew1_no']) ?: "")) == 0 ? "" : trim($api_obj['crew1_no']);
             $crew2_name = mb_strlen(trim(isset($api_obj['crew2_name']) ?: "")) == 0 ? "" : trim($api_obj['crew2_name']);
-            $crew2_no = mb_strlen(trim(isset($api_obj['crew2_no']) ?: "")) == 0 ? "" : trim($api_obj['crew2_no']);
-            $crew3_name = mb_strlen(trim(isset($api_obj['crew3_name']) ?: "")) == 0 ? "" : trim($api_obj['crew3_name']);
-            $crew3_no = mb_strlen(trim(isset($api_obj['crew3_no']) ?: "")) == 0 ? "" : trim($api_obj['crew3_no']);
-            $crew4_name = mb_strlen(trim(isset($api_obj['crew4_name']) ?: "")) == 0 ? "" : trim($api_obj['crew4_name']);
-            $crew4_no = mb_strlen(trim(isset($api_obj['crew4_no']) ?: "")) == 0 ? "" : trim($api_obj['crew4_no']);
-
+            $crew2_no   = mb_strlen(trim(isset($api_obj['crew2_no']) ?: "")) == 0 ? "" : trim($api_obj['crew2_no']);
+            // $crew3_name = mb_strlen(trim(isset($api_obj['crew3_name']) ?: "")) == 0 ? "" : trim($api_obj['crew3_name']);
+            // $crew3_no = mb_strlen(trim(isset($api_obj['crew3_no']) ?: "")) == 0 ? "" : trim($api_obj['crew3_no']);
+            // $crew4_name = mb_strlen(trim(isset($api_obj['crew4_name']) ?: "")) == 0 ? "" : trim($api_obj['crew4_name']);
+            // $crew4_no = mb_strlen(trim(isset($api_obj['crew4_no']) ?: "")) == 0 ? "" : trim($api_obj['crew4_no']);
 
             // if ($title == "") {
             //     $errors[] = "標題不可為空";
@@ -162,7 +162,7 @@ class Apply extends Admin_Controller
                 $this->load->library("Custom_upload");
                 foreach ($_FILES as $k => $file) {
                     if (isset($file['name'])) {
-                        $path = "updata/Apply/" . date("Y-m", time());
+                        $path             = "updata/Apply/" . date("Y-m", time());
                         $up_img_file_name = $this->custom_upload->single_upload($k, date("YmdHis", time()), ["upload_path" => $path, "allowed_types" => "jpeg|jpg|gif|png"]);
                         if ($up_img_file_name) {
                             $up_img_src = $path . "/" . $up_img_file_name;
@@ -177,21 +177,21 @@ class Apply extends Admin_Controller
                     return_post_json("err", $error, "", null);
                 }
                 $sql_data = [
-                    "type" => $type,
-                    "name" => $name,
-                    "team_name" => $team_name,
-                    "no" => $no,
-                    "manifesto" => $manifesto,
-                    "phone" => $phone,
+                    "type"       => $type,
+                    "name"       => $name,
+                    "team_name"  => $team_name,
+                    "no"         => $no,
+                    "manifesto"  => $manifesto,
+                    "phone"      => $phone,
                     "crew1_name" => $crew1_name,
-                    "crew1_no" => $crew1_no,
+                    "crew1_no"   => $crew1_no,
                     "crew2_name" => $crew2_name,
-                    "crew2_no" => $crew2_no,
-                    "crew3_name" => $crew3_name,
-                    "crew3_no" => $crew3_no,
-                    "crew4_name" => $crew4_name,
-                    "crew4_no" => $crew4_no,
-                    "updated_at" => date("Y-m-d H:i:s", time())
+                    "crew2_no"   => $crew2_no,
+                    // "crew3_name" => $crew3_name,
+                    // "crew3_no" => $crew3_no,
+                    // "crew4_name" => $crew4_name,
+                    // "crew4_no" => $crew4_no,
+                    "updated_at" => date("Y-m-d H:i:s", time()),
                 ];
 
                 if ($up_img_src != "") {
@@ -219,22 +219,22 @@ class Apply extends Admin_Controller
                 }
 
                 $sql_data = [
-                    "type" => $type,
-                    "name" => $name,
-                    "team_name" => $team_name,
-                    "no" => $no,
-                    "imgs" => $up_img_src,
-                    "manifesto" => $manifesto,
-                    "phone" => $phone,
+                    "type"       => $type,
+                    "name"       => $name,
+                    "team_name"  => $team_name,
+                    "no"         => $no,
+                    "imgs"       => $up_img_src,
+                    "manifesto"  => $manifesto,
+                    "phone"      => $phone,
                     "crew1_name" => $crew1_name,
-                    "crew1_no" => $crew1_no,
+                    "crew1_no"   => $crew1_no,
                     "crew2_name" => $crew2_name,
-                    "crew2_no" => $crew2_no,
-                    "crew3_name" => $crew3_name,
-                    "crew3_no" => $crew3_no,
-                    "crew4_name" => $crew4_name,
-                    "crew4_no" => $crew4_no,
-                    "created_at" => date("Y-m-d H:i:s", time())
+                    "crew2_no"   => $crew2_no,
+                    // "crew3_name" => $crew3_name,
+                    // "crew3_no" => $crew3_no,
+                    // "crew4_name" => $crew4_name,
+                    // "crew4_no" => $crew4_no,
+                    "created_at" => date("Y-m-d H:i:s", time()),
                 ];
                 if ($this->db->insert("apply", $sql_data)) {
                     return_post_json("ok", "新增成功", base_url('back/Apply/apply_list'), null);
@@ -250,7 +250,7 @@ class Apply extends Admin_Controller
      */
     public function apply_state()
     {
-        $id = mb_strlen(trim(isset($_POST['id']) ?: "")) == 0 ? "" : trim($_POST['id']);
+        $id    = mb_strlen(trim(isset($_POST['id']) ?: "")) == 0 ? "" : trim($_POST['id']);
         $field = mb_strlen(trim(isset($_POST['field']) ?: "")) == 0 ? "" : trim($_POST['field']);
         $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
         if ($id != "" && $field != "") {
@@ -278,7 +278,6 @@ class Apply extends Admin_Controller
         }
     }
 
-
     /**
      * 刪除狀態標籤
      */
@@ -287,8 +286,8 @@ class Apply extends Admin_Controller
         $selectid = mb_strlen(trim(isset($_POST['selectid']) ?: "")) == 0 ? "" : trim($_POST['selectid']);
         if (!empty($selectid)) {
             $id_list = explode(",", $selectid);
-            $is_ok = 0;
-            $is_err = 0;
+            $is_ok   = 0;
+            $is_err  = 0;
             foreach ($id_list as $val) {
                 if ($this->Data_helper_model->del_model_in_id('apply', $val)) {
                     $is_ok++;
@@ -303,6 +302,53 @@ class Apply extends Admin_Controller
         }
     }
 
+    //導出專案
+    public function out_excel()
+    {
+        // return;
+        $user_id = $this->session->userdata('id');
+        if (isset($user_id) && $user_id > 0) {
+        } else {
+            return_get_msg("請重新登入", base_url('back/Admin/login'));
+        }
+        $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+        $c_time     = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
+        $excel_name = mb_strlen(trim(isset($_GET['excel_name']) ?: "")) == 0 ? "導出訂單" : trim($_GET['excel_name']);
+        $field      = array(
+            'apply.id',
+            'apply.name',
+            "if(type=1,'團體','個人') type",
+            'apply.created_at',
+            'apply.updated_at',
+        );
 
+        $this->db->select($field);
+        if ($name != "") {
+            $this->db->group_start();
+            $this->db->like('members_role.name', $name);
+            $this->db->or_like('project.dealer_company_name', $name);
+            $this->db->or_like('c.nick_name', $name);
+            $this->db->group_end();
+
+        }
+        $this->load->library("Excel_generator");
+
+        $query = $this->db->get('apply');
+//        var_dump($this->db->last_query());exit();
+        $this->excel_generator->set_query($query);
+        $this->excel_generator->set_header(array(
+            '類型',
+            '主要人員姓名',
+            '創建時間',
+        ));
+        $this->excel_generator->set_column(array(
+            'type',
+            'name',
+            'created_at',
+        ));
+        $this->excel_generator->set_width(array(25, 30, 30));
+        $this->excel_generator->exportTo2007($excel_name . date("YmdHis"));
+        return;
+    }
 
 }
