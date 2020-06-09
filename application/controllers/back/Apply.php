@@ -311,26 +311,28 @@ class Apply extends Admin_Controller
         } else {
             return_get_msg("請重新登入", base_url('back/Admin/login'));
         }
-        $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
-        $c_time     = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
+        $name       = mb_strlen(trim(isset($_GET['name']) ?: "")) == 0 ? "" : trim($_GET['name']);
+        $c_time     = mb_strlen(trim(isset($_GET['c_time']) ?: "")) == 0 ? "" : trim($_GET['c_time']);
         $excel_name = mb_strlen(trim(isset($_GET['excel_name']) ?: "")) == 0 ? "導出訂單" : trim($_GET['excel_name']);
         $field      = array(
             'apply.id',
             'apply.name',
             "if(type=1,'團體','個人') type",
+            'apply.team_name',
+            'apply.poll',
+            'apply.no',
+            'apply.manifesto',
+            'apply.phone',
+            'apply.crew1_name',
+            'apply.crew1_no',
+            'apply.crew2_name',
+            'apply.crew2_no',
             'apply.created_at',
             'apply.updated_at',
         );
 
         $this->db->select($field);
-        if ($name != "") {
-            $this->db->group_start();
-            $this->db->like('members_role.name', $name);
-            $this->db->or_like('project.dealer_company_name', $name);
-            $this->db->or_like('c.nick_name', $name);
-            $this->db->group_end();
-
-        }
+        
         $this->load->library("Excel_generator");
 
         $query = $this->db->get('apply');
@@ -339,14 +341,30 @@ class Apply extends Admin_Controller
         $this->excel_generator->set_header(array(
             '類型',
             '主要人員姓名',
+            '隊名',
+            '會員編號',
+            '手機',
+            '宣言',
+            '組員1姓名',
+            '會員編號',
+            '新朋友姓名',
+            '會員編號',
             '創建時間',
         ));
         $this->excel_generator->set_column(array(
             'type',
             'name',
+            'team_name',
+            'no',
+            'phone',
+            'manifesto',
+            'crew1_name',
+            'crew1_no',
+            'crew2_name',
+            'crew2_no',
             'created_at',
         ));
-        $this->excel_generator->set_width(array(25, 30, 30));
+        // $this->excel_generator->set_width(array(25, 30, 30, 30, 30, 30, 30, 30, 30, 30, 30));
         $this->excel_generator->exportTo2007($excel_name . date("YmdHis"));
         return;
     }

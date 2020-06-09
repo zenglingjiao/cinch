@@ -96,7 +96,7 @@
 
             <!-- 表数据容器 -->
             <div class="message-table table-responsive smart-widget">
-            	<button type="button" class="btn btn-danger" onclick ="OutExcel()">導出</button>
+            	<button type="button" class="btn btn-danger" onclick ="OutExcel()">匯出</button>
                 <!--这是表格 -->
                 <table class="table overview-table" id="table-javascript">
 
@@ -281,7 +281,7 @@
         var searchLength = $("#form_search").serialize();
 
         sweetAlert({
-            title: '確定要導出嗎',
+            title: '確定要匯出嗎',
             text: null,
             type: "warning",
             showCancelButton: true,
@@ -302,7 +302,7 @@
                     showConfirmButton:false
                 });
             } else {
-                console.log('導出失敗');
+                console.log('匯出失敗');
 
             }
         });

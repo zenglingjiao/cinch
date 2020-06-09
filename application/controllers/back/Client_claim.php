@@ -252,8 +252,8 @@ class Client_claim extends Admin_Controller
         } else {
             return_get_msg("請重新登入", base_url('back/Admin/login'));
         }
-        $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
-        $c_time     = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
+        $name       = mb_strlen(trim(isset($_GET['name']) ?: "")) == 0 ? "" : trim($_GET['name']);
+        $c_time     = mb_strlen(trim(isset($_GET['c_time']) ?: "")) == 0 ? "" : trim($_GET['c_time']);
         $excel_name = mb_strlen(trim(isset($_GET['excel_name']) ?: "")) == 0 ? "導出訂單" : trim($_GET['excel_name']);
         $field      = array(
             'client_claim.id',
@@ -268,9 +268,7 @@ class Client_claim extends Admin_Controller
         $this->db->select($field);
         if ($name != "") {
             $this->db->group_start();
-            $this->db->like('members_role.name', $name);
-            $this->db->or_like('project.dealer_company_name', $name);
-            $this->db->or_like('c.nick_name', $name);
+            $this->db->like('client_claim.name', $name);
             $this->db->group_end();
 
         }
@@ -284,7 +282,7 @@ class Client_claim extends Admin_Controller
             //日期必須小於加一天的。 有時間<=就好，不需要加一天。
             $this->db->where('client_claim.created_at <', date("Y-m-d", strtotime("+1 day", strtotime($c_time[1]))));
         }
-
+        $this->db->order_by('created_at','desc');
         $this->load->library("Excel_generator");
 
         $query = $this->db->get('client_claim');
@@ -294,15 +292,19 @@ class Client_claim extends Admin_Controller
             'ID',
             '姓名',
             '手機',
+            'E-MAIL',
+            'Line ID',
             '創建時間',
         ));
         $this->excel_generator->set_column(array(
             'id',
             'name',
             'phone',
+            'email',
+            'line_id',
             'created_at',
         ));
-        $this->excel_generator->set_width(array(25, 30, 30, 30));
+        $this->excel_generator->set_width(array(25, 30, 30, 30, 30, 30));
         $this->excel_generator->exportTo2007($excel_name . date("YmdHis"));
         return;
     }

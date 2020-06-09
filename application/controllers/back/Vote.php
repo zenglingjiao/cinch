@@ -235,14 +235,13 @@ class Vote extends Admin_Controller
     //導出專案
     public function out_excel()
     {
-        // return;
         $user_id = $this->session->userdata('id');
         if (isset($user_id) && $user_id > 0) {
         } else {
             return_get_msg("請重新登入", base_url('back/Admin/login'));
         }
-        $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
-        $c_time     = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
+        // $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+        // $c_time     = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
         $excel_name = mb_strlen(trim(isset($_GET['excel_name']) ?: "")) == 0 ? "導出訂單" : trim($_GET['excel_name']);
         $field      = array(
             'vote.id',
@@ -250,17 +249,10 @@ class Vote extends Admin_Controller
             'vote.created_at',
             'vote.updated_at',
         );
-
         $this->db->select($field);
-        if ($name != "") {
-            $this->db->group_start();
-            $this->db->like('members_role.name', $name);
-            $this->db->or_like('project.dealer_company_name', $name);
-            $this->db->or_like('c.nick_name', $name);
-            $this->db->group_end();
-
-        }
-
+        
+        
+        $this->db->order_by('created_at','desc');
         $this->load->library("Excel_generator");
 
         $query = $this->db->get('vote');

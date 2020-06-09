@@ -243,8 +243,8 @@ class Winning extends Admin_Controller
         } else {
             return_get_msg("請重新登入", base_url('back/Admin/login'));
         }
-        $name       = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
-        $c_time     = mb_strlen(trim(isset($_POST['c_time']) ?: "")) == 0 ? "" : trim($_POST['c_time']);
+        $name       = mb_strlen(trim(isset($_GET['name']) ?: "")) == 0 ? "" : trim($_GET['name']);
+        $c_time     = mb_strlen(trim(isset($_GET['c_time']) ?: "")) == 0 ? "" : trim($_GET['c_time']);
         $excel_name = mb_strlen(trim(isset($_GET['excel_name']) ?: "")) == 0 ? "導出訂單" : trim($_GET['excel_name']);
         $field      = array(
             'winning.id',
@@ -258,14 +258,7 @@ class Winning extends Admin_Controller
         );
 
         $this->db->select($field);
-        if ($name != "") {
-            $this->db->group_start();
-            $this->db->like('members_role.name', $name);
-            $this->db->or_like('project.dealer_company_name', $name);
-            $this->db->or_like('c.nick_name', $name);
-            $this->db->group_end();
-
-        }
+        
         $this->db->join("roulette", 'roulette.id = winning.awards', 'left');
 
         $this->load->library("Excel_generator");
@@ -277,15 +270,19 @@ class Winning extends Admin_Controller
             'ID',
             '姓名',
             '獎項',
+            '聯絡電話',
+            '地址',
             '創建時間',
         ));
         $this->excel_generator->set_column(array(
             'id',
             'name',
             'awards_name',
+            'phone',
+            'address',
             'created_at',
         ));
-        $this->excel_generator->set_width(array(25, 30, 30, 30));
+        // $this->excel_generator->set_width(array(25, 30, 30, 30));
         $this->excel_generator->exportTo2007($excel_name . date("YmdHis"));
         return;
     }
