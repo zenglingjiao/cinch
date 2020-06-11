@@ -292,6 +292,7 @@ class System extends App_Controller
     public function get_apply()
     {
         $name = mb_strlen(trim(isset($_POST['name']) ?: "")) == 0 ? "" : trim($_POST['name']);
+        $type = mb_strlen(trim(isset($_POST['type']) ?: "")) == 0 ? "" : trim($_POST['type']);
         // if ($user_model) {
         $field = array(
             'apply.id',
@@ -306,13 +307,17 @@ class System extends App_Controller
             $this->db->like('apply.name', $name);
             $this->db->group_end();
         }
-
+        if($type == 1 || $type == 2){
+        	$this->db->like('apply.type', $type);
+        }else{
+            return return_app_json("104", "參數錯誤", null);
+        }
         $data = $this->Data_helper_model->get_tabel_list($this->db, $_POST, "apply");
         // var_dump($this->db->last_query());exit();
         if ($data) {
             return return_app_json('200', '獲取成功', $data);
         } else {
-            return return_app_json("102", "獲取失敗", []);
+            return return_app_json("200", "獲取失敗", []);
         }
     }
 
