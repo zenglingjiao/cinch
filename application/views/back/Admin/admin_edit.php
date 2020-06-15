@@ -122,7 +122,7 @@
                                         </div>
                                     <?php } ?>
 
-                                    <div class="form-group">
+                                    <!-- <div class="form-group">
                                         <label class="col-md-2 control-label">權限</label>
                                         <div class="col-md-8">
                                             <table class="table table-bordered table-zhiw">
@@ -307,7 +307,7 @@
                                             </table>
 
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <?php if(isset($admin['id'])&&$admin['id']>0){ ?>
                                         <div class="form-group">

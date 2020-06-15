@@ -484,4 +484,11 @@ class System extends App_Controller
 
     }
 
+    //獲取挑戰賽狀態
+    public function get_challenge_state()
+    {
+        $data = $this->Data_helper_model->get_model_in_id("version", 1);
+        return return_app_json('200', '成功', $data);
+    }
+
 }

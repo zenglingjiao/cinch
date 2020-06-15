@@ -22,10 +22,27 @@ class Admin extends Admin_Controller
     {
         $data['title'] = "cinch後台 - 首頁";
         $data['active_index'] = "active";
+       	$data['state'] = base_url('back/Admin/index_state');
+        $model = $this->Data_helper_model->get_model_in_id("version", 1);
+        $data['model']=$model;
         $this->load->view("back/Admin/index", $data);
         //redirect(base_url('back/Admin/login'), 'refresh');
     }
-
+    /**
+     * 標籤管理狀態
+     */
+    public function index_state()
+    {
+        $value = mb_strlen(trim(isset($_POST['set']) ?: "")) == 0 ? "" : trim($_POST['set']);
+        if ($this->Data_helper_model->tabel_status(1, "version", 'version_number', $value)) {
+            echo 1;
+            return;
+        } else {
+            echo 0;
+            return;
+        }
+       
+    }
     /**
      * 登入
      */

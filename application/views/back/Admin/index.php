@@ -65,6 +65,24 @@
             </div>
             <!-- END 容器 -->
         </div>
+        <div class="content block-content block-content-narrow" style="">
+	        <div class="form-group">
+	            <label class="col-md-5 control-label" style="text-align: right;">挑戰賽</label>
+	            <div class="col-md-5" style="text-align: left;">
+	                <label class="css-input switch switch-success">
+	                    <?php if($model->version_number == 1){
+	                    	echo '<input type="checkbox" class="xcheck" checked><span></span>';
+	                    }else{
+	                    	echo '<input type="checkbox" class="xcheck"><span></span>';
+
+	                    }
+	                     ?>
+	                    <!-- <input type="checkbox" checked><span></span> -->
+	                </label>
+	            </div>
+	        </div>
+        </div>
+
         <!-- END Page 內問中間默認開始 -->
     </main>
     <!-- END Main 中間容器 -->
@@ -76,6 +94,33 @@
 
 <script>
     $(function () {
+    	$('.xcheck').change(function () {
+            if($(this).is(":checked"))
+            {
+                poststate=1;
+            }
+            else{
+                poststate=0;
+            }
+            $.ajax({
+                type : 'post',
+                url : '<?php echo isset($state)?$state:""?>',
+                data: 'set=' + poststate,
+                //async : false, //同步方式
+                success : function(redata) {
+                    if(redata>0)
+                    {
+                    	
+                    }
+                    else
+                    {
+                        sweetAlert("狀態保存失敗");
+                        $('#table-javascript').bootstrapTable('refresh');
+                    }
+                }
+            });
+
+        });
         // Init page helpers (BS Datepicker + BS Colorpicker + Select2 + Masked Input + Tags Inputs plugins)
         App.initHelpers(['datepicker']);
     });
