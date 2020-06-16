@@ -16,7 +16,10 @@ class Front extends Public_Controller
         $this->load->library("Uuid");
         $this->load->library("logs");
     }
-
+    public function index()
+    {
+        redirect(base_url('vue/dist/index.html'));
+    }
     public function share($id = "")
     {
         $data['title'] = "活動分享";

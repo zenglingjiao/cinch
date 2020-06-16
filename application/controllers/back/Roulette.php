@@ -88,10 +88,10 @@ class Roulette extends Admin_Controller
             $data['active_roulette'] = "active";
             $data['list'] = base_url('back/Roulette/roulette_list');
             $data['edit'] = base_url('back/Roulette/roulette_edit/');
-            $data['list_title'] = "兌換轉盤";
+            $data['list_title'] = "轉盤列表";
             if (!empty($id)) {
                 $id = (int)$id;
-                $data['title'] = "兌換轉盤";
+                $data['title'] = "轉盤編輯";
                 $model = $this->Data_helper_model->get_model_in_id("roulette", $id);
                 if (isset($model)) {
                     $data['model'] = [
