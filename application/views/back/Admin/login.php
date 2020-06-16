@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $title ?></title>
     <!-- OneUI CSS framework -->
+    <link rel="shortcut icon" href="assets/images/favicons/favicon32.png">
     <link rel="stylesheet" id="css-main" href="assets/css/oneui.css">
     <link rel="stylesheet" id="Link1" href="assets/css/login.css?1">
     <!--[if lt IE 9]>
